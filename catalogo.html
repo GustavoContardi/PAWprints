@@ -61,14 +61,22 @@
             <!-- Aquí se pueden agregar filtros para el catálogo, como categorías, precios, etc. -->
 
             <article class="filter-options">
-                <label for="categoria">Categoría:</label>
-                <select id="categoria" name="categoria">
-                    <option value="Todos">Todos</option>
-                    <option value="Ficcion">Ficción</option>
-                    <option value="No-ficcion">No Ficción</option>
-                    <option value="infantil">Infantil</option>
+                <label for="genero">Género:</label>
+                <div class="checkbox-group">
+                    <p>
+                        <input type="checkbox" id="cat-ficcion" name="categoria" value="Ficcion">
+                        <label for="cat-ficcion">Ficción</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="cat-no-ficcion" name="categoria" value="No-ficcion">
+                        <label for="cat-no-ficcion">No Ficción</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="cat-infantil" name="categoria" value="infantil">
+                        <label for="cat-infantil">Infantil</label>
+                    </p>
                     <!-- Agregar más categorías según sea necesario -->
-                </select>
+                </div>
             </article>
 
             <article class="filter-options">
