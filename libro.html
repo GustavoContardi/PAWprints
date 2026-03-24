@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titulo Libro - PAWprints</title>
+</head>
+<body>
+    <header>
+        <section>
+            <!-- Logo PAWprints -->
+            <div class="logo">
+                <a href="home.html">
+                    <img src="" alt="Logo PAWprints">
+                </a>
+            </div>
+
+            <!-- Menu Hamburguesa -->
+            <div class="menu-icon">
+                <input type="checkbox" id="menu-check" class="menu-checkbox">
+                
+                <label for="menu-check" class="menu-button">
+                    <span></span>
+                </label>
+                
+                <nav class="nav">
+                    <ul>
+                    <li><a href="#">Op1</a></li>
+                    <li><a href="#">Op2</a></li>
+                    <li><a href="#">Op3</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </a>
+        </section>
+    </header>
+
+    <main>
+        <!-- section del libro -->
+        <section>
+           <!--Imagen-->
+            <div>
+                <img src="" alt="Tapa libro"> 
+           </div> 
+
+           <!--Detalle del libro-->
+           <div>
+                <h2>Título libro</h2>
+                <p>Genero</p>
+                <p>Precio</p>
+                <p>Autor</p>
+
+                <form>
+                    <label for="formatoLibro">Formato</label>
+                    <select id="formatoLibro" required>
+                        <option>PDF</option>
+                        <option>Tapa dura</option>
+                        <option>Tapa blanda</option>
+                    </select>
+
+                    <label for="idiomaLibro">Idioma</label>
+                    <select id="idiomaLibro" required>
+                        <option>Inglés</option>
+                        <option>Español</option>
+                        <option>Francés</option>
+                    </select>
+
+                    <button type="submit">Agregar al carrito</button>
+                </form>
+                
+                <details>
+                    <summary>Título</summary>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                        Ad doloremque ut mollitia dolore delectus aut maxime 
+                        odit voluptatum excepturi, optio quod voluptates dolorem quae voluptate 
+                        hic doloribus accusamus quasi corporis.
+                    </p>
+                </details>
+
+           </div>
+        </section>
+
+
+
+        <!-- section del seguir las ultimas tendencias -->
+         <section>
+            <h3>Seguir las últimas tendencias</h3>
+            <form>
+                <input type="email" id="ultTendencias" name="ultTendencias" placeholder="nombre@tuemail.com">
+                <button type="submit" id="subTendencias">Suscribirme</button>
+            </form>
+         </section>
+
+    </main>
+
+    <footer>
+        <section class="content-block">
+            <!-- Redes Sociales -->
+            <h4>Redes Sociales</h4>
+            <ul>
+                <li><a href="https://www.x.com/pawprints">X</a></li>
+                <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
+                <li><a href="https://www.youtube.com/pawprints">YouTube</a></li>
+            </ul>
+        </section>
+        <section class="content-block">
+            <!-- Contacto -->
+            <h4>Información de Contacto</h4>
+            <p>Telefono: +54 11 1245 6789</p>
+            <p>Email: pawprints@gmail.com</p>
+        </section>
+        <section class="content-block">
+            <!-- Dirección -->
+            <h4>Dirección</h4>
+            <p>123 Calle Principal, Ciudad, País</p>
+            <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
+        </section>
+    </footer>
+</body>
+</html>
