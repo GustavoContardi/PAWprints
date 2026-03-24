@@ -7,62 +7,82 @@
 </head>
 <body>
     <header>
-        <nav>
-            <div>
+        <section>
+            <!-- Logo PAWprints -->
+            <div class="logo">
                 <a href="home.html">
                     <img src="" alt="Logo PAWprints">
                 </a>
             </div>
 
-            <div>
-                <a href="catalogo.html">Catálogo</a>
-                <a href="indispensables.html">Indispensables</a>
-                <a href="masVendidos.html">Más vendidos</a>
-                <a href="sobreNosotros.html">Sobre nosotros</a>
+            <!-- Menu Hamburguesa -->
+            <div class="menu-icon">
+                <input type="checkbox" id="menu-check" class="menu-checkbox">
+                
+                <label for="menu-check" class="menu-button">
+                    <span></span>
+                </label>
+                
+                <nav class="nav">
+                    <ul>
+                    <li><a href="#">Op1</a></li>
+                    <li><a href="#">Op2</a></li>
+                    <li><a href="#">Op3</a></li>
+                    </ul>
+                </nav>
             </div>
-
-            <div>
-                <a href="">
-                    <img src="" alt="Carrito">
-                </a>
-                <a href="">
-                    <img src="" alt="Perfil">
-                </a>
-                <button>
-                    <img src="" alt="Menú">
-                </button>
-            </div>
-        </nav>
-
+        </a>
+        </section>
     </header>
 
     <main>
         <div>
-            <h1>PAWprints</h1>
-            <h2>Pedidos, consultas y más</h2>   
+            <div>
+                <h1>PAWprints</h1>
+                <h2>Pedidos, consultas y más</h2>   
+            </div>
+
+            <div>
+                <form>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Valor" required>
+
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" placeholder="Valor" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Valor" required>
+                    
+                    <label for="mensaje">Mensaje</label>
+                    <textarea name="mensaje" id="mensaje" placeholder="Valor" required></textarea>
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
         </div>
-
-        <div>
-            <form>
-                <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" id="nombre" placeholder="Valor" required>
-
-                <label for="apellido">Apellido</label>
-                <input type="text" name="apellido" id="apellido" placeholder="Valor" required>
-
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Valor" required>
-                
-                <label for="mensaje">Mensaje</label>
-                <textarea name="mensaje" id="mensaje" placeholder="Valor" required></textarea>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-
     </main>
 
     <footer>
-        
+        <section class="content-block">
+            <!-- Redes Sociales -->
+            <h4>Redes Sociales</h4>
+            <ul>
+                <li><a href="https://www.x.com/pawprints">X</a></li>
+                <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
+                <li><a href="https://www.youtube.com/pawprints">YouTube</a></li>
+            </ul>
+        </section>
+        <section class="content-block">
+            <!-- Contacto -->
+            <h4>Información de Contacto</h4>
+            <p>Telefono: +54 11 1245 6789</p>
+            <p>Email: pawprints@gmail.com</p>
+        </section>
+        <section class="content-block">
+            <!-- Dirección -->
+            <h4>Dirección</h4>
+            <p>123 Calle Principal, Ciudad, País</p>
+            <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
+        </section>
     </footer>
 </body>
 </html>
