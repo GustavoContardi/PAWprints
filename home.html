@@ -64,10 +64,12 @@
             <h2>Libros</h2>
 
             <!-- Barra de Búsqueda -->
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Buscar...">
-                <img src="" alt="Ícono de Búsqueda" class="search-icon">
-            </div>
+            <form action="/buscar" method="GET"> 
+                <input type="search" class="search-input" placeholder="Buscar...">
+                <button type="submit">
+                    <img src="" alt="Ícono de Búsqueda" class="search-icon">    
+                </button>
+            </form>
         </section>
         <section class="content-block">
             <!-- Imágen Ilustrativa -->
