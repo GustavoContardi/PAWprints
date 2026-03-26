@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAWprints - Reservar libro</title>
+</head>
+<body>
+    <header>
+        <section>
+            <!-- Logo PAWprints -->
+            <div class="logo">
+                <a href="home.html">
+                    <img src="" alt="Logo PAWprints">
+                </a>
+            </div>
+
+            <!-- Menu Hamburguesa -->
+            <div class="menu-icon">
+                <input type="checkbox" id="menu-check" class="menu-checkbox">
+                
+                <label for="menu-check" class="menu-button">
+                    <span></span>
+                </label>
+                
+                <nav class="nav">
+                    <ul>
+                        <li>
+                            <a href="catalogo.html">Catálogo</a>
+                        </li>
+                        <li>
+                            <a href="indispensables.html">Indispensables</a>
+                        </li>
+                        <li>
+                            <a href="masVendidos.html">Más Vendidos</a>
+                        </li>
+                        <li>
+                            <a href="contacto.html">Contacto</a>
+                        </li>
+                        <li>
+                            <a href="">Carrito</a>
+                        </li>
+                        <li>
+                            <a href="">Perfil</a>
+                        </li>
+                        <li>
+                            <a href="">Iniciar Sesión</a>
+                        </li>
+                        <li>
+                            <a href="">Registrarse</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </a>
+        </section>
+    </header>
+
+    <main>
+        <div>
+            <div>
+                <h1>PAWprints</h1>
+                <h2>Datos de reserva</h2>   
+            </div>
+
+            <div>
+                <h3>Informacion de envío</h3>
+                <h4>Lo entregamos en 2 días hábiles</h4>
+                <form>
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="ej. Juan Perez" required>
+
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" name="telefono" id="telefono" placeholder="ej. +54 11 1234 5678" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="ej. tunombre@tumail.com" required>
+                    
+                    <label for="busqueda">Libro a reservar</label>
+                    <input type="search" list="libros" id="busqueda" placeholder="Buscar libro..." required>
+                    <datalist id="libros">
+                        <option value="El Principito">
+                        <option value="Cien años de soledad">
+                        <option value="1984">
+                        <option value="Don Quijote">
+                        <option value="Contardi">
+                        <option value="Zander">
+                        <option value="Romero">
+                    </datalist>
+                    
+                    <label for="copias">Cantidad de copias</label>
+                    <input type="range" id="copias" name="copias" min="0" max="100" value="0" step="1">
+
+                    <button type="submit">Guardar reserva</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <section class="content-block">
+            <!-- Redes Sociales -->
+            <h4>Redes Sociales</h4>
+            <ul>
+                <li><a href="https://www.x.com/pawprints">X</a></li>
+                <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
+                <li><a href="https://www.youtube.com/pawprints">YouTube</a></li>
+            </ul>
+        </section>
+        <section class="content-block">
+            <!-- Contacto -->
+            <h4>Información de Contacto</h4>
+            <p>Telefono: +54 11 1245 6789</p>
+            <p>Email: pawprints@gmail.com</p>
+        </section>
+        <section class="content-block">
+            <!-- Dirección -->
+            <h4>Dirección</h4>
+            <p>123 Calle Principal, Ciudad, País</p>
+            <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
+        </section>
+    </footer>
+</body>
+</html>
