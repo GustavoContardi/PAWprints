@@ -60,91 +60,90 @@
         <section class="filters">
             <!-- Aquí se pueden agregar filtros para el catálogo, como categorías, precios, etc. -->
 
-            <article class="filter-options">
+            <form class="filter-options">
                 <label for="price-range">Rango de Precio:</label>
                 <label>Precio: <span id="rangeValue">$0 - $50</span></label>
                 <div class="slider-container">
                     <input type="range" id="minPrice" min="0" max="50" value="0" step="1">
                     <input type="range" id="maxPrice" min="0" max="50" value="50" step="1">
                 </div>
-                </select>
-            </article>
+            </form>
 
-            <article class="filter-options">
+            <form class="filter-options">
                 <label for="genero">Edad:</label>
                 <div class="checkbox-group">
-                    <p>
+                    <li>
                         <input type="checkbox" id="cat-infantil" name="edad" value="infantil">
                         <label for="cat-infantil">Infantil</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-juvenil" name="edad" value="juvenil">
                         <label for="cat-juvenil">Juvenil</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-adulto" name="edad" value="adulto">
                         <label for="cat-adulto">Adulto</label>
-                    </p>
+                    </li>
                     <!-- Agregar más categorías según sea necesario -->
                 </div>
-            </article>
+            </form>
 
-            <article class="filter-options">
+            <form class="filter-options">
                 <label for="genero">Género:</label>
                 <div class="checkbox-group">
-                    <p>
+                    <li>
                         <input type="checkbox" id="cat-no-ficcion" name="categoria" value="No-ficcion">
                         <label for="cat-no-ficcion">No Ficción</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-fantasia" name="categoria" value="Fantasia">
                         <label for="cat-fantasia">Fantasía</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-romance" name="categoria" value="Romance">
                         <label for="cat-romance">Romance</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-misterio" name="categoria" value="Misterio">
                         <label for="cat-misterio">Misterio</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-ciencia-ficcion" name="categoria" value="Ciencia-ficcion">
                         <label for="cat-ciencia-ficcion">Ciencia Ficción</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-historia" name="categoria" value="Historia">
                         <label for="cat-historia">Historia</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-aventura" name="categoria" value="Aventura">
                         <label for="cat-aventura">Aventura</label>
-                    </p>
-                    <p>
+                    </li>
+                    <li>
                         <input type="checkbox" id="cat-otros" name="categoria" value="Otros">
                         <label for="cat-otros">Otros</label>
-                    </p>
+                    </li>
                     <!-- Agregar más categorías según sea necesario -->
                 </div>
-            </article>
+            </form>
 
         </section>
 
         <section class="book-list">
 
-            <article class="busqueda">
+            <form class="busqueda">
                 <label for="busqueda">Buscar:</label>
                 <input type="text" id="busqueda" name="busqueda" placeholder="Buscar por título, autor, etc.">
-            </article>
+            </form>
 
-            <article class="ordenar">
+            <form class="ordenar">
                 <label for="orden">Ordenar por:</label>
                 <select id="orden" name="orden">
                     <option value="nombre">Nombre</option>
                     <option value="precio">Precio</option>
                     <option value="popularidad">Popularidad</option>
                 </select>
-            </article>
+            </form>
 
             <!-- Aquí se mostrarán los libros del catálogo -->
             <article class="book-item">
