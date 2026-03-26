@@ -57,44 +57,42 @@
     </header>
 
     <main>
-        <div>
-            <div>
-                <h1>PAWprints</h1>
-                <h2>Datos de reserva</h2>   
-            </div>
+        <section>
+            <h1>PAWprints</h1>
+            <h2>Datos de reserva</h2>  
+        </section>
 
-            <div>
-                <h3>Informacion de envío</h3>
-                <h4>Lo entregamos en 2 días hábiles</h4>
-                <form>
-                    <label for="nombre">Nombre completo</label>
-                    <input type="text" name="nombre" id="nombre" placeholder="ej. Juan Perez" required>
+        <section>
+            <h3>Informacion de envío</h3>
+            <h4>Lo entregamos en 2 días hábiles</h4>
+            <form>
+                <label for="nombre">Nombre completo</label>
+                <input type="text" name="nombre" id="nombre" placeholder="ej. Juan Perez" required>
 
-                    <label for="tel">Teléfono</label>
-                    <input type="text" name="telefono" id="tel" placeholder="ej. +54 11 1234 5678" required>
+                <label for="tel">Teléfono</label>
+                <input type="text" name="telefono" id="tel" placeholder="ej. +54 11 1234 5678" required>
 
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="ej. tunombre@tumail.com" required>
-                    
-                    <label for="busqueda">Libro a reservar</label>
-                    <input type="search" list="libros" id="busqueda" placeholder="Buscar libro..." required>
-                    <datalist id="libros">
-                        <option value="El Principito">
-                        <option value="Cien años de soledad">
-                        <option value="1984">
-                        <option value="Don Quijote">
-                        <option value="Contardi">
-                        <option value="Zander">
-                        <option value="Romero">
-                    </datalist>
-                    
-                    <label for="copias">Cantidad de copias</label>
-                    <input type="range" id="copias" name="copias" min="0" max="100" value="0" step="1">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="ej. tunombre@tumail.com" required>
+                
+                <label for="busqueda">Libro a reservar</label>
+                <input type="search" list="libros" id="busqueda" placeholder="Buscar libro..." required>
+                <datalist id="libros">
+                    <option value="El Principito">
+                    <option value="Cien años de soledad">
+                    <option value="1984">
+                    <option value="Don Quijote">
+                    <option value="Contardi">
+                    <option value="Zander">
+                    <option value="Romero">
+                </datalist>
+                
+                <label for="copias">Cantidad de copias</label>
+                <input type="range" id="copias" name="copias" min="0" max="100" value="0" step="1">
 
-                    <button type="submit">Guardar reserva</button>
-                </form>
-            </div>
-        </div>
+                <button type="submit">Guardar reserva</button>
+            </form>
+        </section>
     </main>
 
     <footer>
