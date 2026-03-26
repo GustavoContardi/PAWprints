@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <base href="http://pawprints.com/"> -->
     <title>PAWprints - Catálogo</title>
-</html>
+</head>
 <body>
     <header>
         <section>
@@ -44,7 +45,7 @@
         <section class="filters">
             <!-- Aquí se pueden agregar filtros para el catálogo, como categorías, precios, etc. -->
 
-            <form class="filter-options" method="get" action="/filtrar">
+            <form class="filter-options" method="get" action="/catalogo/filtrar">
                 <label for="price-range">Rango de Precio:</label>
                 <label>Precio: <span id="rangeValue">$0 - $50</span></label>
                 <div class="slider-container">
@@ -118,12 +119,12 @@
 
         <section class="book-list">
 
-            <form class="busqueda" method="get" action="/buscar">
+            <form class="busqueda" method="get" action="/catalogo/buscar">
                 <label for="busqueda">Buscar:</label>
                 <input type="text" id="busqueda" name="busqueda" placeholder="Buscar por título, autor, etc.">
             </form>
 
-            <form class="ordenar" method="get" action="/ordenar">
+            <form class="ordenar" method="get" action="/catalogo/ordenar">
                 <label for="orden">Ordenar por:</label>
                 <select id="orden" name="orden">
                     <option value="nombre">Nombre</option>
