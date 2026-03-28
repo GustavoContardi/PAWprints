@@ -29,59 +29,79 @@
 
     <main>
         <section>
-            <!-- Aquí se pueden agregar filtros para el catálogo, como categorías, precios, etc. -->
+            <h1>Catálogo</h1>
 
-            <fieldset method="get" action="/catalogo/filtrar">
-                <label for="price-range">Rango de Precio:</label>
-                <label>Precio: <span id="rangeValue">$0 - $50</span></label>
-                <input type="range" min="0" max="50" value="0" step="1">
-                
-                <label>Edad:</label>
-                
-                <input type="checkbox" name="edad" value="infantil">
-                <label>Infantil</label>
-                        
-                <input type="checkbox" name="edad" value="juvenil">
-                <label for="cat-juvenil">Juvenil</label>
-                
-                <input type="checkbox" name="edad" value="adulto">
-                <label for="cat-adulto">Adulto</label>
-                
-                <!-- Agregar más categorías según sea necesario -->
-                
-                <label for="genero">Género:</label>
-                
-                <input type="checkbox" name="categoria" value="No-ficcion">
-                <label for="cat-no-ficcion">No Ficción</label>
-                
-                <input type="checkbox" name="categoria" value="Fantasia">
-                <label for="cat-fantasia">Fantasía</label>
-                
-                <input type="checkbox" id="cat-romance" name="categoria" value="Romance">
-                <label for="cat-romance">Romance</label>
-                
-                <input type="checkbox" name="categoria" value="Misterio">
-                <label for="cat-misterio">Misterio</label>
-                
-                <input type="checkbox" name="categoria" value="Ciencia-ficcion">
-                <label for="cat-ciencia-ficcion">Ciencia Ficción</label>
-                
-                <input type="checkbox" name="categoria" value="Historia">
-                <label for="cat-historia">Historia</label>
+            <form method="get" action="/catalogo/filtrar">
 
-                <input type="checkbox" name="categoria" value="Aventura">
-                <label for="cat-aventura">Aventura</label>
-                        
-                <input type="checkbox" name="categoria" value="Otros">
-                <label for="cat-otros">Otros</label>
-        
-                <!-- Agregar más categorías según sea necesario -->
-        
+                <!-- Precio -->
+                <fieldset>
+                    <legend>Rango de Precio</legend>
+
+                    <label for="price-range">
+                        Precio: <span id="rangeValue">$0 - $50</span>
+                    </label>
+
+                    <input 
+                        type="range" 
+                        id="price-range"
+                        name="precio"
+                        min="0" 
+                        max="50" 
+                        value="0" 
+                        step="1">
+                </fieldset>
+
+                <!-- Edad -->
+                <fieldset>
+                    <legend>Edad</legend>
+
+                    <input type="checkbox" id="edad-infantil" name="edad" value="infantil">
+                    <label for="edad-infantil">Infantil</label>
+
+                    <input type="checkbox" id="edad-juvenil" name="edad" value="juvenil">
+                    <label for="edad-juvenil">Juvenil</label>
+
+                    <input type="checkbox" id="edad-adulto" name="edad" value="adulto">
+                    <label for="edad-adulto">Adulto</label>
+                </fieldset>
+
+                <!-- Género -->
+                <fieldset>
+                    <legend>Género</legend>
+
+                    <input type="checkbox" id="cat-no-ficcion" name="categoria" value="No-ficcion">
+                    <label for="cat-no-ficcion">No Ficción</label>
+
+                    <input type="checkbox" id="cat-fantasia" name="categoria" value="Fantasia">
+                    <label for="cat-fantasia">Fantasía</label>
+
+                    <input type="checkbox" id="cat-romance" name="categoria" value="Romance">
+                    <label for="cat-romance">Romance</label>
+
+                    <input type="checkbox" id="cat-misterio" name="categoria" value="Misterio">
+                    <label for="cat-misterio">Misterio</label>
+
+                    <input type="checkbox" id="cat-ciencia-ficcion" name="categoria" value="Ciencia-ficcion">
+                    <label for="cat-ciencia-ficcion">Ciencia Ficción</label>
+
+                    <input type="checkbox" id="cat-historia" name="categoria" value="Historia">
+                    <label for="cat-historia">Historia</label>
+
+                    <input type="checkbox" id="cat-aventura" name="categoria" value="Aventura">
+                    <label for="cat-aventura">Aventura</label>
+
+                    <input type="checkbox" id="cat-otros" name="categoria" value="Otros">
+                    <label for="cat-otros">Otros</label>
+                </fieldset>
+
                 <button type="submit">Filtrar</button>
-            </fieldset>
+
+            </form>
         </section>
 
-        <section class="book-list">
+        <section>
+
+            <h2>Resultados de la búsqueda</h2>
 
             <form method="get" action="/catalogo/buscar">
                 <label for="busqueda">Buscar:</label>
@@ -98,7 +118,7 @@
             </form>
 
             <!-- Aquí se mostrarán los libros del catálogo -->
-            <article class="book-item">
+            <article>
                 <img src="" alt="Portada del libro">
                 <h3>Título del Libro</h3>
                 <p>Autor: Nombre del Autor</p>
@@ -106,7 +126,7 @@
                 <button>Añadir al Carrito</button>
             </article>
 
-            <article class="book-item">
+            <article>
                 <img src="" alt="Portada del libro">
                 <h3>Título del Libro</h3>
                 <p>Autor: Nombre del Autor</p>
@@ -118,21 +138,26 @@
     </main>
 
     <footer>
+        <h3>Redes Sociales</h3>
         <address>
             <!-- Redes Sociales -->
-            <h4>Redes Sociales</h4>
             <ul>
                 <li><a href="https://www.x.com/pawprints">X</a></li>
                 <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
                 <li><a href="https://www.youtube.com/pawprints">YouTube</a></li>
             </ul>
-            <!-- Contacto -->
-            <h4>Información de Contacto</h4>
+        </address>
+
+        <h3>Información de Contacto</h3>
+        <address>
+        <!-- Contacto -->
             <p>Telefono: +54 11 1245 6789</p>
             <p>Email: pawprints@gmail.com</p>
+        </address>
 
+        <h3>Dirección</h3>
+        <address>
             <!-- Dirección -->
-            <h4>Dirección</h4>
             <p>123 Calle Principal, Ciudad, País</p>
             <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
         </address>
