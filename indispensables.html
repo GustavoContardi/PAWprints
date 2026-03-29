@@ -9,11 +9,8 @@
 <body>
     <header>
         <!-- Logo PAWprints -->
-        <a href="home.html">
-            <img src="" alt="Logo PAWprints">
-        </a>
-
-        <!-- Menu Hamburguesa -->
+        <a href="index.html"><img src="" alt="Logo PAWprints"></a>
+        
         <nav>
             <ul>
                 <li><a href="catalogo.html">Catálogo</a></li>
@@ -26,226 +23,216 @@
                 <li><a href="">Registrarse</a></li>
             </ul>
         </nav>
+
     </header>
+
     <main>
-        <section class="hero">
-            <!-- Subtítulo -->
-            <h2>Nuestros</h2>
+        <h1>Nuestros Indispensables</h1>
 
-            <!-- Título -->
-            <h1>Indispensables</h1>
+        <!-- Barra de Búsqueda -->
+        <form action="buscar" method="GET">
+            <label for="busqueda">Buscar...</label>
+            <input type="search" id="busqueda" class="search-input" placeholder="Buscar...">
+            <button type="submit">
+                <img src="" alt="Ícono de Búsqueda" class="search-icon">    
+            </button>
+        </form>
+    
+        <section>
+            <!-- Novedades -->
+            <a href="catalogo.html"><h2 class="option-title">Novedades</h2></a>
 
-            <!-- Barra de Búsqueda -->
-             <!-- ARREGLAR -->
-            <form action="/buscar" method="GET">
-                <label for="busqueda">Buscar...</label>
-                <input type="search" id="busqueda" class="search-input" placeholder="Buscar...">
-                <button type="submit">
-                    <img src="" alt="Ícono de Búsqueda" class="search-icon">    
+            <!-- Carrusel de Novedades -->
+            <section class="carousel-container">
+                <!-- Botón Anterior -->
+                <button class="carousel-control-prev" name="Anterior">
+                    <img src="" alt="Flecha Anterior">
                 </button>
-            </form>
+
+                <!-- Publicaciones -->
+                <div class="carousel-track-container">
+                    <ul class="carousel-track">
+                        
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 1">
+                                <h3>Libro 1</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
+
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 2">
+                                <h3>Libro 2</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
+
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 3">
+                                <h3>Libro 3</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Botón Siguiente -->
+                <button class="carousel-control-next" name="Siguiente">
+                    <img src="" alt="Flecha Siguiente">
+                </button>
+            </section>
         </section>
-        <!-- ARREGLAR -->
-        <section class="content-block">
-            <!-- Opciones -->
-            <section class="option-block">
-                <!-- Novedades -->
-                <a href="catalogo.html">
-                    <h3 class="option-title">Novedades</h3>
-                </a>
 
-                <!-- Carrusel de Novedades -->
-                <section class="carousel-container">
-                    <!-- Botón Anterior -->
-                    <button class="carousel-control-prev" name="Anterior">
-                        <img src="" alt="Flecha Anterior">
-                    </button>
+        <section>
+            <!-- Descuentos -->
+            <a href="catalogo.html"><h2 class="option-title">Descuentos</h2></a>
 
-                    <!-- Publicaciones -->
-                    <div class="carousel-track-container">
-                        <ul class="carousel-track">
-                            
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 1">
-                                    <h3>Libro 1</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
+            <!-- Carrusel de Descuentos -->
+            <section class="carousel-container">
+                <!-- Botón Anterior -->
+                <button class="carousel-control-prev" name="Anterior">
+                    <img src="" alt="Flecha Anterior">
+                </button>
 
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 2">
-                                    <h3>Libro 2</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
+                <!-- Publicaciones -->
+                <div class="carousel-track-container">
+                    <ul class="carousel-track">
+                        
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 1">
+                                <h3>Libro 1</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
 
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 3">
-                                    <h3>Libro 3</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 2">
+                                <h3>Libro 2</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
 
-                        </ul>
-                    </div>
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 3">
+                                <h3>Libro 3</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
 
-                    <!-- Botón Siguiente -->
-                    <button class="carousel-control-next" name="Siguiente">
-                        <img src="" alt="Flecha Siguiente">
-                    </button>
-                </section>
+                    </ul>
+                </div>
+
+                <!-- Botón Siguiente -->
+                <button class="carousel-control-next" name="Siguiente">
+                    <img src="" alt="Flecha Siguiente">
+                </button>
             </section>
+        </section>
 
-            <section class="option-block">
-                <!-- Descuentos -->
-                <a href="catalogo.html">
-                    <h3 class="option-title">Descuentos</h3>
-                </a>
+        <section>
+            <!-- Recomendados -->
+            <a href="catalogo.html"><h2 class="option-title">Recomendados</h2></a>
 
-                <!-- Carrusel de Descuentos -->
-                <section class="carousel-container">
-                    <!-- Botón Anterior -->
-                    <button class="carousel-control-prev" name="Anterior">
-                        <img src="" alt="Flecha Anterior">
-                    </button>
+            <!-- Carrusel de Recomendados -->
+            <section class="carousel-container">
+                <!-- Botón Anterior -->
+                <button class="carousel-control-prev" name="Anterior">
+                    <img src="" alt="Flecha Anterior">
+                </button>
 
-                    <!-- Publicaciones -->
-                    <div class="carousel-track-container">
-                        <ul class="carousel-track">
-                            
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 1">
-                                    <h3>Libro 1</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
+                <!-- Publicaciones -->
+                <div class="carousel-track-container">
+                    <ul class="carousel-track">
+                        
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 1">
+                                <h3>Libro 1</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
 
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 2">
-                                    <h3>Libro 2</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 2">
+                                <h3>Libro 2</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
 
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 3">
-                                    <h3>Libro 3</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
+                        <li class="carousel-slide">
+                            <article class="book-card">
+                                <img src="" alt="Portada de Libro 3">
+                                <h3>Libro 3</h3>
+                                <h4>$ 0</h4>
+                                <button>
+                                    <img src="" alt="Carrito">
+                                </button>
+                            </article>
+                        </li>
 
-                        </ul>
-                    </div>
+                    </ul>
+                </div>
 
-                    <!-- Botón Siguiente -->
-                    <button class="carousel-control-next" name="Siguiente">
-                        <img src="" alt="Flecha Siguiente">
-                    </button>
-                </section>
-            </section>
-
-            <section class="option-block">
-                <!-- Recomendados -->
-                <a href="catalogo.html">
-                    <h3 class="option-title">Recomendados</h3>
-                </a>
-
-                <!-- Carrusel de Recomendados -->
-                <section class="carousel-container">
-                    <!-- Botón Anterior -->
-                    <button class="carousel-control-prev" name="Anterior">
-                        <img src="" alt="Flecha Anterior">
-                    </button>
-
-                    <!-- Publicaciones -->
-                    <div class="carousel-track-container">
-                        <ul class="carousel-track">
-                            
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 1">
-                                    <h3>Libro 1</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
-
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 2">
-                                    <h3>Libro 2</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
-
-                            <li class="carousel-slide">
-                                <article class="book-card">
-                                    <img src="" alt="Portada de Libro 3">
-                                    <h3>Libro 3</h3>
-                                    <h4>$ 0</h4>
-                                    <button>
-                                        <img src="" alt="Carrito">
-                                    </button>
-                                </article>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <!-- Botón Siguiente -->
-                    <button class="carousel-control-next" name="Siguiente">
-                        <img src="" alt="Flecha Siguiente">
-                    </button>
-                </section>
+                <!-- Botón Siguiente -->
+                <button class="carousel-control-next" name="Siguiente">
+                    <img src="" alt="Flecha Siguiente">
+                </button>
             </section>
         </section>
     </main>
+
     <footer>
+        <h3>Redes Sociales</h3>
         <address>
             <!-- Redes Sociales -->
-            <h4>Redes Sociales</h4>
             <ul>
                 <li><a href="https://www.x.com/pawprints">X</a></li>
                 <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
                 <li><a href="https://www.youtube.com/pawprints">YouTube</a></li>
             </ul>
+        </address>
 
-            <!-- Contacto -->
-            <h4>Información de Contacto</h4>
+        <h3>Información de Contacto</h3>
+        <address>
+        <!-- Contacto -->
             <p>Telefono: +54 11 1245 6789</p>
             <p>Email: pawprints@gmail.com</p>
+        </address>
 
+        <h3>Dirección</h3>
+        <address>
             <!-- Dirección -->
-            <h4>Dirección</h4>
             <p>123 Calle Principal, Ciudad, País</p>
             <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
         </address>
