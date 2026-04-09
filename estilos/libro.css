@@ -1,0 +1,520 @@
+/* ============================================================
+   PAWprints — libro.css
+   Manual de Identidad: Violeta #5c068c | Blanco #ffffff
+   Tipografía: Montserrat (equivalente a Argentum Sans)
+   Wireframe base: DESKTOP_Libro__Detalle_.png
+   SIN breakpoints mobile (archivo separado)
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ---------- Reset & Box Model ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Variables ---------- */
+:root {
+  --purple:       #5c068c;
+  --purple-dark:  #44036a;
+  --white:        #ffffff;
+  --bg:           #efefef;
+  --text:         #2a2a2a;
+  --text-muted:   #888888;
+  --border:       #d8d8d8;
+  --radius:       6px;
+  --font:         'Montserrat', sans-serif;
+  --header-h:     64px;
+}
+
+/* ---------- Base ---------- */
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+a  { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ============================================================
+   HEADER — fondo violeta corporativo
+   ============================================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--purple);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+header a:first-child img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--white);
+  flex-shrink: 0;
+  display: block;
+}
+
+header nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+header nav ul {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+header nav ul li a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--white);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+header nav ul li a:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Últimos 3 li: íconos Carrito, Perfil, Hamburguesa */
+header nav ul li:nth-last-child(-n+3) a {
+  font-size: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0;
+}
+
+header nav ul li:nth-last-child(3) a::before {
+  content: '';
+  display: block;
+  width: 20px; height: 18px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+header nav ul li:nth-last-child(2) a::before {
+  content: '';
+  display: block;
+  width: 20px; height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+header nav ul li:nth-last-child(1) a::before {
+  content: '';
+  display: block;
+  width: 20px; height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cline x1='3' y1='6' x2='21' y2='6'/%3E%3Cline x1='3' y1='12' x2='21' y2='12'/%3E%3Cline x1='3' y1='18' x2='21' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+main { flex: 1; }
+
+/* ============================================================
+   SECCIÓN 1 — Detalle del libro
+   HTML (hijos directos de section):
+     img | h2 | p(género) | p(precio) | p(autor) | form | details
+   Grid 2 columnas: img en col 1 abarcando todas las filas,
+   el resto en col 2 fila a fila.
+   ============================================================ */
+main > section:first-of-type {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  grid-template-rows: auto auto auto auto auto auto;
+  column-gap: 3rem;
+  padding: 3rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Portada — col 1, abarca las 6 filas */
+main > section:first-of-type > img:first-child {
+  grid-column: 1;
+  grid-row: 1 / 7;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--bg);
+  align-self: start;
+}
+
+/* Título */
+main > section:first-of-type > h2 {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding-bottom: 0.6rem;
+  align-self: end;
+}
+
+/* Badge género */
+main > section:first-of-type > p:nth-of-type(1) {
+  grid-column: 2;
+  grid-row: 2;
+  display: inline-block;
+  width: fit-content;
+  background: #d4edda;
+  color: #2d6a4f;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  align-self: start;
+}
+
+/* Precio */
+main > section:first-of-type > p:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 3;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  padding-bottom: 0.4rem;
+  align-self: start;
+}
+
+main > section:first-of-type > p:nth-of-type(2)::before {
+  content: '$';
+  font-size: 1.25rem;
+  font-weight: 600;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* Autor */
+main > section:first-of-type > p:nth-of-type(3) {
+  grid-column: 2;
+  grid-row: 4;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding-bottom: 1.25rem;
+  align-self: start;
+}
+
+/* Formulario */
+main > section:first-of-type > form {
+  grid-column: 2;
+  grid-row: 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 1rem;
+  align-items: start;
+}
+
+main > section:first-of-type > form label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+main > section:first-of-type > form label[for="formatoLibro"] {
+  grid-column: 1; grid-row: 1;
+}
+main > section:first-of-type > form label[for="idiomaLibro"] {
+  grid-column: 2; grid-row: 1;
+}
+
+main > section:first-of-type > form select {
+  width: 100%;
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  color: var(--text);
+  background: var(--white)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+    no-repeat right 0.6rem center / 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+main > section:first-of-type > form select:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(92,6,140,0.1);
+}
+
+main > section:first-of-type > form select#formatoLibro {
+  grid-column: 1; grid-row: 2;
+}
+main > section:first-of-type > form select#idiomaLibro {
+  grid-column: 2; grid-row: 2;
+}
+
+/* Botón Reservar */
+main > section:first-of-type > form a {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0.8rem 1rem;
+  background: var(--purple);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: var(--radius);
+  transition: background 0.2s, transform 0.1s;
+}
+
+main > section:first-of-type > form a:hover  { background: var(--purple-dark); }
+main > section:first-of-type > form a:active { transform: scale(0.98); }
+
+/* Accordion */
+main > section:first-of-type > details {
+  grid-column: 2;
+  grid-row: 6;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+summary {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  user-select: none;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+summary::after {
+  content: '';
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+details[open] summary::after {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpolyline points='18 15 12 9 6 15'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+details > p {
+  padding: 0 1rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   SECCIÓN 2 — Información del autor
+   HTML: section > h2 + p(nombre) + p(bio) + img
+   Grid: texto col 1, foto col 2 abarcando todas las filas
+   ============================================================ */
+main > section:last-of-type {
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 1fr 38%;
+  grid-template-rows: auto auto auto;
+  column-gap: 3rem;
+  padding: 3.5rem 4rem;
+}
+
+main > section:last-of-type > h2 {
+  grid-column: 1; grid-row: 1;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 0.25rem;
+}
+
+main > section:last-of-type > p:nth-of-type(1) {
+  grid-column: 1; grid-row: 2;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+main > section:last-of-type > p:nth-of-type(2) {
+  grid-column: 1; grid-row: 3;
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.75;
+}
+
+main > section:last-of-type > img {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--border);
+  align-self: start;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  padding: 2.5rem 3rem;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+/* Ocultar "Redes Sociales" — solo íconos visibles */
+footer > h3:nth-of-type(1) { display: none; }
+
+footer h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 0.75rem;
+}
+
+footer address { font-style: normal; }
+
+footer p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+footer > address:nth-of-type(1) ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+footer > address:nth-of-type(1) ul li a {
+  display: flex;
+  align-items: center;
+  width: 28px; height: 28px;
+  font-size: 0;
+  color: transparent;
+}
+
+footer > address:nth-of-type(1) ul li:nth-child(1) a::before {
+  content: '';
+  width: 22px; height: 22px;
+  display: block;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232a2a2a'%3E%3Cpath d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.727-8.836L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+footer > address:nth-of-type(1) ul li:nth-child(2) a::before {
+  content: '';
+  width: 22px; height: 22px;
+  display: block;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Crect x='2' y='2' width='20' height='20' rx='5'/%3E%3Cpath d='M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z'/%3E%3Cline x1='17.5' y1='6.5' x2='17.51' y2='6.5'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+footer > address:nth-of-type(1) ul li:nth-child(3) a::before {
+  content: '';
+  width: 22px; height: 22px;
+  display: block;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpath d='M22.54 6.42a2.78 2.78 0 0 0-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 1.96C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z'/%3E%3Cpolygon points='9.75 15.02 15.5 12 9.75 8.98 9.75 15.02'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+footer > address:nth-of-type(1) ul li a:hover::before {
+  filter: invert(13%) sepia(97%) saturate(5000%) hue-rotate(280deg) brightness(60%);
+}
+
+/* ============================================================
+   TABLET (max 900px) — sin mobile
+   ============================================================ */
+@media (max-width: 900px) {
+  main > section:first-of-type {
+    padding: 2.5rem;
+    column-gap: 2rem;
+  }
+
+  main > section:last-of-type {
+    padding: 2.5rem;
+    column-gap: 2rem;
+  }
+
+  footer {
+    padding: 2rem;
+    gap: 2.5rem;
+  }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  header {
+    position: static;
+    background: white !important;
+    border-bottom: 1px solid #ccc;
+  }
+
+  header nav ul li a { color: black !important; }
+  header nav ul li:nth-last-child(-n+3) { display: none; }
+
+  main > section:first-of-type,
+  main > section:last-of-type { padding: 1.5rem; }
+
+  main > section:first-of-type > form a { display: none; }
+
+  details { border: 1px solid #ccc; }
+
+  footer { border-top: 1px solid #ccc; gap: 2rem; }
+
+  footer > address:nth-of-type(1) ul li a {
+    font-size: 0.875rem !important;
+    color: black !important;
+    width: auto; height: auto;
+  }
+
+  footer > address:nth-of-type(1) ul li a::before { display: none; }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75rem;
+    color: #555;
+  }
+
+  header nav ul li a::after { content: none; }
+}
