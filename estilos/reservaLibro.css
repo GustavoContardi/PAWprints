@@ -105,15 +105,14 @@ main > form button[type="submit"] {
    ============================================================ */
 @media (min-width: 900px) {
 
-  /* Hero: fondo oscuro, texto blanco — igual que contacto.css */
   main > h1,
   main > h2 {
-    background: var(--color-text);
-    color: var(--color-white);
+    background: var(--color-white);
+    color: var(--color-text);
     padding-left: 2rem;
     padding-right: 2rem;
     margin: 0;
-  }
+  }  
 
   main > h1 {
     padding-top: 2rem;
@@ -122,8 +121,9 @@ main > form button[type="submit"] {
   }
 
   main > h2 {
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--color-text-muted);
     padding-bottom: 2rem;
+    border-bottom: 6px solid var(--color-brand);
   }
 
   /* Formulario: un poco más ancho en desktop */
