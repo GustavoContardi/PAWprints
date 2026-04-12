@@ -1,0 +1,230 @@
+/* ============================================================
+   PAWprints — components.css
+   Capa 3: Componentes reutilizables entre páginas.
+   Importar en TODAS las páginas DESPUÉS de layout.css.
+   ============================================================ */
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+
+/* Botón primario — usado en formularios y CTAs */
+.btn,
+button[type="submit"],
+button[type="button"] {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  background: var(--color-brand);
+  color: var(--color-white);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.01em;
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;
+}
+
+.btn:hover,
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background: var(--color-brand-dark);
+}
+
+.btn:active,
+button[type="submit"]:active,
+button[type="button"]:active {
+  transform: scale(0.98);
+}
+
+/* Variante: botón como enlace <a> (ej: Reservar en libro) */
+.btn-link {
+  display: block;
+  padding: 0.8rem 1rem;
+  background: var(--color-brand);
+  color: var(--color-white);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: var(--radius);
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;
+}
+
+.btn-link:hover  { background: var(--color-brand-dark); }
+.btn-link:active { transform: scale(0.98); }
+
+/*
+  Botones de sesión en el nav (Iniciar sesión / Registrarse).
+  Clase .nav-btn aplicada al <a> dentro del <li>.
+  Solo visibles en desktop — layout.css oculta esos li en mobile.
+*/
+.nav-btn {
+  padding: 0.3rem 0.85rem !important;
+  border-radius: var(--radius) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
+  transition: background 0.2s, border-color 0.2s !important;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: var(--color-white) !important;
+}
+
+/* ============================================================
+   FORMULARIOS
+   Estructura esperada en HTML:
+     <fieldset>
+       <legend>...</legend>
+       <label for="x">...</label>
+       <input id="x" ...>
+       ...
+       <button type="submit">...</button>
+     </fieldset>
+   ============================================================ */
+fieldset {
+  border: none;
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+legend {
+  /* Accesible pero invisible visualmente */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+label:first-of-type {
+  margin-top: 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  display: block;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="search"]::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* Select personalizado */
+select {
+  width: 100%;
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  background: var(--color-white)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+    no-repeat right 0.6rem center / 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
+}
+
+/* ============================================================
+   CARD DE LIBRO
+   Estructura HTML esperada:
+     <article>
+       <img ...>
+       <h3>Título</h3>
+       <p>Precio</p>
+       <a class="btn-link" ...>Reservar</a>
+     </article>
+   ============================================================ */
+article.card-libro {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+article.card-libro img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: var(--color-bg);
+}
+
+article.card-libro h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.75rem 0.75rem 0.25rem;
+}
+
+article.card-libro p {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  padding: 0 0.75rem 0.75rem;
+  flex: 1;
+}
+
+article.card-libro .btn-link {
+  margin: 0 0.75rem 0.75rem;
+  width: calc(100% - 1.5rem);
+}
