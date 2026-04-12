@@ -132,11 +132,24 @@ main > img {
 
 .index-opciones a img {
   position: absolute;
-  width: 100%;
+  /*width: 100%;*/
+  width: auto;
+  min-width: 280%;
   height: 100%;
   object-fit: cover;
   top: 0;
   left: 0;
+
+  animation: scroll-img 90s linear infinite;
+}
+
+@keyframes scroll-img {
+  from {
+    transform: translateX(100);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .overlay {
