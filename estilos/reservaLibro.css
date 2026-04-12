@@ -1,0 +1,134 @@
+/* ============================================================
+   PAWprints — reservaLibro.css
+   Capa 4: Específico de reservaLibro.html ÚNICAMENTE.
+   Depende de: base.css → layout.css → components.css
+
+   Wireframe mobile:  hero apilado, formulario centrado en columna
+   Wireframe desktop: hero fondo oscuro, formulario centrado y más ancho
+   ============================================================ */
+
+/* ============================================================
+   HERO — título y subtítulo de la página
+   ============================================================ */
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+main > h1,
+main > h2 {
+  text-align: center;
+}
+
+main > h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  padding: 2rem 1.25rem 0.25rem;
+}
+
+main > h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  padding: 0 1.25rem 2rem;
+}
+
+/* ============================================================
+   FORMULARIO — contenedor
+   ============================================================ */
+main > form {
+  width: 100%;
+  max-width: 400px;
+  margin-inline: auto;
+  padding: 0 1.25rem 3rem;
+}
+
+/* ============================================================
+   FIELDSET — sobreescribir legend para hacerla visible
+   (components.css la oculta con clip; acá la necesitamos visible)
+   ============================================================ */
+main > form fieldset legend {
+  position: static;
+  width: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  padding: 3.0rem 0 0.75rem;
+}
+
+/* ============================================================
+   CANTIDAD DE COPIAS — etiqueta + valor en la misma fila
+   ============================================================ */
+.reserva-copias-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.reserva-copias-label output {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   INPUT RANGE — slider de cantidad de copias
+   ============================================================ */
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-brand);
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================================
+   BOTÓN SUBMIT
+   ============================================================ */
+main > form button[type="submit"] {
+  margin-top: 1.25rem;
+}
+
+/* ============================================================
+   DESKTOP (≥ 900px)
+   ============================================================ */
+@media (min-width: 900px) {
+
+  /* Hero: fondo oscuro, texto blanco — igual que contacto.css */
+  main > h1,
+  main > h2 {
+    background: var(--color-text);
+    color: var(--color-white);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0;
+  }
+
+  main > h1 {
+    padding-top: 2rem;
+    padding-bottom: 0.25rem;
+    font-size: 3.5rem;
+  }
+
+  main > h2 {
+    color: rgba(255, 255, 255, 0.65);
+    padding-bottom: 2rem;
+  }
+
+  /* Formulario: un poco más ancho en desktop */
+  main > form {
+    max-width: 480px;
+    padding: 2.5rem 0 4rem;
+  }
+}

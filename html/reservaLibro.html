@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <base href="http://pawprints.com/"> -->
     <title>PAWprints - Reservar libro</title>
+    <link rel="stylesheet" href="../estilos/base.css">
+    <link rel="stylesheet" href="../estilos/layout.css">
+    <link rel="stylesheet" href="../estilos/components.css">
+    <link rel="stylesheet" href="../estilos/reservaLibro.css">
 </head>
 
 <body>
@@ -17,14 +21,13 @@
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="indispensables.html">Indispensables</a></li>
                 <li><a href="masVendidos.html">Más Vendidos</a></li>
+                <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="">Carrito</a></li>
-                <li><a href="">Perfil</a></li>
-                <li><a href="">Iniciar Sesión</a></li>
-                <li><a href="">Registrarse</a></li>
+                <li><a href="" class="nav-btn">Iniciar sesión</a></li>
+                <li><a href="" class="nav-btn">Registrarse</a></li>
+                <li><a href="" aria-label="Menú">Menú</a></li>
             </ul>
         </nav>
-
     </header>
 
     <main>
@@ -33,19 +36,19 @@
 
         <form method="post" action="/procesar-reserva">
             <fieldset>
-                <legend>Información del pedido</legend>
+                <legend>Información de pedido</legend>
 
-                <label for="nombre">Nombre completo</label>
-                <input type="text" name="nombre" id="nombre" placeholder="ej. Juan Perez" required>
+                <label for="nombre">Nombre entero</label>
+                <input type="text" name="nombre" id="nombre" placeholder="eg. Juan Perez" required>
 
-                <label for="tel">Teléfono</label>
-                <input type="text" name="telefono" id="tel" placeholder="ej. +54 11 1234 5678" required>
+                <label for="tel">Telefono</label>
+                <input type="text" name="telefono" id="tel" placeholder="eg. +54 11 1234 5678" required>
 
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="ej. tunombre@tumail.com" required>
+                <label for="email">Correo electrónico</label>
+                <input type="email" name="email" id="email" placeholder="eg. juanperez@yahoo.com" required>
                 
                 <label for="busqueda">Libro a reservar</label>
-                <input type="search" list="libros" id="busqueda" placeholder="Buscar libro..." required>
+                <input type="search" list="libros" id="busqueda" name="libro" placeholder="Titulo del libro" required>
                 <datalist id="libros">
                     <option value="El Principito">
                     <option value="Cien años de soledad">
@@ -55,20 +58,23 @@
                     <option value="Zander">
                     <option value="Romero">
                 </datalist>
-                
-                <label for="copias">Cantidad de copias</label>
-                <input type="range" id="copias" name="copias" min="0" max="100" value="0" step="1">
+
+                <!-- Label con output para mostrar el valor del slider -->
+                <span class="reserva-copias-label">
+                    <label for="copias">Cantidad de copias</label>
+                    <output for="copias" id="copias-valor">0-100</output>
+                </span>
+                <input type="range" id="copias" name="copias" min="0" max="100" value="0" step="1"
+                       oninput="document.getElementById('copias-valor').value = this.value">
 
                 <button type="submit">Guardar reserva</button>
             </fieldset>
         </form>
-        
     </main>
 
     <footer>
         <h3>Redes Sociales</h3>
-        <address>
-            <!-- Redes Sociales -->
+        <address class="rs">
             <ul>
                 <li><a href="https://www.x.com/pawprints">X</a></li>
                 <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
@@ -76,18 +82,16 @@
             </ul>
         </address>
 
-        <h3>Información de Contacto</h3>
+        <h3>Contacto</h3>
         <address>
-        <!-- Contacto -->
-            <p>Telefono: +54 11 1245 6789</p>
-            <p>Email: pawprints@gmail.com</p>
+            <p>+54 11 1234 5678</p>
         </address>
 
         <h3>Dirección</h3>
         <address>
-            <!-- Dirección -->
-            <p>123 Calle Principal, Ciudad, País</p>
-            <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
+            <p>Argentina, Buenos Aires</p>
+            <p>Luján, Humberto Primo 666 (6700)</p>
+            <p>2025-2026 PAWprints libros S.A.</p>
         </address>
     </footer>
 </body>
