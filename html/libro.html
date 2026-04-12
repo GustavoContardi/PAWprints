@@ -5,82 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <base href="http://pawprints.com/"> -->
     <title>Titulo Libro - PAWprints</title>
-    <link rel="stylesheet" href="estilos/libro.css">
+    <link rel="stylesheet" href="../estilos/base.css">
+    <link rel="stylesheet" href="../estilos/layout.css">
+    <link rel="stylesheet" href="../estilos/components.css">
+    <link rel="stylesheet" href="../estilos/libro.css">
 </head>
 <body>
     <header>
+<<<<<<< Updated upstream
         <!-- Logo PAWprints -->
         <a href="index.html"><img src="../img/logo_PAWprints.svg" alt="Logo PAWprints"></a>
         
+=======
+        <a href="index.html"><img src="img/placeholder.jpg" alt="Logo PAWprints"></a>
+>>>>>>> Stashed changes
         <nav>
             <ul>
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="indispensables.html">Indispensables</a></li>
                 <li><a href="masVendidos.html">Más Vendidos</a></li>
+                <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="">Carrito</a></li>
-                <li><a href="">Perfil</a></li>
-                <li><a href="">Iniciar Sesión</a></li>
-                <li><a href="">Registrarse</a></li>
+                <li><a href="" class="nav-btn">Iniciar sesión</a></li>
+                <li><a href="" class="nav-btn">Registrarse</a></li>
+                <li><a href="" aria-label="Menú">Menú</a></li>
             </ul>
         </nav>
-
     </header>
 
     <main>
-        <!-- section del libro -->
-        <section>
-           <!--Imagen-->
-            <img src="img/placeholder.jpg" alt="Tapa de libro"> 
-
-           <!--Detalle del libro-->
-            <h2>Título libro</h2>
-            <p>Genero</p>
-            <p>Precio</p>
-            <p>Autor</p>
-
-            <form>
+            <!-- Sección detalle del libro -->
+        <section class="seccion-libro">
+            <img class="libro-portada" src="img/placeholder.jpg" alt="Tapa de libro">
+        
+            <h2 class="libro-titulo">Título libro</h2>
+            <p class="libro-genero">Género</p>
+            <p class="libro-precio">50</p>
+            <p class="libro-autor">Autor</p>
+    
+            <form class="libro-form">
                 <label for="formatoLibro">Formato</label>
                 <select id="formatoLibro" name="formato" required>
-                    <option value="" disabled selected>Seleccione un formato</option>
-                    <option value="pdf">PDF</option>
-                    <option value="tapa-dura">Tapa dura</option>
-                    <option value="tapa-blanda">Tapa blanda</option>
+                <option value="" disabled selected>Valor</option>
+                <option value="pdf">PDF</option>
+                <option value="tapa-dura">Tapa dura</option>
+                <option value="tapa-blanda">Tapa blanda</option>
                 </select>
-
+        
                 <label for="idiomaLibro">Idioma</label>
                 <select id="idiomaLibro" name="idioma" required>
-                    <option value="" disabled selected>Seleccione un idioma</option>
-                    <option value="ingles">Inglés</option>
-                    <option value="espanol">Español</option>
-                    <option value="frances">Francés</option>
+                <option value="" disabled selected>Valor</option>
+                <option value="ingles">Inglés</option>
+                <option value="espanol">Español</option>
+                <option value="frances">Francés</option>
                 </select>
-                
-                <a href="reservaLibro.html">Reservar</a>
+        
+                <a href="reservaLibro.html">Agregar al carrito</a>
             </form>
-            
-            <details>
+        
+            <details class="libro-sinopsis">
                 <summary>Título</summary>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                    Ad doloremque ut mollitia dolore delectus aut maxime 
-                    odit voluptatum excepturi, optio quod voluptates dolorem quae voluptate 
-                    hic doloribus accusamus quasi corporis.
-                </p>
+                <p>Sinopsis / Resumen</p>
+                <p>Sinopsis / Resumen</p>
+                <p>Sinopsis / Resumen</p>
+                <p>Sinopsis / Resumen</p>
             </details>
-
         </section>
-
-        <section>
-            <h2>Nombre del Autor</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur explicabo quia nesciunt quas dolores delectus cumque? Deserunt similique impedit accusamus hic, totam quisquam nobis porro saepe. Ipsa aspernatur possimus esse!</p>
-            <img src="img/avatar_placeholder.jpg" alt="Foto del autor">
+        <!-- Sección autor -->
+        <section class="seccion-autor">
+            <img class="autor-foto" src="img/avatar_placeholder.jpg" alt="Foto del autor">
+            <h2 class="autor-titulo">Información del autor</h2>
+            <h3 class="autor-nombre">Nombre del autor</h3>
+            <p class="autor-bio">Lorem ipsum dolor sit amet consectetur, 
+                adipisicing elit. Aliquam voluptatum sapiente asperiores 
+                consequuntur eligendi quas! Nostrum ab minus, sequi quia 
+                recusandae incidunt vel qui nesciunt blanditiis rem delectus 
+                eveniet aut. Lorem ipsum dolor sit amet consectetur, 
+                adipisicing elit. Veniam aliquid architecto in ullam consequatur 
+                possimus illo dolorem, laborum magnam alias dolorum aut atque 
+                exercitationem voluptatem explicabo. Mollitia sint debitis nemo?
+            </p>
         </section>
     </main>
 
     <footer>
         <h3>Redes Sociales</h3>
-        <address>
-            <!-- Redes Sociales -->
+        <address class="rs">
             <ul>
                 <li><a href="https://www.x.com/pawprints">X</a></li>
                 <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
@@ -88,18 +98,16 @@
             </ul>
         </address>
 
-        <h3>Información de Contacto</h3>
+        <h3>Contacto</h3>
         <address>
-        <!-- Contacto -->
-            <p>Telefono: +54 11 1245 6789</p>
-            <p>Email: pawprints@gmail.com</p>
+            <p>+54 11 1234 5678</p>
         </address>
 
         <h3>Dirección</h3>
         <address>
-            <!-- Dirección -->
-            <p>123 Calle Principal, Ciudad, País</p>
-            <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
+            <p>Argentina, Buenos Aires</p>
+            <p>Luján, Humberto Primo 666 (6700)</p>
+            <p>2025-2026 PAWprints libros S.A.</p>
         </address>
     </footer>
 </body>
