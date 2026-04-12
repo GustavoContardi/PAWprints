@@ -3,163 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <base href="http://pawprints.com/"> -->
     <title>PAWprints - Catálogo</title>
+    <link rel="stylesheet" href="../estilos/base.css">
+    <link rel="stylesheet" href="../estilos/layout.css">
+    <link rel="stylesheet" href="../estilos/components.css">
+    <link rel="stylesheet" href="../estilos/catalogo.css">
 </head>
-
 <body>
     <header>
-        <!-- Logo PAWprints -->
         <a href="index.html"><img src="../img/logo_PAWprints.svg" alt="Logo PAWprints"></a>
-        
         <nav>
             <ul>
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="indispensables.html">Indispensables</a></li>
                 <li><a href="masVendidos.html">Más Vendidos</a></li>
+                <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="">Carrito</a></li>
-                <li><a href="">Perfil</a></li>
-                <li><a href="">Iniciar Sesión</a></li>
-                <li><a href="">Registrarse</a></li>
+                <li><a href="" class="nav-btn">Iniciar sesión</a></li>
+                <li><a href="" class="nav-btn">Registrarse</a></li>
+                <li><a href="" aria-label="Menú">Menú</a></li>
             </ul>
         </nav>
-
     </header>
 
     <main>
-        <section>
-            <h1>Catálogo</h1>
 
-            <form method="get" action="/catalogo/filtrar">
+        <!-- Sidebar filtros — visible solo en desktop -->
+        <aside class="cat-sidebar">
+            <form class="cat-filtros" method="get" action="/catalogo/filtrar">
 
-                <!-- Precio -->
-                <fieldset>
-                    <legend>Rango de Precio</legend>
+                <p class="cat-filtros-titulo">Keywords</p>
+                <div class="cat-keywords">
+                    <span class="cat-keyword">Spring <button type="button">×</button></span>
+                    <span class="cat-keyword">Smart <button type="button">×</button></span>
+                    <span class="cat-keyword">Modern <button type="button">×</button></span>
+                </div>
 
-                    <label for="price-range">
-                        Precio: <span id="rangeValue">$0 - $50</span>
-                    </label>
+                <label for="price-range" class="cat-filtro-label">
+                    Precio <span id="rangeValue">$0-100</span>
+                </label>
+                <input type="range" id="price-range" name="precio" min="0" max="100" value="100" step="1">
 
-                    <input 
-                        type="range" 
-                        id="price-range"
-                        name="precio"
-                        min="0" 
-                        max="50" 
-                        value="0" 
-                        step="1">
-                </fieldset>
+                <p class="cat-filtro-label">Género</p>
+                <div class="cat-checks">
+                    <label><input type="checkbox" name="categoria" value="ciencia-ficcion" checked> Ciencia ficción</label>
+                    <label><input type="checkbox" name="categoria" value="romance" checked> Romance</label>
+                    <label><input type="checkbox" name="categoria" value="aventura" checked> Aventura</label>
+                    <label><input type="checkbox" name="categoria" value="fantasia"> Fantasía</label>
+                    <label><input type="checkbox" name="categoria" value="misterio"> Misterio</label>
+                    <label><input type="checkbox" name="categoria" value="historia"> Historia</label>
+                    <label><input type="checkbox" name="categoria" value="no-ficcion"> No Ficción</label>
+                    <label><input type="checkbox" name="categoria" value="otros"> Otros</label>
+                </div>
 
-                <!-- Edad -->
-                <fieldset>
-                    <legend>Edad</legend>
-
-                    <input type="checkbox" id="edad-infantil" name="edad" value="infantil">
-                    <label for="edad-infantil">Infantil</label>
-
-                    <input type="checkbox" id="edad-juvenil" name="edad" value="juvenil">
-                    <label for="edad-juvenil">Juvenil</label>
-
-                    <input type="checkbox" id="edad-adulto" name="edad" value="adulto">
-                    <label for="edad-adulto">Adulto</label>
-                </fieldset>
-
-                <!-- Género -->
-                <fieldset>
-                    <legend>Género</legend>
-
-                    <input type="checkbox" id="cat-no-ficcion" name="categoria" value="No-ficcion">
-                    <label for="cat-no-ficcion">No Ficción</label>
-
-                    <input type="checkbox" id="cat-fantasia" name="categoria" value="Fantasia">
-                    <label for="cat-fantasia">Fantasía</label>
-
-                    <input type="checkbox" id="cat-romance" name="categoria" value="Romance">
-                    <label for="cat-romance">Romance</label>
-
-                    <input type="checkbox" id="cat-misterio" name="categoria" value="Misterio">
-                    <label for="cat-misterio">Misterio</label>
-
-                    <input type="checkbox" id="cat-ciencia-ficcion" name="categoria" value="Ciencia-ficcion">
-                    <label for="cat-ciencia-ficcion">Ciencia Ficción</label>
-
-                    <input type="checkbox" id="cat-historia" name="categoria" value="Historia">
-                    <label for="cat-historia">Historia</label>
-
-                    <input type="checkbox" id="cat-aventura" name="categoria" value="Aventura">
-                    <label for="cat-aventura">Aventura</label>
-
-                    <input type="checkbox" id="cat-otros" name="categoria" value="Otros">
-                    <label for="cat-otros">Otros</label>
-                </fieldset>
-
-                <button type="submit">Filtrar</button>
+                <p class="cat-filtro-label">Edad</p>
+                <div class="cat-checks">
+                    <label><input type="checkbox" name="edad" value="infantil" checked> Infantil</label>
+                    <label><input type="checkbox" name="edad" value="juvenil" checked> Juvenil</label>
+                    <label><input type="checkbox" name="edad" value="adulto" checked> Adulto</label>
+                </div>
 
             </form>
+        </aside>
+
+        <!-- Área principal -->
+        <section class="cat-contenido">
+
+            <!-- Barra superior: buscador + chips de orden -->
+            <div class="cat-barra">
+                <button class="cat-btn-filtro" type="button" aria-label="Filtros">
+                    <!-- ícono filtro SVG inline -->
+                </button>
+
+                <form class="cat-busqueda" method="get" action="/catalogo/buscar">
+                    <label for="busqueda" class="sr-only">Buscar</label>
+                    <input type="search" id="busqueda" name="busqueda" placeholder="Buscar">
+                    <button type="submit" aria-label="Buscar"></button>
+                </form>
+
+                <div class="cat-chips">
+                    <button class="cat-chip cat-chip--activo" type="button">✓ Nuevo</button>
+                    <button class="cat-chip" type="button">Género</button>
+                    <button class="cat-chip" type="button">Popular</button>
+                    <button class="cat-chip" type="button">Precio</button>
+                </div>
+            </div>
+
+            <!-- Grid de libros -->
+            <div class="cat-grid">
+
+                <article class="cat-card">
+                    <img src="img/placeholder.jpg" alt="Portada del libro">
+                    <div class="cat-card-info">
+                        <div>
+                            <h3>Titulo</h3>
+                            <p class="cat-card-autor">Autor</p>
+                            <p class="cat-card-precio">$0</p>
+                        </div>
+                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article class="cat-card">
+                    <img src="img/placeholder.jpg" alt="Portada del libro">
+                    <div class="cat-card-info">
+                        <div>
+                            <h3>Titulo</h3>
+                            <p class="cat-card-autor">Autor</p>
+                            <p class="cat-card-precio">$0</p>
+                        </div>
+                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article class="cat-card">
+                    <img src="img/placeholder.jpg" alt="Portada del libro">
+                    <div class="cat-card-info">
+                        <div>
+                            <h3>Titulo</h3>
+                            <p class="cat-card-autor">Autor</p>
+                            <p class="cat-card-precio">$0</p>
+                        </div>
+                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+                <article class="cat-card">
+                    <img src="img/placeholder.jpg" alt="Portada del libro">
+                    <div class="cat-card-info">
+                        <div>
+                            <h3>Titulo</h3>
+                            <p class="cat-card-autor">Autor</p>
+                            <p class="cat-card-precio">$0</p>
+                        </div>
+                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    </div>
+                </article>
+
+            </div>
         </section>
 
-        <section>
-
-            <h2>Resultados de la búsqueda</h2>
-
-            <form method="get" action="/catalogo/buscar">
-                <label for="busqueda">Buscar:</label>
-                <input type="text" id="busqueda" name="busqueda" placeholder="Buscar por título, autor, etc.">
-            </form>
-
-            <form method="get" action="/catalogo/ordenar">
-                <label for="orden">Ordenar por:</label>
-                <select id="orden" name="orden">
-                    <option value="nombre">Nombre</option>
-                    <option value="precio">Precio</option>
-                    <option value="popularidad">Popularidad</option>
-                </select>
-            </form>
-
-            <!-- Aquí se mostrarán los libros del catálogo -->
-            <article title="Descripción breve del libro">
-                <img src="img/avatar_placeholder.jpg" alt="Portada del libro" title="Ver detalles del libro">
-                <h3 title="Título completo del libro">Título del Libro</h3>
-                <p>Autor: Nombre del Autor</p>
-                <p>Precio: $XX.XX</p>
-                <button title="Agregar este libro al carrito">Añadir al Carrito</button>
-            </article>
-
-            <article title="Descripción breve del libro">
-                <img src="img/placeholder.jpg" alt="Portada del libro" title="Ver detalles del libro">
-                <h3 title="Título completo del libro">Título del Libro</h3>
-                <p>Autor: Nombre del Autor</p>
-                <p>Precio: $XX.XX</p>
-                <button title="Agregar este libro al carrito">Añadir al Carrito</button>
-            </article>
-            <!-- Repetir el bloque de artículo para cada libro en el catálogo -->
-        </section>
     </main>
 
     <footer>
         <h3>Redes Sociales</h3>
-        <address>
-            <!-- Redes Sociales -->
+        <address class="rs">
             <ul>
                 <li><a href="https://www.x.com/pawprints">X</a></li>
                 <li><a href="https://www.instagram.com/pawprints">Instagram</a></li>
                 <li><a href="https://www.youtube.com/pawprints">YouTube</a></li>
             </ul>
         </address>
-
-        <h3>Información de Contacto</h3>
+        <h3>Contacto</h3>
         <address>
-        <!-- Contacto -->
-            <p>Telefono: +54 11 1245 6789</p>
-            <p>Email: pawprints@gmail.com</p>
+            <p>+54 11 1234 5678</p>
         </address>
-
         <h3>Dirección</h3>
         <address>
-            <!-- Dirección -->
-            <p>123 Calle Principal, Ciudad, País</p>
-            <p>&copy; 2025-2026 PAWprints libros S.A. Todos los derechos reservados.</p>
+            <p>Argentina, Buenos Aires</p>
+            <p>Luján, Humberto Primo 666 (6700)</p>
+            <p>2025-2026 PAWprints libros S.A.</p>
         </address>
     </footer>
 </body>
