@@ -25,11 +25,11 @@ header {
 
 /* Logo */
 header > a:first-child img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: var(--color-white);
+  width: 150px;
+  height: 55.2px;
+  /*border-radius: 50%;*/
+  object-fit: contain;
+  /*background: var(--color-white);*/
   flex-shrink: 0;
 }
 
