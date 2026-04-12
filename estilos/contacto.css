@@ -37,7 +37,7 @@ main > h2 {
    ============================================================ */
 main > form {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   margin-inline: auto;
   padding: 0 1.25rem 3rem;
 }
