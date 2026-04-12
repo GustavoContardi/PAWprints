@@ -97,6 +97,7 @@ main > section form button[type="submit"]::before {
 main > img {
   width: 100%;
   aspect-ratio: 4 / 3;
+  margin-bottom: 2rem;
   object-fit: cover;
   background: var(--color-text);
   display: block;
@@ -105,19 +106,51 @@ main > img {
 /* ============================================================
    LINKS DE SECCIÓN — mobile: columna con separadores
    ============================================================ */
-.index-opciones {
+/*.index-opciones {
   display: flex;
   flex-direction: column;
   width: 100%;
+}*/
+
+.index-opciones {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 0 1.5rem 2rem;
 }
 
 .index-opciones a {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.index-opciones a img {
+  position: absolute;
   width: 100%;
-  padding: 2.5rem 1.25rem;
-  border-top: 1.5px solid var(--color-text);
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(92, 6, 140, 0.4);
+  top: 0;
+  left: 0;
+  transition: 0.3s;
+}
+
+.index-opciones a:hover .overlay {
+  background: rgba(38, 2, 58, 0.4);
 }
 
 .index-opciones a:last-child {
@@ -131,8 +164,13 @@ main > img {
 .index-opciones h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-white);
+  z-index: 2;
   text-align: center;
+}
+
+.index-opciones a:hover h3 {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* ============================================================
