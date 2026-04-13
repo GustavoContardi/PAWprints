@@ -108,17 +108,13 @@ main {
    SECCIONES
    ============================================================ */
 .ind-seccion {
+  position: relative;   /* ancla para los botones ← → posicionados */
   padding: 2rem 0;
   border-bottom: 2px solid var(--color-border);
 }
 
-.ind-seccion:nth-of-type(even) {
-  background: var(--color-bg);
-}
-
-.ind-seccion:nth-of-type(odd) {
-  background: var(--color-white);
-}
+.ind-seccion:nth-of-type(even) { background: var(--color-bg); }
+.ind-seccion:nth-of-type(odd)  { background: var(--color-white); }
 
 .ind-seccion-titulo {
   font-size: 1.5rem;
@@ -142,7 +138,21 @@ main {
   border-bottom-color: var(--color-brand);
 }
 
-/* Carrusel scroll horizontal nativo */
+/* ============================================================
+   BOTONES DE CARRUSEL ← →
+   Hermanos de <ul> dentro de <section>.
+   Por ahora disabled — se activarán con JS en el futuro.
+   Posicionados sobre el carrusel en desktop.
+   En mobile se ocultan (el scroll táctil es suficiente).
+   ============================================================ */
+.ind-btn-anterior,
+.ind-btn-siguiente {
+  display: none; /* ocultos en mobile — swipe es suficiente */
+}
+
+/* ============================================================
+   CARRUSEL — scroll horizontal nativo
+   ============================================================ */
 .ind-carrusel {
   display: flex;
   flex-direction: row;
@@ -164,7 +174,16 @@ main {
 }
 
 /* ============================================================
-   CARD
+   CARD — article en grid
+   La imagen ocupa toda la card; título, precio y botón
+   carrito se superponen con position absolute sobre ella.
+
+   Estructura de grid:
+     fila 1 → imagen (fondo)
+     fila 2 → título   | btn-carrito (col 2, rows 1-2 en desktop)
+     fila 3 → precio
+
+   En mobile se mantiene el overlay con gradiente como antes.
    ============================================================ */
 .ind-card {
   position: relative;
@@ -189,16 +208,18 @@ main {
   display: block;
 }
 
-.ind-card-info {
+/* Título y precio superpuestos con gradiente — position absolute
+   sobre la imagen, sin wrapper */
+.ind-card-titulo,
+.ind-card-precio {
   position: absolute;
-  bottom: 0;
   left: 0;
   right: 0;
-  padding: 1.5rem 0.6rem 0.5rem;
-  background: linear-gradient(to top, rgba(44, 0, 68, 0.85) 0%, transparent 100%);
+  padding: 0 0.6rem;
 }
 
 .ind-card-titulo {
+  bottom: 1.25rem;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--color-white);
@@ -208,12 +229,26 @@ main {
 }
 
 .ind-card-precio {
+  bottom: 0.5rem;
   font-size: 0.75rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* Botón carrito — esquina superior derecha */
+/* Gradiente de fondo para legibilidad del texto — antes era
+   un div.ind-card-info, ahora es ::before del article */
+.ind-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(44, 0, 68, 0.85) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Botón carrito — esquina superior derecha, igual que antes */
 .ind-btn-carrito {
   position: absolute;
   top: 0.5rem;
@@ -278,12 +313,72 @@ main {
     margin-bottom: 1.5rem;
   }
 
+  /* Carrusel con padding lateral para dejar espacio a los botones */
   .ind-carrusel {
-    padding: 0.5rem 3rem 1.25rem;
+    padding: 0.5rem 4rem 1.25rem;
     gap: 1.25rem;
   }
 
   .ind-card {
     width: 170px;
+  }
+
+  /* Botones ← → visibles en desktop, centrados verticalmente
+     sobre el carrusel. disabled → opacidad reducida. */
+  .ind-btn-anterior,
+  .ind-btn-siguiente {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border);
+    background: var(--color-white);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+    padding: 0;
+    font-size: 0;
+    z-index: 1;
+  }
+
+  .ind-btn-anterior { left: 0.75rem; }
+  .ind-btn-siguiente { right: 0.75rem; }
+
+  .ind-btn-anterior::before,
+  .ind-btn-siguiente::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+
+  .ind-btn-anterior::before {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
+  .ind-btn-siguiente::before {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
+  .ind-btn-anterior:not([disabled]):hover,
+  .ind-btn-siguiente:not([disabled]):hover {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+
+  .ind-btn-anterior:not([disabled]):hover::before,
+  .ind-btn-siguiente:not([disabled]):hover::before {
+    filter: brightness(0) invert(1);
+  }
+
+  /* Estado disabled: semitransparente y sin cursor pointer */
+  .ind-btn-anterior[disabled],
+  .ind-btn-siguiente[disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
   }
 }
