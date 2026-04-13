@@ -168,6 +168,7 @@ footer p {
    Desktop: columna vertical.
 */
 footer h3:first-child {
+  display: none;
   aria-hidden: "true"; /* "Redes Sociales" no aparece en los wireframes */
 }
 

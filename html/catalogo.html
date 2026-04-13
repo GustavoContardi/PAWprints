@@ -33,19 +33,19 @@
             <form class="cat-filtros" method="get" action="/catalogo/filtrar">
 
                 <p class="cat-filtros-titulo">Keywords</p>
-                <div class="cat-keywords">
-                    <span class="cat-keyword">Spring <button type="button">×</button></span>
-                    <span class="cat-keyword">Smart <button type="button">×</button></span>
-                    <span class="cat-keyword">Modern <button type="button">×</button></span>
-                </div>
+                <ul class="cat-keywords">
+                    <li class="cat-keyword">Spring <button type="button">×</button></li>
+                    <li class="cat-keyword">Smart <button type="button">×</button></li>
+                    <li class="cat-keyword">Modern <button type="button">×</button></li>
+                </ul>
 
                 <label for="price-range" class="cat-filtro-label">
                     Precio <span id="rangeValue">$0-100</span>
                 </label>
                 <input type="range" id="price-range" name="precio" min="0" max="100" value="100" step="1">
 
-                <p class="cat-filtro-label">Género</p>
-                <div class="cat-checks">
+                <fieldset class="cat-checks">
+                    <legend class="cat-filtro-label">Género</legend>
                     <label><input type="checkbox" name="categoria" value="ciencia-ficcion" checked> Ciencia ficción</label>
                     <label><input type="checkbox" name="categoria" value="romance" checked> Romance</label>
                     <label><input type="checkbox" name="categoria" value="aventura" checked> Aventura</label>
@@ -54,14 +54,14 @@
                     <label><input type="checkbox" name="categoria" value="historia"> Historia</label>
                     <label><input type="checkbox" name="categoria" value="no-ficcion"> No Ficción</label>
                     <label><input type="checkbox" name="categoria" value="otros"> Otros</label>
-                </div>
+                </fieldset>
 
-                <p class="cat-filtro-label">Edad</p>
-                <div class="cat-checks">
+                <fieldset class="cat-checks">
+                    <legend class="cat-filtro-label">Edad</legend>
                     <label><input type="checkbox" name="edad" value="infantil" checked> Infantil</label>
                     <label><input type="checkbox" name="edad" value="juvenil" checked> Juvenil</label>
                     <label><input type="checkbox" name="edad" value="adulto" checked> Adulto</label>
-                </div>
+                </fieldset>
 
             </form>
         </aside>
@@ -70,10 +70,8 @@
         <section class="cat-contenido">
 
             <!-- Barra superior: buscador + chips de orden -->
-            <div class="cat-barra">
-                <button class="cat-btn-filtro" type="button" aria-label="Filtros">
-                    <!-- ícono filtro SVG inline -->
-                </button>
+            <search class="cat-barra">
+                <button class="cat-btn-filtro" type="button" aria-label="Filtros"></button>
 
                 <form class="cat-busqueda" method="get" action="/catalogo/buscar">
                     <label for="busqueda" class="sr-only">Buscar</label>
@@ -81,66 +79,50 @@
                     <button type="submit" aria-label="Buscar"></button>
                 </form>
 
-                <div class="cat-chips">
-                    <button class="cat-chip cat-chip--activo" type="button">✓ Nuevo</button>
-                    <button class="cat-chip" type="button">Género</button>
-                    <button class="cat-chip" type="button">Popular</button>
-                    <button class="cat-chip" type="button">Precio</button>
-                </div>
-            </div>
+                <menu class="cat-chips">
+                    <li><button class="cat-chip cat-chip--activo" type="button">✓ Nuevo</button></li>
+                    <li><button class="cat-chip" type="button">Género</button></li>
+                    <li><button class="cat-chip" type="button">Popular</button></li>
+                    <li><button class="cat-chip" type="button">Precio</button></li>
+                </menu>
+            </search>
 
             <!-- Grid de libros -->
-            <div class="cat-grid">
+            <section class="cat-grid">
 
                 <article class="cat-card">
                     <img src="img/placeholder.jpg" alt="Portada del libro">
-                    <div class="cat-card-info">
-                        <div>
-                            <h3>Titulo</h3>
-                            <p class="cat-card-autor">Autor</p>
-                            <p class="cat-card-precio">$0</p>
-                        </div>
-                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
-                    </div>
+                    <h3>Titulo</h3>
+                    <p class="cat-card-autor">Autor</p>
+                    <p class="cat-card-precio">$0</p>
+                    <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
 
                 <article class="cat-card">
                     <img src="img/placeholder.jpg" alt="Portada del libro">
-                    <div class="cat-card-info">
-                        <div>
-                            <h3>Titulo</h3>
-                            <p class="cat-card-autor">Autor</p>
-                            <p class="cat-card-precio">$0</p>
-                        </div>
-                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
-                    </div>
+                    <h3>Titulo</h3>
+                    <p class="cat-card-autor">Autor</p>
+                    <p class="cat-card-precio">$0</p>
+                    <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
 
                 <article class="cat-card">
                     <img src="img/placeholder.jpg" alt="Portada del libro">
-                    <div class="cat-card-info">
-                        <div>
-                            <h3>Titulo</h3>
-                            <p class="cat-card-autor">Autor</p>
-                            <p class="cat-card-precio">$0</p>
-                        </div>
-                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
-                    </div>
+                    <h3>Titulo</h3>
+                    <p class="cat-card-autor">Autor</p>
+                    <p class="cat-card-precio">$0</p>
+                    <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
 
                 <article class="cat-card">
                     <img src="img/placeholder.jpg" alt="Portada del libro">
-                    <div class="cat-card-info">
-                        <div>
-                            <h3>Titulo</h3>
-                            <p class="cat-card-autor">Autor</p>
-                            <p class="cat-card-precio">$0</p>
-                        </div>
-                        <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
-                    </div>
+                    <h3>Titulo</h3>
+                    <p class="cat-card-autor">Autor</p>
+                    <p class="cat-card-precio">$0</p>
+                    <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
 
-            </div>
+            </section>
         </section>
 
     </main>

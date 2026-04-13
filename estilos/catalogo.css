@@ -28,8 +28,9 @@ main {
 
 /* ============================================================
    BARRA SUPERIOR
+   <search> reemplaza al <div class="cat-barra">
    ============================================================ */
-.cat-barra {
+search.cat-barra {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -62,7 +63,8 @@ main {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cline x1='4' y1='6' x2='20' y2='6'/%3E%3Cline x1='8' y1='12' x2='16' y2='12'/%3E%3Cline x1='11' y1='18' x2='13' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
-.cat-busqueda {
+/* <form> toma directamente la clase cat-busqueda */
+form.cat-busqueda {
   display: flex;
   align-items: center;
   flex: 1;
@@ -74,7 +76,7 @@ main {
   gap: 0.4rem;
 }
 
-.cat-busqueda input[type="search"] {
+form.cat-busqueda input[type="search"] {
   flex: 1;
   border: none;
   outline: none;
@@ -87,12 +89,12 @@ main {
   min-width: 0;
 }
 
-.cat-busqueda input[type="search"]::placeholder {
+form.cat-busqueda input[type="search"]::placeholder {
   color: var(--color-text-muted);
   opacity: 0.7;
 }
 
-.cat-busqueda button[type="submit"] {
+form.cat-busqueda button[type="submit"] {
   width: 20px !important;
   height: 20px !important;
   min-width: unset !important;
@@ -108,7 +110,7 @@ main {
   font-size: 0;
 }
 
-.cat-busqueda button[type="submit"]::before {
+form.cat-busqueda button[type="submit"]::before {
   content: '';
   display: block;
   width: 16px;
@@ -116,11 +118,16 @@ main {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
-.cat-chips {
+/* <menu> reemplaza al <div class="cat-chips"> */
+menu.cat-chips {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   width: 100%;
+  /* Reset de estilos de lista heredados */
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .cat-chip {
@@ -159,20 +166,37 @@ main {
 
 /* ============================================================
    GRID DE CARDS — mobile: 1 columna
+   <section> reemplaza al <div class="cat-grid">
    ============================================================ */
-.cat-grid {
+section.cat-grid {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem 1rem 2rem;
 }
 
+/*
+  Grid de 2 columnas:
+    col 1 (1fr)  → imagen, h3, autor, precio
+    col 2 (36px) → botón carrito, centrado verticalmente
+                   abarcando las 3 filas de texto
+
+  Filas:
+    1 → imagen  (col 1-2)
+    2 → h3      (col 1) | btn (col 2, rows 2-4)
+    3 → autor   (col 1)
+    4 → precio  (col 1)
+*/
 .cat-card {
   background: var(--color-white);
   border-radius: var(--radius);
   overflow: hidden;
   border: 1.5px solid var(--color-border);
   transition: box-shadow 0.2s;
+  display: grid;
+  grid-template-columns: 1fr 64px;
+  grid-template-rows: auto auto auto auto;
+  align-items: center;
 }
 
 .cat-card:hover {
@@ -180,42 +204,47 @@ main {
 }
 
 .cat-card img {
+  grid-column: 1 / -1;
+  grid-row: 1;
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   background: var(--color-bg);
   display: block;
-}
-
-.cat-card-info {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 0.75rem;
-  gap: 0.5rem;
-  border-top: 3px solid var(--color-brand);
+  border-bottom: 3px solid var(--color-brand);
 }
 
 .cat-card h3 {
+  grid-column: 1;
+  grid-row: 2;
   font-size: 0.9375rem;
   font-weight: 600;
   color: var(--color-text);
-  margin-bottom: 0.15rem;
+  padding: 0.75rem 0.75rem 0.15rem;
 }
 
 .cat-card-autor {
+  grid-column: 1;
+  grid-row: 3;
   font-size: 0.8125rem;
   color: var(--color-text-muted);
-  margin-bottom: 0.15rem;
+  padding: 0 0.75rem 0.15rem;
 }
 
 .cat-card-precio {
+  grid-column: 1;
+  grid-row: 4;
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--color-brand);
+  padding: 0 0.75rem 0.75rem;
 }
 
 .cat-btn-carrito {
+  grid-column: 2;
+  grid-row: 2 / 5;
+  align-self: center;
+  justify-self: center;
   width: 36px !important;
   height: 36px !important;
   min-width: unset !important;
@@ -334,11 +363,38 @@ main {
     margin-bottom: 0.5rem;
   }
 
-  .cat-checks {
+  /* Neutralizar estilos de fieldset que vienen de components.css */
+  fieldset.cat-checks {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    border: none;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+
+  /* Hacer visible el legend (components.css lo oculta con clip) */
+  fieldset.cat-checks legend.cat-filtro-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    /* Heredar estilos de .cat-filtro-label */
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    margin-top: 1rem;
+    /* float necesario para que legend ocupe el ancho completo en fieldset */
+    float: left;
+    width: 100%;
   }
 
   .cat-checks label {
@@ -367,7 +423,7 @@ main {
   }
 
   /* Barra desktop */
-  .cat-barra {
+  search.cat-barra {
     flex-wrap: nowrap;
     padding: 0 0 1rem;
     gap: 1rem;
@@ -380,14 +436,14 @@ main {
     display: none !important;
   }
 
-  .cat-busqueda {
+  form.cat-busqueda {
     flex: 0 0 auto;
     width: 180px;
     order: 1;
     background: var(--color-white);
   }
 
-  .cat-chips {
+  menu.cat-chips {
     order: 2;
     flex: 1;
     width: auto;
@@ -396,7 +452,7 @@ main {
   }
 
   /* Grid 4 columnas */
-  .cat-grid {
+  section.cat-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
