@@ -194,7 +194,7 @@ section.cat-grid {
   border: 1.5px solid var(--color-border);
   transition: box-shadow 0.2s;
   display: grid;
-  grid-template-columns: 1fr 52px;
+  grid-template-columns: 1fr 64px;
   grid-template-rows: auto auto auto auto;
   align-items: center;
 }
