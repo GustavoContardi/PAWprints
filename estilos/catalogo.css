@@ -194,7 +194,7 @@ section.cat-grid {
   border: 1.5px solid var(--color-border);
   transition: box-shadow 0.2s;
   display: grid;
-  grid-template-columns: 1fr 64px;
+  grid-template-columns: 1fr 52px;
   grid-template-rows: auto auto auto auto;
   align-items: center;
 }
@@ -458,4 +458,76 @@ section.cat-grid {
     gap: 1rem;
     padding: 0;
   }
+}
+
+/* ============================================================
+   PAGINACIÓN — mobile y desktop
+   ============================================================ */
+nav.cat-paginacion {
+  padding: 1.5rem 1rem 2rem;
+}
+
+nav.cat-paginacion ol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav.cat-paginacion ol li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  border: 1.5px solid transparent;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+nav.cat-paginacion ol li a:hover {
+  background: var(--color-white);
+  border-color: var(--color-border);
+}
+
+/* Página actual */
+nav.cat-paginacion ol li a[aria-current="page"] {
+  background: var(--color-brand);
+  color: var(--color-white);
+  border-color: var(--color-brand);
+  font-weight: 700;
+}
+
+/* Flechas anterior/siguiente */
+nav.cat-paginacion ol li:first-child a,
+nav.cat-paginacion ol li:last-child a {
+  font-size: 1rem;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-white);
+}
+
+nav.cat-paginacion ol li:first-child a:hover,
+nav.cat-paginacion ol li:last-child a:hover {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: var(--color-white);
+}
+
+/* Desktop: sin padding lateral */
+@media (min-width: 900px) {
+  nav.cat-paginacion {
+    padding: 1.5rem 0 0;
+  }
+}
+
+/* Paginación superior: menos padding abajo, más arriba no necesario
+   porque la search bar ya tiene su propio espaciado */
+nav.cat-paginacion:first-of-type {
+  padding-bottom: 0.75rem;
 }
