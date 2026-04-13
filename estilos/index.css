@@ -2,8 +2,6 @@
    PAWprints — index.css
    Capa 4: Específico de index.html ÚNICAMENTE.
    Depende de: base.css → layout.css → components.css
-   Wireframe mobile:  hero apilado, imagen full, links en columna
-   Wireframe desktop: hero centrado, imagen full, links en grilla 2x2
    ============================================================ */
 
 /* ============================================================
@@ -123,8 +121,7 @@ main > img {
   border-radius: 10px;
 }
 
-/* Overlay decorativo — antes era un <div class="overlay">,
-   ahora es un pseudo-elemento del <a> para no contaminar el HTML */
+/* Overlay decorativo */
 .index-opciones a::after {
   content: '';
   position: absolute;
@@ -199,7 +196,6 @@ main > img {
     aspect-ratio: 21 / 9;
   }
 
-  /* Links: grilla 2x2 */
   .index-opciones {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -213,7 +209,6 @@ main > img {
     height: auto;
   }
 
-  /* Borde derecho en columna izquierda */
   .index-opciones a:nth-child(odd) {
     border-right: 1.5px solid var(--color-text);
   }

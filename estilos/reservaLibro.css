@@ -2,13 +2,10 @@
    PAWprints — reservaLibro.css
    Capa 4: Específico de reservaLibro.html ÚNICAMENTE.
    Depende de: base.css → layout.css → components.css
-
-   Wireframe mobile:  hero apilado, formulario centrado en columna
-   Wireframe desktop: hero fondo oscuro, formulario centrado y más ancho
    ============================================================ */
 
 /* ============================================================
-   HERO — título y subtítulo de la página
+   HERO
    ============================================================ */
 main {
   display: flex;
@@ -36,7 +33,7 @@ main > h2 {
 }
 
 /* ============================================================
-   FORMULARIO — contenedor
+   FORMULARIO
    ============================================================ */
 main > form {
   width: 100%;
@@ -46,8 +43,7 @@ main > form {
 }
 
 /* ============================================================
-   FIELDSET — sobreescribir legend para hacerla visible
-   (components.css la oculta con clip; acá la necesitamos visible)
+   FIELDSET
    ============================================================ */
 main > form fieldset legend {
   position: static;
@@ -64,7 +60,7 @@ main > form fieldset legend {
 }
 
 /* ============================================================
-   CANTIDAD DE COPIAS — etiqueta + valor en la misma fila
+   CANTIDAD DE COPIAS
    ============================================================ */
 .reserva-copias-label {
   display: flex;
@@ -84,7 +80,7 @@ main > form fieldset legend {
 }
 
 /* ============================================================
-   INPUT RANGE — slider de cantidad de copias
+   INPUT RANGE
    ============================================================ */
 input[type="range"] {
   width: 100%;
@@ -126,7 +122,7 @@ main > form button[type="submit"] {
     border-bottom: 6px solid var(--color-brand);
   }
 
-  /* Formulario: un poco más ancho en desktop */
+  /* Formulario*/
   main > form {
     max-width: 480px;
     padding: 2.5rem 0 4rem;

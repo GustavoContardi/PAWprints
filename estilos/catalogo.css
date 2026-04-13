@@ -28,7 +28,6 @@ main {
 
 /* ============================================================
    BARRA SUPERIOR
-   <search> reemplaza al <div class="cat-barra">
    ============================================================ */
 search.cat-barra {
   display: flex;
@@ -63,7 +62,6 @@ search.cat-barra {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cline x1='4' y1='6' x2='20' y2='6'/%3E%3Cline x1='8' y1='12' x2='16' y2='12'/%3E%3Cline x1='11' y1='18' x2='13' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
-/* <form> toma directamente la clase cat-busqueda */
 form.cat-busqueda {
   display: flex;
   align-items: center;
@@ -118,13 +116,11 @@ form.cat-busqueda button[type="submit"]::before {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232a2a2a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
-/* <menu> reemplaza al <div class="cat-chips"> */
 menu.cat-chips {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   width: 100%;
-  /* Reset de estilos de lista heredados */
   list-style: none;
   padding: 0;
   margin: 0;
@@ -166,7 +162,6 @@ menu.cat-chips {
 
 /* ============================================================
    GRID DE CARDS — mobile: 1 columna
-   <section> reemplaza al <div class="cat-grid">
    ============================================================ */
 section.cat-grid {
   display: flex;
@@ -363,7 +358,6 @@ section.cat-grid {
     margin-bottom: 0.5rem;
   }
 
-  /* Neutralizar estilos de fieldset que vienen de components.css */
   fieldset.cat-checks {
     background: transparent;
     box-shadow: none;
@@ -376,7 +370,6 @@ section.cat-grid {
     margin-bottom: 0.5rem;
   }
 
-  /* Hacer visible el legend (components.css lo oculta con clip) */
   fieldset.cat-checks legend.cat-filtro-label {
     position: static;
     width: auto;
@@ -384,7 +377,6 @@ section.cat-grid {
     overflow: visible;
     clip: auto;
     white-space: normal;
-    /* Heredar estilos de .cat-filtro-label */
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--color-text);
@@ -392,7 +384,6 @@ section.cat-grid {
     justify-content: space-between;
     margin-bottom: 0.4rem;
     margin-top: 1rem;
-    /* float necesario para que legend ocupe el ancho completo en fieldset */
     float: left;
     width: 100%;
   }
@@ -451,7 +442,6 @@ section.cat-grid {
     justify-content: flex-start;
   }
 
-  /* Grid 4 columnas */
   section.cat-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -519,15 +509,14 @@ nav.cat-paginacion ol li:last-child a:hover {
   color: var(--color-white);
 }
 
-/* Desktop: sin padding lateral */
+/* Desktop sin padding lateral */
 @media (min-width: 900px) {
   nav.cat-paginacion {
     padding: 1.5rem 0 0;
   }
 }
 
-/* Paginación superior: menos padding abajo, más arriba no necesario
-   porque la search bar ya tiene su propio espaciado */
+/* Paginación superior */
 nav.cat-paginacion:first-of-type {
   padding-bottom: 0.75rem;
 }

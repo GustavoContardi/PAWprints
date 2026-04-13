@@ -1,14 +1,14 @@
 /* ============================================================
    PAWprints — components.css
    Capa 3: Componentes reutilizables entre páginas.
-   Importar en TODAS las páginas DESPUÉS de layout.css.
+   Depende de: base.css → layout.css
    ============================================================ */
 
 /* ============================================================
    BOTONES
    ============================================================ */
 
-/* Botón primario — usado en formularios y CTAs */
+/* Botón primario */
 .btn,
 button[type="submit"],
 button[type="button"] {
@@ -40,7 +40,7 @@ button[type="button"]:active {
   transform: scale(0.98);
 }
 
-/* Variante: botón como enlace <a> (ej: Reservar en libro) */
+/* Variante: botón como enlace <a> */
 .btn-link {
   display: block;
   padding: 0.8rem 1rem;
@@ -100,7 +100,6 @@ fieldset {
 }
 
 legend {
-  /* Accesible pero invisible visualmente */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -162,7 +161,6 @@ textarea {
   line-height: 1.5;
 }
 
-/* Select personalizado */
 select {
   width: 100%;
   padding: 0.55rem 2rem 0.55rem 0.75rem;

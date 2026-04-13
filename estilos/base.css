@@ -6,7 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-/* ---------- Reset ---------- */
+/* ---------- CSS Reset ---------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -15,7 +15,7 @@
 
 /* ---------- Variables globales ---------- */
 :root {
-  /* Paleta de color */
+  /* Paleta de colores */
   --color-brand:       #5c068c;
   --color-brand-dark:  #44036a;
   --color-white:       #ffffff;

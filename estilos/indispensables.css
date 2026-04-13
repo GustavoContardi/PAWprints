@@ -108,7 +108,7 @@ main {
    SECCIONES
    ============================================================ */
 .ind-seccion {
-  position: relative;   /* ancla para los botones ← → posicionados */
+  position: relative;
   padding: 2rem 0;
   border-bottom: 2px solid var(--color-border);
 }
@@ -147,8 +147,7 @@ main {
    ============================================================ */
 button.ind-btn-anterior,
 button.ind-btn-siguiente {
-  /* Neutraliza button[type="button"] de components.css
-     usando especificidad equivalente: elemento + clase = [0,1,1] */
+  /* Neutraliza button de components.css */
   width: unset;
   background: transparent;
   color: unset;
@@ -157,7 +156,7 @@ button.ind-btn-siguiente {
   border-radius: unset;
   letter-spacing: unset;
   padding: unset;
-  display: none; /* ocultos en mobile — swipe es suficiente */
+  display: none; /* ocultos en mobile */
 }
 
 /* ============================================================
@@ -218,8 +217,7 @@ button.ind-btn-siguiente {
   display: block;
 }
 
-/* Título y precio superpuestos con gradiente — position absolute
-   sobre la imagen, sin wrapper */
+/* Título y precio superpuestos con gradiente */
 .ind-card-titulo,
 .ind-card-precio {
   position: absolute;
@@ -245,8 +243,7 @@ button.ind-btn-siguiente {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* Gradiente de fondo para legibilidad del texto — antes era
-   un div.ind-card-info, ahora es ::before del article */
+/* Gradiente de fondo para legibilidad del texto */
 .ind-card::before {
   content: '';
   position: absolute;
@@ -258,7 +255,7 @@ button.ind-btn-siguiente {
   pointer-events: none;
 }
 
-/* Botón carrito — esquina superior derecha, igual que antes */
+/* Botón carrito */
 .ind-btn-carrito {
   position: absolute;
   top: 0.5rem;
@@ -333,8 +330,7 @@ button.ind-btn-siguiente {
     width: 170px;
   }
 
-  /* Botones ← → visibles en desktop, centrados verticalmente
-     sobre el carrusel. disabled → opacidad reducida. */
+  /* Botones ← → visibles en desktop */
   button.ind-btn-anterior,
   button.ind-btn-siguiente {
     display: flex;

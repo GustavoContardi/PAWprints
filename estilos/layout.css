@@ -1,10 +1,7 @@
 /* ============================================================
    PAWprints — layout.css
    Capa 2: Header y footer compartidos.
-   Importar en TODAS las páginas DESPUÉS de base.css.
-
-   Wireframe mobile:  logo izquierda + hamburguesa derecha
-   Wireframe desktop: logo izquierda + nav central + íconos derecha
+   Depende de: base.css
    ============================================================ */
 
 /* ============================================================
@@ -27,9 +24,7 @@ header {
 header > a:first-child img {
   width: 150px;
   height: 55.2px;
-  /*border-radius: 50%;*/
   object-fit: contain;
-  /*background: var(--color-white);*/
   flex-shrink: 0;
 }
 
@@ -169,7 +164,6 @@ footer p {
 */
 footer h3:first-child {
   display: none;
-  aria-hidden: "true"; /* "Redes Sociales" no aparece en los wireframes */
 }
 
 footer address.rs {
