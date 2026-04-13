@@ -104,14 +104,8 @@ main > img {
 }
 
 /* ============================================================
-   LINKS DE SECCIÓN — mobile: columna con separadores
+   LINKS DE SECCIÓN — mobile: columna
    ============================================================ */
-/*.index-opciones {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}*/
-
 .index-opciones {
   display: grid;
   grid-template-columns: 1fr;
@@ -125,65 +119,56 @@ main > img {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 0;
   height: 200px;
   border-radius: 10px;
 }
 
+/* Overlay decorativo — antes era un <div class="overlay">,
+   ahora es un pseudo-elemento del <a> para no contaminar el HTML */
+.index-opciones a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(92, 6, 140, 0.4);
+  transition: background 0.3s;
+}
+
+.index-opciones a:hover::after {
+  background: rgba(38, 2, 58, 0.4);
+}
+
 .index-opciones a img {
   position: absolute;
-  /*width: 100%;*/
   width: auto;
   min-width: 280%;
   height: 100%;
   object-fit: cover;
   top: 0;
   left: 0;
-
   animation: scroll-img 90s linear infinite;
 }
 
 @keyframes scroll-img {
-  from {
-    transform: translateX(100);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(92, 6, 140, 0.4);
-  top: 0;
-  left: 0;
-  transition: 0.3s;
-}
-
-.index-opciones a:hover .overlay {
-  background: rgba(38, 2, 58, 0.4);
-}
-
-.index-opciones a:last-child {
-  border-bottom: 1.5px solid var(--color-text);
-}
-
-.index-opciones a:hover {
-  background: var(--color-border);
-}
-
-.index-opciones h3 {
+.index-opciones a h3 {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-white);
-  z-index: 2;
+  /* z-index mayor al del ::after para que el texto quede sobre el overlay */
+  position: relative;
+  z-index: 1;
   text-align: center;
 }
 
 .index-opciones a:hover h3 {
   color: rgba(255, 255, 255, 0.75);
+}
+
+.index-opciones a:last-child {
+  border-bottom: 1.5px solid var(--color-text);
 }
 
 /* ============================================================
@@ -218,12 +203,14 @@ main > img {
   .index-opciones {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    border-bottom: 1.5px solid var(--color-text);
   }
 
   .index-opciones a {
     padding: 4rem 2rem;
     border-top: 1.5px solid var(--color-text);
     border-bottom: none;
+    height: auto;
   }
 
   /* Borde derecho en columna izquierda */
@@ -231,18 +218,7 @@ main > img {
     border-right: 1.5px solid var(--color-text);
   }
 
-  /* Borde inferior en la segunda fila */
-  .index-opciones a:nth-child(3),
-  .index-opciones a:nth-child(4) {
-    border-top: 1.5px solid var(--color-text);
-  }
-
-  /* Borde inferior del grid completo */
-  .index-opciones {
-    border-bottom: 1.5px solid var(--color-text);
-  }
-
-  .index-opciones h3 {
+  .index-opciones a h3 {
     font-size: 2rem;
   }
 }
