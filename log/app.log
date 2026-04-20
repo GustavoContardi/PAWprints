@@ -1,0 +1,4 @@
+[2026-04-20T00:46:01.814026+00:00] pawprints.INFO: Conexión a la base de datos establecida [] []
+[2026-04-20T00:52:00.264621+00:00] pawprints.INFO: Conexión a la base de datos establecida [] []
+[2026-04-20T00:52:00.265100+00:00] pawprints.INFO: Request entrante {"method":"GET","uri":"/"} []
+[2026-04-20T00:52:00.265228+00:00] pawprints.INFO: Ruta resuelta {"controller":"HomeController","action":"index","params":[]} []

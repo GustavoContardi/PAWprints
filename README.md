@@ -119,12 +119,6 @@ El sitio queda disponible en **http://localhost:8080**
 | vlucas/phpdotenv | ^5.6 | Variables de entorno |
 | robmorgan/phinx | ^0.16 | Migraciones de base de datos |
 
-Instalación de dependencias:
-
-```bash
-docker compose exec php composer require monolog/monolog vlucas/phpdotenv robmorgan/phinx
-```
-
 ## Comandos útiles
 
 ```bash
