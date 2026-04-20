@@ -38,5 +38,5 @@ try {
     $logger->info('Conexión a la base de datos establecida');
 } catch (PDOException $e) {
     $logger->critical('Error de conexión a la base de datos', ['error' => $e->getMessage()]);
-    throw $e; // Whoops lo captura y lo muestra
+    throw $e;
 }

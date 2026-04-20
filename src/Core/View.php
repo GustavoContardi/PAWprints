@@ -16,6 +16,6 @@ class View
         $content = ob_get_clean();
 
         // Cargamos el layout con $content ya disponible
-        require __DIR__ . '/../Views/layouts/main.php';
+        require __DIR__ . '/../Views/layouts/layout.php';
     }
 }
