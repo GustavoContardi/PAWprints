@@ -1,4 +1,5 @@
 <?php
+// src/Controllers/HomeController.php
 
 namespace Controllers;
 
@@ -6,6 +7,6 @@ class HomeController
 {
     public function index(array $params): void
     {
-        echo "Home funcionando";
+        require __DIR__ . '/../Views/home.php';
     }
 }

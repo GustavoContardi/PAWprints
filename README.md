@@ -31,8 +31,23 @@ proyecto/
 │       ├── html/
 │       ├── estilos/
 │       └── img/
-├── src/
-│   └── bootstrap.php       # Inicialización: DB, autoload, config
+├──src/
+│   ├── Controllers/
+│   │   ├── HomeController.php
+│   │   ├── CatalogoController.php
+│   │   └── ...
+│   ├── Core/
+│   │   ├── Router.php       ← maneja las rutas
+│   │   └── ...
+│   ├── Models/
+│   │   ├── Libro.php
+│   │   └── ...
+│   └── Views/
+│       ├── home.php
+│       ├── catalogo.php
+│       └── layouts/
+│           └── main.php      ← header + footer compartido
+├── bootstrap.php
 ├── vendor/                 # Generado por Composer — no se commitea
 ├── .env                    # Variables de entorno locales — no se commitea
 ├── .env.example            # Plantilla de variables de entorno — sí se commitea
