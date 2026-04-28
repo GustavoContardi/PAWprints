@@ -21,7 +21,10 @@ Estudiantes:
 ## Estructura del proyecto
 
 ```
-proyecto/
+├── db/
+│   ├── migrations/         # Archivos de migración de Phinx
+│   └── seeds/              # Archivos de datos de prueba (seeds)
+├── doc/
 ├── docker/
 │   ├── nginx.conf          # Configuración de Nginx
 │   └── php.Dockerfile      # Imagen PHP con extensiones y Composer
@@ -48,6 +51,7 @@ proyecto/
 │       └── layouts/
 │           └── main.php      ← header + footer compartido
 ├── bootstrap.php
+├── phinx.php               # Configuración de migraciones
 ├── vendor/                 # Generado por Composer — no se commitea
 ├── .env                    # Variables de entorno locales — no se commitea
 ├── .env.example            # Plantilla de variables de entorno — sí se commitea
@@ -125,6 +129,35 @@ pawprints-web-1   web       running
 ```
 
 El sitio queda disponible en **http://localhost:8080**
+
+### 7. Ejecutar migraciones y seeds
+
+Para crear las tablas y cargar datos iniciales de prueba:
+
+```bash
+# Crear las tablas
+docker compose exec php ./vendor/bin/phinx migrate
+
+# Cargar datos de prueba (opcional)
+docker compose exec php ./vendor/bin/phinx seed:run
+```
+
+## Base de Datos y Migraciones
+
+Utilizamos **Phinx** para la gestión del esquema de base de datos.
+
+- **Crear una nueva migración**:
+  ```bash
+  docker compose exec php ./vendor/bin/phinx create NombreDeLaMigracion
+  ```
+- **Volver atrás una migración**:
+  ```bash
+  docker compose exec php ./vendor/bin/phinx rollback
+  ```
+- **Crear un nuevo seeder**:
+  ```bash
+  docker compose exec php ./vendor/bin/phinx seed:create NombreDelSeeder
+  ```
 
 ## Dependencias PHP
 

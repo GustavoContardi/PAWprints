@@ -21,14 +21,36 @@ class BooksCollection
         $query = "SELECT * FROM libros WHERE 1=1";
         $params = [];
 
+        // Filtro por categorías (soporta array)
         if (!empty($filters['categoria'])) {
-            $query .= " AND categoria = :categoria";
-            $params['categoria'] = $filters['categoria'];
+            if (is_array($filters['categoria'])) {
+                $placeholders = [];
+                foreach ($filters['categoria'] as $i => $cat) {
+                    $key = "cat_$i";
+                    $placeholders[] = ":$key";
+                    $params[$key] = $cat;
+                }
+                $query .= " AND categoria IN (" . implode(',', $placeholders) . ")";
+            } else {
+                $query .= " AND categoria = :categoria";
+                $params['categoria'] = $filters['categoria'];
+            }
         }
 
+        // Filtro por edad (soporta array)
         if (!empty($filters['edad'])) {
-            $query .= " AND edad = :edad";
-            $params['edad'] = $filters['edad'];
+            if (is_array($filters['edad'])) {
+                $placeholders = [];
+                foreach ($filters['edad'] as $i => $e) {
+                    $key = "edad_$i";
+                    $placeholders[] = ":$key";
+                    $params[$key] = $e;
+                }
+                $query .= " AND edad IN (" . implode(',', $placeholders) . ")";
+            } else {
+                $query .= " AND edad = :edad";
+                $params['edad'] = $filters['edad'];
+            }
         }
 
         if (!empty($filters['busqueda'])) {
@@ -36,20 +58,20 @@ class BooksCollection
             $params['busqueda'] = '%' . $filters['busqueda'] . '%';
         }
 
-        if (isset($filters['precio_max'])) {
+        if (isset($filters['precio_max']) && $filters['precio_max'] !== '') {
             $query .= " AND precio <= :precio_max";
-            $params['precio_max'] = $filters['precio_max'];
+            $params['precio_max'] = (float)$filters['precio_max'];
         }
 
         $stmt = $this->db->prepare($query);
-        $stmt->execute($params);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        $stmt->execute();
         
         return $stmt->fetchAll();
     }
 
-    /**
-     * Obtiene libros marcados como novedades
-     */
     public function getNovedades(int $limit = 10): array
     {
         $stmt = $this->db->prepare("SELECT * FROM libros WHERE es_novedad = TRUE LIMIT :limit");
@@ -58,9 +80,6 @@ class BooksCollection
         return $stmt->fetchAll();
     }
 
-    /**
-     * Obtiene libros con descuento
-     */
     public function getDescuentos(int $limit = 10): array
     {
         $stmt = $this->db->prepare("SELECT * FROM libros WHERE descuento > 0 LIMIT :limit");
@@ -69,9 +88,6 @@ class BooksCollection
         return $stmt->fetchAll();
     }
 
-    /**
-     * Obtiene libros recomendados
-     */
     public function getRecomendados(int $limit = 10): array
     {
         $stmt = $this->db->prepare("SELECT * FROM libros WHERE es_recomendado = TRUE LIMIT :limit");

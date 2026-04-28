@@ -1,5 +1,5 @@
 <aside class="cat-sidebar">
-    <form class="cat-filtros" method="get" action="/catalogo/filtrar">
+    <form class="cat-filtros" method="get" action="/catalogo">
 
         <p class="cat-filtros-titulo">Keywords</p>
         <ul class="cat-keywords">
@@ -9,29 +9,49 @@
         </ul>
 
         <label for="price-range" class="cat-filtro-label">
-            Precio <span id="rangeValue">$0-100</span>
+            Precio <span id="rangeValue">$0-<?= htmlspecialchars($_GET['precio'] ?? '100') ?></span>
         </label>
-        <input type="range" id="price-range" name="precio" min="0" max="100" value="100" step="1">
+        <input type="range" id="price-range" name="precio" min="0" max="100" value="<?= htmlspecialchars($_GET['precio'] ?? '100') ?>" step="1">
 
         <fieldset class="cat-checks">
             <legend class="cat-filtro-label">Género</legend>
-            <label><input type="checkbox" name="categoria" value="ciencia-ficcion" checked> Ciencia ficción</label>
-            <label><input type="checkbox" name="categoria" value="romance" checked> Romance</label>
-            <label><input type="checkbox" name="categoria" value="aventura" checked> Aventura</label>
-            <label><input type="checkbox" name="categoria" value="fantasia"> Fantasía</label>
-            <label><input type="checkbox" name="categoria" value="misterio"> Misterio</label>
-            <label><input type="checkbox" name="categoria" value="historia"> Historia</label>
-            <label><input type="checkbox" name="categoria" value="no-ficcion"> No Ficción</label>
-            <label><input type="checkbox" name="categoria" value="otros"> Otros</label>
+            <?php 
+                $categorias_seleccionadas = $_GET['categoria'] ?? [];
+                $categorias = [
+                    'ciencia-ficcion' => 'Ciencia ficción',
+                    'romance' => 'Romance',
+                    'aventura' => 'Aventura',
+                    'fantasia' => 'Fantasía',
+                    'misterio' => 'Misterio',
+                    'historia' => 'Historia',
+                    'no-ficcion' => 'No Ficción',
+                    'otros' => 'Otros'
+                ];
+                foreach ($categorias as $value => $label): 
+                    $checked = in_array($value, (array)$categorias_seleccionadas) ? 'checked' : '';
+            ?>
+                <label><input type="checkbox" name="categoria[]" value="<?= $value ?>" <?= $checked ?>> <?= $label ?></label>
+            <?php endforeach; ?>
         </fieldset>
 
         <fieldset class="cat-checks">
             <legend class="cat-filtro-label">Edad</legend>
-            <label><input type="checkbox" name="edad" value="infantil" checked> Infantil</label>
-            <label><input type="checkbox" name="edad" value="juvenil" checked> Juvenil</label>
-            <label><input type="checkbox" name="edad" value="adulto" checked> Adulto</label>
+            <?php 
+                $edades_seleccionadas = $_GET['edad'] ?? [];
+                $edades = [
+                    'infantil' => 'Infantil',
+                    'juvenil' => 'Juvenil',
+                    'adulto' => 'Adulto'
+                ];
+                foreach ($edades as $value => $label): 
+                    $checked = in_array($value, (array)$edades_seleccionadas) ? 'checked' : '';
+            ?>
+                <label><input type="checkbox" name="edad[]" value="<?= $value ?>" <?= $checked ?>> <?= $label ?></label>
+            <?php endforeach; ?>
         </fieldset>
 
+        <button type="submit" class="cat-btn-aplicar">Aplicar Filtros</button>
+        <a href="/catalogo" class="cat-btn-limpiar">Limpiar</a>
     </form>
 </aside>
 
@@ -40,9 +60,9 @@
     <search class="cat-barra">
         <button class="cat-btn-filtro" type="button" aria-label="Filtros"></button>
 
-        <form class="cat-busqueda" method="get" action="/catalogo/buscar">
+        <form class="cat-busqueda" method="get" action="/catalogo">
             <label for="busqueda" class="sr-only">Buscar</label>
-            <input type="search" id="busqueda" name="busqueda" placeholder="Buscar">
+            <input type="search" id="busqueda" name="busqueda" value="<?= htmlspecialchars($_GET['busqueda'] ?? '') ?>" placeholder="Buscar">
             <button type="submit" aria-label="Buscar"></button>
         </form>
 
@@ -67,15 +87,19 @@
     </nav>
 
     <section class="cat-grid">
-        <?php foreach ($books as $book): ?>
-            <article class="cat-card">
-                <img src="/assets/img/<?= htmlspecialchars($book['imagen']) ?>" alt="Portada del book$book">
-                <h3><?= htmlspecialchars($book['titulo']) ?></h3>
-                <p class="cat-card-autor"><?= htmlspecialchars($book['autor']) ?></p>
-                <p class="cat-card-precio">$<?= number_format($book['precio'], 2, ',', '.') ?></p>
-                <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
-            </article>
-        <?php endforeach; ?>
+        <?php if (empty($books)): ?>
+            <p>No se encontraron libros con los filtros seleccionados.</p>
+        <?php else: ?>
+            <?php foreach ($books as $book): ?>
+                <article class="cat-card">
+                    <img src="/assets/img/<?= htmlspecialchars($book['imagen'] ?? 'placeholder.jpg') ?>" alt="Portada del libro">
+                    <h3><?= htmlspecialchars($book['titulo']) ?></h3>
+                    <p class="cat-card-autor"><?= htmlspecialchars($book['autor']) ?></p>
+                    <p class="cat-card-precio">$<?= number_format($book['precio'], 2, ',', '.') ?></p>
+                    <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                </article>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
     </section>
 

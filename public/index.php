@@ -12,5 +12,6 @@ $router->get('/libro/{id}',       'LibroController',    'show');
 $router->get('/sobre-nosotros',   'PagesController',    'about');
 $router->get('/contacto',         'PagesController',    'contact');
 $router->get('/indispensables',   'PagesController',    'indispensables');
+$router->post('/procesar-contacto', 'PagesController', 'processContact');
 
 $router->resolve();
