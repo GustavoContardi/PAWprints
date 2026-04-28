@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,12 @@
     <link rel="stylesheet" href="../estilos/components.css">
     <link rel="stylesheet" href="../estilos/libro.css">
 </head>
+
 <body>
     <header>
         <!-- Logo PAWprints -->
         <a href="index.html"><img src="../img/logo_PAWprints.svg" alt="Logo PAWprints"></a>
-        
+
         <nav>
             <ul>
                 <li><a href="catalogo.html">Catálogo</a></li>
@@ -32,35 +34,34 @@
     </header>
 
     <main>
-            <!-- Sección detalle del libro -->
         <section class="seccion-libro">
             <img class="libro-portada" src="img/placeholder.jpg" alt="Tapa de libro">
-        
+
             <h2 class="libro-titulo">Título libro</h2>
             <p class="libro-genero">Género</p>
             <p class="libro-precio">50</p>
             <p class="libro-autor">Autor</p>
-    
+
             <form class="libro-form">
                 <label for="formatoLibro">Formato</label>
                 <select id="formatoLibro" name="formato" required>
-                <option value="" disabled selected>Valor</option>
-                <option value="pdf">PDF</option>
-                <option value="tapa-dura">Tapa dura</option>
-                <option value="tapa-blanda">Tapa blanda</option>
+                    <option value="" disabled selected>Valor</option>
+                    <option value="pdf">PDF</option>
+                    <option value="tapa-dura">Tapa dura</option>
+                    <option value="tapa-blanda">Tapa blanda</option>
                 </select>
-        
+
                 <label for="idiomaLibro">Idioma</label>
                 <select id="idiomaLibro" name="idioma" required>
-                <option value="" disabled selected>Valor</option>
-                <option value="ingles">Inglés</option>
-                <option value="espanol">Español</option>
-                <option value="frances">Francés</option>
+                    <option value="" disabled selected>Valor</option>
+                    <option value="ingles">Inglés</option>
+                    <option value="espanol">Español</option>
+                    <option value="frances">Francés</option>
                 </select>
-        
+
                 <a href="reservaLibro.html">Reservar libro</a>
             </form>
-        
+
             <details class="libro-sinopsis">
                 <summary>Título</summary>
                 <p>Sinopsis / Resumen</p>
@@ -69,18 +70,18 @@
                 <p>Sinopsis / Resumen</p>
             </details>
         </section>
-        <!-- Sección autor -->
+
         <section class="seccion-autor">
             <img class="autor-foto" src="img/avatar_placeholder.jpg" alt="Foto del autor">
             <h2 class="autor-titulo">Información del autor</h2>
             <h3 class="autor-nombre">Nombre del autor</h3>
-            <p class="autor-bio">Lorem ipsum dolor sit amet consectetur, 
-                adipisicing elit. Aliquam voluptatum sapiente asperiores 
-                consequuntur eligendi quas! Nostrum ab minus, sequi quia 
-                recusandae incidunt vel qui nesciunt blanditiis rem delectus 
-                eveniet aut. Lorem ipsum dolor sit amet consectetur, 
-                adipisicing elit. Veniam aliquid architecto in ullam consequatur 
-                possimus illo dolorem, laborum magnam alias dolorum aut atque 
+            <p class="autor-bio">Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Aliquam voluptatum sapiente asperiores
+                consequuntur eligendi quas! Nostrum ab minus, sequi quia
+                recusandae incidunt vel qui nesciunt blanditiis rem delectus
+                eveniet aut. Lorem ipsum dolor sit amet consectetur,
+                adipisicing elit. Veniam aliquid architecto in ullam consequatur
+                possimus illo dolorem, laborum magnam alias dolorum aut atque
                 exercitationem voluptatem explicabo. Mollitia sint debitis nemo?
             </p>
         </section>
@@ -109,4 +110,5 @@
         </address>
     </footer>
 </body>
+
 </html>
