@@ -1,14 +1,14 @@
 <section class="seccion-libro">
-    <img class="libro-portada" src="img/placeholder.jpg" alt="Tapa de libro">
+    <img class="libro-portada" src="/assets/img/<?= htmlspecialchars($book['image'] ?? 'placeholder.jpg') ?>" alt="Tapa de <?= htmlspecialchars($book['title']) ?>">
 
-    <h2 class="libro-titulo">Título libro</h2>
-    <p class="libro-genero">Género</p>
-    <p class="libro-precio">50</p>
-    <p class="libro-autor">Autor</p>
+    <h2 class="libro-titulo"><?= htmlspecialchars($book['title']) ?></h2>
+    <p class="libro-genero"><?= htmlspecialchars($book['category'] ?? 'Sin categoría') ?></p>
+    <p class="libro-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
+    <p class="libro-autor"><?= htmlspecialchars($book['author']) ?></p>
 
-    <form class="libro-form">
+    <div class="libro-form">
         <label for="formatoLibro">Formato</label>
-        <select id="formatoLibro" name="formato" required>
+        <select id="formatoLibro" name="formato">
             <option value="" disabled selected>Valor</option>
             <option value="pdf">PDF</option>
             <option value="tapa-dura">Tapa dura</option>
@@ -16,36 +16,29 @@
         </select>
 
         <label for="idiomaLibro">Idioma</label>
-        <select id="idiomaLibro" name="idioma" required>
+        <select id="idiomaLibro" name="idioma">
             <option value="" disabled selected>Valor</option>
             <option value="ingles">Inglés</option>
             <option value="espanol">Español</option>
             <option value="frances">Francés</option>
         </select>
 
-        <a href="reservaLibro.html">Reservar libro</a>
-    </form>
+        <a href="/reserve/<?= $book['id'] ?>"
+           class="btn-comprar"
+           <?= $book['stock'] <= 0 ? 'style="pointer-events:none;opacity:0.5"' : '' ?>>
+            <?= $book['stock'] > 0 ? 'Reservar Libro' : 'No disponible' ?>
+        </a>
+    </div>
 
     <details class="libro-sinopsis">
-        <summary>Título</summary>
-        <p>Sinopsis / Resumen</p>
-        <p>Sinopsis / Resumen</p>
-        <p>Sinopsis / Resumen</p>
-        <p>Sinopsis / Resumen</p>
+        <summary>Sinopsis</summary>
+        <p><?= htmlspecialchars($book['description'] ?? 'Sin descripción disponible.') ?></p>
     </details>
 </section>
 
 <section class="seccion-autor">
-    <img class="autor-foto" src="img/avatar_placeholder.jpg" alt="Foto del autor">
+    <img class="autor-foto" src="/assets/img/avatar_placeholder.jpg" alt="Foto de <?= htmlspecialchars($book['author']) ?>">
     <h2 class="autor-titulo">Información del autor</h2>
-    <h3 class="autor-nombre">Nombre del autor</h3>
-    <p class="autor-bio">Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Aliquam voluptatum sapiente asperiores
-        consequuntur eligendi quas! Nostrum ab minus, sequi quia
-        recusandae incidunt vel qui nesciunt blanditiis rem delectus
-        eveniet aut. Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Veniam aliquid architecto in ullam consequatur
-        possimus illo dolorem, laborum magnam alias dolorum aut atque
-        exercitationem voluptatem explicabo. Mollitia sint debitis nemo?
-    </p>
+    <h3 class="autor-nombre"><?= htmlspecialchars($book['author']) ?></h3>
+    <p class="autor-bio">Información del autor no disponible.</p>
 </section>
