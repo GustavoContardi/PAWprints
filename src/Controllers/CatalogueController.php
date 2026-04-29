@@ -11,7 +11,7 @@ class CatalogueController extends Controller
         $collection = new BooksCollection($this->db);
 
         $page    = max(1, (int)($_GET['page'] ?? 1));
-        $perPage = max(1, (int)($_GET['per_page'] ?? 10));
+        $perPage = max(1, (int)($_GET['per_page'] ?? 12));
 
         $filters = [
             'category'  => $_GET['category'] ?? null,
