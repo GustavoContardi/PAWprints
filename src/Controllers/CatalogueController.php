@@ -40,46 +40,6 @@ class CatalogueController extends Controller
         ]);
     }
 
-    public function search(array $params): void
-    {
-        $q = trim($_GET['q'] ?? '');
-
-        if ($q === '') {
-            header('Location: /catalogue');
-            exit;
-        }
-
-        $collection = new BooksCollection($this->db);
-
-        $page    = max(1, (int)($_GET['page'] ?? 1));
-        $perPage = max(1, (int)($_GET['per_page'] ?? 10));
-
-        $filters = [
-            'category'  => $_GET['category'] ?? null,
-            'age'       => $_GET['age'] ?? null,
-            'search'    => $q,
-            'max_price' => $_GET['price'] ?? null,
-            'page'      => $page,
-            'per_page'  => $perPage,
-        ];
-
-        $result = $collection->getAll($filters);
-
-        if ($page > $result['totalPages'] || $page < 1) {
-            $this->abort(404, 'Página no encontrada');
-        }
-
-        $this->render('catalogue', [
-            'title'      => "Resultados de \"$q\" — PAWprints",
-            'styles'     => ['catalogo.css'],
-            'books'      => $result['items'],
-            'page'       => $result['page'],
-            'totalPages' => $result['totalPages'],
-            'perPage'    => $result['perPage'],
-            'total'      => $result['total'],
-        ]);
-    }
-
     public function exportCsv(array $params): void
     {
         $collection = new BooksCollection($this->db);

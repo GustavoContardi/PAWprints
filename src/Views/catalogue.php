@@ -14,9 +14,9 @@
         <p class="cat-titulo">Filtros</p>
 
         <label for="price-range" class="cat-filtro-label">
-            Precio <span id="rangeValue">$0-<?= htmlspecialchars($_GET['price'] ?? '100') ?></span>
+            Precio <span id="rangeValue">$0-<?= htmlspecialchars($_GET['price'] ?? '25000') ?></span>
         </label>
-        <input type="range" id="price-range" name="price" min="0" max="100" value="<?= htmlspecialchars($_GET['price'] ?? '100') ?>" step="1">
+        <input type="range" id="price-range" name="price" min="0" max="25000" value="<?= htmlspecialchars($_GET['price'] ?? '25000') ?>" step="100">
 
         <fieldset class="cat-checks">
             <legend class="cat-filtro-label">Género</legend>

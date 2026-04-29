@@ -49,14 +49,14 @@ class Book
             $stmt = $pdo->prepare("UPDATE books SET title = ?, author = ?, price = ?, description = ?, stock = ?, image = ?, category = ?, age = ?, is_new = ?, discount = ?, is_recommended = ? WHERE id = ?");
             return $stmt->execute([
                 $this->title, $this->author, $this->price, $this->description, $this->stock, $this->image,
-                $this->category, $this->age, $this->is_new ? 1 : 0, $this->discount, $this->is_recommended ? 1 : 0,
+                $this->category, $this->age, $this->is_new, $this->discount, $this->is_recommended,
                 $this->id
             ]);
         } else {
             $stmt = $pdo->prepare("INSERT INTO books (title, author, price, description, stock, image, category, age, is_new, discount, is_recommended) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
                 $this->title, $this->author, $this->price, $this->description, $this->stock, $this->image,
-                $this->category, $this->age, $this->is_new ? 1 : 0, $this->discount, $this->is_recommended ? 1 : 0
+                $this->category, $this->age, $this->is_new, $this->discount, $this->is_recommended
             ]);
             if ($result) {
                 $this->id = (int)$pdo->lastInsertId();
