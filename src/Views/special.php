@@ -3,16 +3,16 @@
 <section class="ind-hero">
     <p class="ind-hero-sub">Nuestros</p>
     <h1 class="ind-hero-titulo">Indispensables</h1>
-    <form class="ind-busqueda" action="buscar" method="GET">
+    <form class="ind-busqueda" action="/catalogue" method="GET">
         <label for="busqueda" class="sr-only">Buscar</label>
-        <input type="search" id="busqueda" name="busqueda" placeholder="Buscar">
+        <input type="search" id="busqueda" name="search" placeholder="Buscar">
         <button type="submit" aria-label="Buscar"></button>
     </form>
 </section>
 
 <!-- Novedades -->
 <section class="ind-seccion">
-    <h2 class="ind-seccion-titulo"><a href="catalogo.html">Novedades</a></h2>
+    <h2 class="ind-seccion-titulo"><a href="/catalogue">Novedades</a></h2>
 
     <button class="ind-btn-anterior" type="button" aria-label="Anterior en Novedades" disabled></button>
 
@@ -20,9 +20,11 @@
         <?php foreach($new as $book): ?>
             <li>
                 <article class="ind-card">
-                    <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro 1">
+                    <a href="/book/<?= $book['id'] ?>">
+                        <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                    </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
-                    <p class="ind-card-precio"><?= htmlspecialchars($book['price']) ?></p>
+                    <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
                     <button class="ind-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
             </li>
@@ -35,7 +37,7 @@
 
 <!-- Descuentos -->
 <section class="ind-seccion">
-    <h2 class="ind-seccion-titulo"><a href="catalogo.html">Descuentos</a></h2>
+    <h2 class="ind-seccion-titulo"><a href="/catalogue">Descuentos</a></h2>
     
     <button class="ind-btn-anterior" type="button" aria-label="Anterior en Descuentos" disabled></button>
     
@@ -43,9 +45,11 @@
         <?php foreach($sales as $book): ?>
             <li>
                 <article class="ind-card">
-                    <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro 1">
+                    <a href="/book/<?= $book['id'] ?>">
+                        <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                    </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
-                    <p class="ind-card-precio"><?= htmlspecialchars($book['price']) ?></p>
+                    <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
                     <button class="ind-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
             </li>
@@ -58,7 +62,7 @@
 
 <!-- Recomendados -->
 <section class="ind-seccion">
-    <h2 class="ind-seccion-titulo"><a href="catalogo.html">Recomendados</a></h2>
+    <h2 class="ind-seccion-titulo"><a href="/catalogue">Recomendados</a></h2>
     
     <button class="ind-btn-anterior" type="button" aria-label="Anterior en Recomendados" disabled></button>
     
@@ -66,9 +70,11 @@
         <?php foreach($recommended as $book): ?>
             <li>
                 <article class="ind-card">
-                    <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro 1">
+                    <a href="/book/<?= $book['id'] ?>">
+                        <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                    </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
-                    <p class="ind-card-precio"><?= htmlspecialchars($book['price']) ?></p>
+                    <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
                     <button class="ind-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
             </li>

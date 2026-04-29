@@ -7,11 +7,11 @@ use Core\Router;
 $router = new Router($logger);
 
 $router->get('/',                 'HomeController',     'index');
-$router->get('/catalogo',         'CatalogoController', 'index');
-$router->get('/libro/{id}',       'LibroController',    'show');
-$router->get('/sobre-nosotros',   'PagesController',    'about');
-$router->get('/contacto',         'PagesController',    'contact');
-$router->get('/indispensables',   'PagesController',    'indispensables');
-$router->post('/procesar-contacto', 'PagesController', 'processContact');
+$router->get('/catalogue',         'CatalogueController', 'index');
+$router->get('/book/{id}',         'BookController',      'show');
+$router->get('/about-us',          'PagesController',     'about');
+$router->get('/contact',           'PagesController',     'contact');
+$router->get('/special',           'PagesController',     'special');
+$router->post('/process-contact',  'PagesController',     'processContact');
 
 $router->resolve();

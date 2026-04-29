@@ -4,17 +4,17 @@ namespace Controllers;
 
 use Models\BooksCollection;
 
-class CatalogoController extends Controller
+class CatalogueController extends Controller
 {
     public function index(array $params): void
     {
         $collection = new BooksCollection($this->db);
         
         $filters = [
-            'categoria' => $_GET['categoria'] ?? null,
-            'edad'      => $_GET['edad'] ?? null,
-            'busqueda'  => $_GET['busqueda'] ?? null,
-            'precio_max' => $_GET['precio'] ?? null,
+            'category'  => $_GET['category'] ?? null,
+            'age'       => $_GET['age'] ?? null,
+            'search'    => $_GET['search'] ?? null,
+            'max_price' => $_GET['price'] ?? null,
         ];
 
         $books = $collection->getAll($filters);

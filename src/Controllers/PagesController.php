@@ -28,16 +28,16 @@ class PagesController extends Controller
         ]);
     }
 
-    public function indispensables(array $params): void
+    public function special(array $params): void
     {
         $collection = new \Models\BooksCollection($this->db);
 
         $this->render('special', [
             'title'       => 'Indispensables — PAWprints',
             'styles'      => ['indispensables.css'],
-            'new'         => $collection->getNovedades(4),
-            'sales'       => $collection->getDescuentos(4),
-            'recommended' => $collection->getRecomendados(4)
+            'new'         => $collection->getNew(4),
+            'sales'       => $collection->getSales(4),
+            'recommended' => $collection->getRecommended(4)
         ]);
     }
 }

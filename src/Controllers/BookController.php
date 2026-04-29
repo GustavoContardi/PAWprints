@@ -4,14 +4,14 @@ namespace Controllers;
 
 use Models\Book;
 
-class LibroController extends Controller
+class BookController extends Controller
 {
     public function show(array $params): void
     {
         $id = $params['id'] ?? null;
 
         if (!$id) {
-            header('Location: /catalogo');
+            header('Location: /catalogue');
             exit;
         }
 
@@ -23,9 +23,9 @@ class LibroController extends Controller
         }
 
         $this->render('libro', [
-            'title'  => "{$book->getTitulo()} — PAWprints",
+            'title'  => "{$book->getTitle()} — PAWprints",
             'styles' => ['libro.css'],
-            'libro'  => $book->toArray()
+            'book'   => $book->toArray()
         ]);
     }
 }

@@ -18,11 +18,11 @@
         <a href="/"><img src="/assets/img/logo_PAWprints.svg" alt="Logo PAWprints"></a>
         <nav>
             <ul>
-                <li><a href="/catalogo">Catálogo</a></li>
-                <li><a href="/indispensables">Indispensables</a></li>
-                <li><a href="/catalogo">Más Vendidos</a></li>
-                <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
-                <li><a href="/contacto">Contacto</a></li>
+                <li><a href="/catalogue">Catálogo</a></li>
+                <li><a href="/special">Indispensables</a></li>
+                <li><a href="/catalogue">Más Vendidos</a></li>
+                <li><a href="/about-us">Sobre nosotros</a></li>
+                <li><a href="/contact">Contacto</a></li>
                 <li><a href="" class="nav-btn">Iniciar sesión</a></li>
                 <li><a href="" class="nav-btn">Registrarse</a></li>
                 <li><a href="" aria-label="Menú">Menú</a></li>

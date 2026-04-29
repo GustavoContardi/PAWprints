@@ -14,53 +14,53 @@ class BooksCollection
     }
 
     /**
-     * Obtiene todos los libros con filtros opcionales
+     * Gets all books with optional filters
      */
     public function getAll(array $filters = []): array
     {
-        $query = "SELECT * FROM libros WHERE 1=1";
+        $query = "SELECT * FROM books WHERE 1=1";
         $params = [];
 
-        // Filtro por categorías (soporta array)
-        if (!empty($filters['categoria'])) {
-            if (is_array($filters['categoria'])) {
+        // Filter by categories (supports array)
+        if (!empty($filters['category'])) {
+            if (is_array($filters['category'])) {
                 $placeholders = [];
-                foreach ($filters['categoria'] as $i => $cat) {
+                foreach ($filters['category'] as $i => $cat) {
                     $key = "cat_$i";
                     $placeholders[] = ":$key";
                     $params[$key] = $cat;
                 }
-                $query .= " AND categoria IN (" . implode(',', $placeholders) . ")";
+                $query .= " AND category IN (" . implode(',', $placeholders) . ")";
             } else {
-                $query .= " AND categoria = :categoria";
-                $params['categoria'] = $filters['categoria'];
+                $query .= " AND category = :category";
+                $params['category'] = $filters['category'];
             }
         }
 
-        // Filtro por edad (soporta array)
-        if (!empty($filters['edad'])) {
-            if (is_array($filters['edad'])) {
+        // Filter by age (supports array)
+        if (!empty($filters['age'])) {
+            if (is_array($filters['age'])) {
                 $placeholders = [];
-                foreach ($filters['edad'] as $i => $e) {
-                    $key = "edad_$i";
+                foreach ($filters['age'] as $i => $e) {
+                    $key = "age_$i";
                     $placeholders[] = ":$key";
                     $params[$key] = $e;
                 }
-                $query .= " AND edad IN (" . implode(',', $placeholders) . ")";
+                $query .= " AND age IN (" . implode(',', $placeholders) . ")";
             } else {
-                $query .= " AND edad = :edad";
-                $params['edad'] = $filters['edad'];
+                $query .= " AND age = :age";
+                $params['age'] = $filters['age'];
             }
         }
 
-        if (!empty($filters['busqueda'])) {
-            $query .= " AND (titulo ILIKE :busqueda OR autor ILIKE :busqueda)";
-            $params['busqueda'] = '%' . $filters['busqueda'] . '%';
+        if (!empty($filters['search'])) {
+            $query .= " AND (title ILIKE :search OR author ILIKE :search)";
+            $params['search'] = '%' . $filters['search'] . '%';
         }
 
-        if (isset($filters['precio_max']) && $filters['precio_max'] !== '') {
-            $query .= " AND precio <= :precio_max";
-            $params['precio_max'] = (float)$filters['precio_max'];
+        if (isset($filters['max_price']) && $filters['max_price'] !== '') {
+            $query .= " AND price <= :max_price";
+            $params['max_price'] = (float)$filters['max_price'];
         }
 
         $stmt = $this->db->prepare($query);
@@ -72,25 +72,25 @@ class BooksCollection
         return $stmt->fetchAll();
     }
 
-    public function getNovedades(int $limit = 10): array
+    public function getNew(int $limit = 10): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM libros WHERE es_novedad = TRUE LIMIT :limit");
+        $stmt = $this->db->prepare("SELECT * FROM books WHERE is_new = TRUE LIMIT :limit");
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    public function getDescuentos(int $limit = 10): array
+    public function getSales(int $limit = 10): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM libros WHERE descuento > 0 LIMIT :limit");
+        $stmt = $this->db->prepare("SELECT * FROM books WHERE discount > 0 LIMIT :limit");
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    public function getRecomendados(int $limit = 10): array
+    public function getRecommended(int $limit = 10): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM libros WHERE es_recomendado = TRUE LIMIT :limit");
+        $stmt = $this->db->prepare("SELECT * FROM books WHERE is_recommended = TRUE LIMIT :limit");
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();

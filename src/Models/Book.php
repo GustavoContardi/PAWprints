@@ -7,37 +7,37 @@ use PDO;
 class Book
 {
     private ?int $id;
-    private string $titulo;
-    private string $autor;
-    private float $precio;
-    private ?string $descripcion;
+    private string $title;
+    private string $author;
+    private float $price;
+    private ?string $description;
     private int $stock;
-    private ?string $imagen;
-    private ?string $categoria;
-    private ?string $edad;
-    private bool $es_novedad;
-    private float $descuento;
-    private bool $es_recomendado;
+    private ?string $image;
+    private ?string $category;
+    private ?string $age;
+    private bool $is_new;
+    private float $discount;
+    private bool $is_recommended;
 
     public function __construct(array $data = [])
     {
         $this->id = $data['id'] ?? null;
-        $this->titulo = $data['titulo'] ?? '';
-        $this->autor = $data['autor'] ?? '';
-        $this->precio = (float)($data['precio'] ?? 0);
-        $this->descripcion = $data['descripcion'] ?? null;
+        $this->title = $data['title'] ?? $data['titulo'] ?? '';
+        $this->author = $data['author'] ?? $data['autor'] ?? '';
+        $this->price = (float)($data['price'] ?? $data['precio'] ?? 0);
+        $this->description = $data['description'] ?? $data['descripcion'] ?? null;
         $this->stock = (int)($data['stock'] ?? 0);
-        $this->imagen = $data['imagen'] ?? null;
-        $this->categoria = $data['categoria'] ?? null;
-        $this->edad = $data['edad'] ?? null;
-        $this->es_novedad = (bool)($data['es_novedad'] ?? false);
-        $this->descuento = (float)($data['descuento'] ?? 0);
-        $this->es_recomendado = (bool)($data['es_recomendado'] ?? false);
+        $this->image = $data['image'] ?? $data['imagen'] ?? null;
+        $this->category = $data['category'] ?? $data['categoria'] ?? null;
+        $this->age = $data['age'] ?? $data['edad'] ?? null;
+        $this->is_new = (bool)($data['is_new'] ?? $data['es_novedad'] ?? false);
+        $this->discount = (float)($data['discount'] ?? $data['descuento'] ?? 0);
+        $this->is_recommended = (bool)($data['is_recommended'] ?? $data['es_recomendado'] ?? false);
     }
 
     public static function find(PDO $pdo, int $id): ?self
     {
-        $stmt = $pdo->prepare("SELECT * FROM libros WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT * FROM books WHERE id = ?");
         $stmt->execute([$id]);
         $row = $stmt->fetch();
         return $row ? new self($row) : null;
@@ -46,17 +46,17 @@ class Book
     public function save(PDO $pdo): bool
     {
         if ($this->id) {
-            $stmt = $pdo->prepare("UPDATE libros SET titulo = ?, autor = ?, precio = ?, descripcion = ?, stock = ?, imagen = ?, categoria = ?, edad = ?, es_novedad = ?, descuento = ?, es_recomendado = ? WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE books SET title = ?, author = ?, price = ?, description = ?, stock = ?, image = ?, category = ?, age = ?, is_new = ?, discount = ?, is_recommended = ? WHERE id = ?");
             return $stmt->execute([
-                $this->titulo, $this->autor, $this->precio, $this->descripcion, $this->stock, $this->imagen,
-                $this->categoria, $this->edad, $this->es_novedad ? 1 : 0, $this->descuento, $this->es_recomendado ? 1 : 0,
+                $this->title, $this->author, $this->price, $this->description, $this->stock, $this->image,
+                $this->category, $this->age, $this->is_new ? 1 : 0, $this->discount, $this->is_recommended ? 1 : 0,
                 $this->id
             ]);
         } else {
-            $stmt = $pdo->prepare("INSERT INTO libros (titulo, autor, precio, descripcion, stock, imagen, categoria, edad, es_novedad, descuento, es_recomendado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO books (title, author, price, description, stock, image, category, age, is_new, discount, is_recommended) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
-                $this->titulo, $this->autor, $this->precio, $this->descripcion, $this->stock, $this->imagen,
-                $this->categoria, $this->edad, $this->es_novedad ? 1 : 0, $this->descuento, $this->es_recomendado ? 1 : 0
+                $this->title, $this->author, $this->price, $this->description, $this->stock, $this->image,
+                $this->category, $this->age, $this->is_new ? 1 : 0, $this->discount, $this->is_recommended ? 1 : 0
             ]);
             if ($result) {
                 $this->id = (int)$pdo->lastInsertId();
@@ -67,37 +67,33 @@ class Book
 
     // Getters
     public function getId(): ?int { return $this->id; }
-    public function getTitulo(): string { return $this->titulo; }
-    public function getAutor(): string { return $this->autor; }
-    public function getPrecio(): float { return $this->precio; }
-    public function getDescripcion(): ?string { return $this->descripcion; }
+    public function getTitle(): string { return $this->title; }
+    public function getAuthor(): string { return $this->author; }
+    public function getPrice(): float { return $this->price; }
+    public function getDescription(): ?string { return $this->description; }
     public function getStock(): int { return $this->stock; }
-    public function getImagen(): ?string { return $this->imagen; }
-    public function getCategoria(): ?string { return $this->categoria; }
-    public function getEdad(): ?string { return $this->edad; }
-    public function isNovedad(): bool { return $this->es_novedad; }
-    public function getDescuento(): float { return $this->descuento; }
-    public function isRecomendado(): bool { return $this->es_recomendado; }
+    public function getImage(): ?string { return $this->image; }
+    public function getCategory(): ?string { return $this->category; }
+    public function getAge(): ?string { return $this->age; }
+    public function isNew(): bool { return $this->is_new; }
+    public function getDiscount(): float { return $this->discount; }
+    public function isRecommended(): bool { return $this->is_recommended; }
 
     public function toArray(): array
     {
         return [
             'id' => $this->id,
-            'titulo' => $this->titulo,
-            'autor' => $this->autor,
-            'precio' => $this->precio,
-            'descripcion' => $this->descripcion,
+            'title' => $this->title,
+            'author' => $this->author,
+            'price' => $this->price,
+            'description' => $this->description,
             'stock' => $this->stock,
-            'imagen' => $this->imagen,
-            'categoria' => $this->categoria,
-            'edad' => $this->edad,
-            'es_novedad' => $this->es_novedad,
-            'descuento' => $this->descuento,
-            'es_recomendado' => $this->es_recomendado,
-            // Soporte para nombres en inglés usados en algunas vistas
-            'title' => $this->titulo,
-            'image' => $this->imagen,
-            'price' => $this->precio
+            'image' => $this->image,
+            'category' => $this->category,
+            'age' => $this->age,
+            'is_new' => $this->is_new,
+            'discount' => $this->discount,
+            'is_recommended' => $this->is_recommended
         ];
     }
 }
