@@ -97,17 +97,81 @@
         </menu>
     </search>
 
-    <nav class="cat-paginacion" aria-label="Paginación superior">
-        <ol>
-            <li><a href="?pagina=1" aria-label="Página anterior">&#8592;</a></li>
-            <li><a href="?pagina=1" aria-current="page">1</a></li>
-            <li><a href="?pagina=2">2</a></li>
-            <li><a href="?pagina=3">3</a></li>
-            <li><a href="?pagina=4">4</a></li>
-            <li><a href="?pagina=5">5</a></li>
-            <li><a href="?pagina=2" aria-label="Página siguiente">&#8594;</a></li>
-        </ol>
-    </nav>
+    <?php
+    // ── Helper de paginación ─────────────────────────────────────────────
+    // Genera el bloque <nav> de paginación dinámica.
+    // Recibe $page, $totalPages y un aria-label para accesibilidad.
+    function renderPagination(int $page, int $totalPages, string $ariaLabel = 'Paginación'): void
+    {
+        if ($totalPages <= 1) return;
+
+        // Preservar todos los query params actuales, cambiando solo "page"
+        $buildUrl = function (int $p) {
+            $params = $_GET;
+            $params['page'] = $p;
+            return '?' . http_build_query($params);
+        };
+
+        // Rango de páginas a mostrar (ventana deslizante de hasta 5)
+        $delta = 2;
+        $start = max(1, $page - $delta);
+        $end   = min($totalPages, $page + $delta);
+
+        // Ajustar para mostrar siempre al menos 5 si hay suficientes páginas
+        if ($end - $start < 4 && $totalPages >= 5) {
+            if ($start === 1) {
+                $end = min($totalPages, $start + 4);
+            } elseif ($end === $totalPages) {
+                $start = max(1, $end - 4);
+            }
+        }
+
+        echo '<nav class="cat-paginacion" aria-label="' . htmlspecialchars($ariaLabel) . '">';
+        echo '<ol>';
+
+        // Flecha izquierda
+        if ($page === 1) {
+            echo '<li><span class="disabled" aria-label="Página anterior">&#8592;</span></li>';
+        } else {
+            echo '<li><a href="' . $buildUrl($page - 1) . '" aria-label="Página anterior">&#8592;</a></li>';
+        }
+
+        // Números de página
+        if ($start > 1) {
+            echo '<li><a href="' . $buildUrl(1) . '">1</a></li>';
+            if ($start > 2) {
+                echo '<li><span class="ellipsis">…</span></li>';
+            }
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            if ($i === $page) {
+                echo '<li><a href="' . $buildUrl($i) . '" aria-current="page">' . $i . '</a></li>';
+            } else {
+                echo '<li><a href="' . $buildUrl($i) . '">' . $i . '</a></li>';
+            }
+        }
+
+        if ($end < $totalPages) {
+            if ($end < $totalPages - 1) {
+                echo '<li><span class="ellipsis">…</span></li>';
+            }
+            echo '<li><a href="' . $buildUrl($totalPages) . '">' . $totalPages . '</a></li>';
+        }
+
+        // Flecha derecha
+        if ($page === $totalPages) {
+            echo '<li><span class="disabled" aria-label="Página siguiente">&#8594;</span></li>';
+        } else {
+            echo '<li><a href="' . $buildUrl($page + 1) . '" aria-label="Página siguiente">&#8594;</a></li>';
+        }
+
+        echo '</ol>';
+        echo '</nav>';
+    }
+    ?>
+
+    <?php renderPagination($page, $totalPages, 'Paginación superior'); ?>
 
     <section class="cat-grid">
         <?php if (empty($books)): ?>
@@ -128,16 +192,6 @@
 
     </section>
 
-    <nav class="cat-paginacion" aria-label="Paginación">
-        <ol>
-            <li><a href="?pagina=1" aria-label="Página anterior">&#8592;</a></li>
-            <li><a href="?pagina=1" aria-current="page">1</a></li>
-            <li><a href="?pagina=2">2</a></li>
-            <li><a href="?pagina=3">3</a></li>
-            <li><a href="?pagina=4">4</a></li>
-            <li><a href="?pagina=5">5</a></li>
-            <li><a href="?pagina=2" aria-label="Página siguiente">&#8594;</a></li>
-        </ol>
-    </nav>
+    <?php renderPagination($page, $totalPages, 'Paginación inferior'); ?>
 
 </section>

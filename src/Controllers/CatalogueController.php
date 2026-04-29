@@ -9,20 +9,114 @@ class CatalogueController extends Controller
     public function index(array $params): void
     {
         $collection = new BooksCollection($this->db);
-        
+
+        $page    = max(1, (int)($_GET['page'] ?? 1));
+        $perPage = max(1, (int)($_GET['per_page'] ?? 10));
+
         $filters = [
             'category'  => $_GET['category'] ?? null,
             'age'       => $_GET['age'] ?? null,
             'search'    => $_GET['search'] ?? null,
             'max_price' => $_GET['price'] ?? null,
+            'page'      => $page,
+            'per_page'  => $perPage,
         ];
 
-        $books = $collection->getAll($filters);
+        $result = $collection->getAll($filters);
+
+        // Validar que la página solicitada esté en rango
+        if ($page > $result['totalPages'] || $page < 1) {
+            $this->abort(404, 'Página no encontrada');
+        }
 
         $this->render('catalogue', [
-            'title'  => 'Catálogo — PAWprints',
-            'styles' => ['catalogo.css'],
-            'books'  => $books
+            'title'      => 'Catálogo — PAWprints',
+            'styles'     => ['catalogo.css'],
+            'books'      => $result['items'],
+            'page'       => $result['page'],
+            'totalPages' => $result['totalPages'],
+            'perPage'    => $result['perPage'],
+            'total'      => $result['total'],
         ]);
+    }
+
+    public function search(array $params): void
+    {
+        $q = trim($_GET['q'] ?? '');
+
+        if ($q === '') {
+            header('Location: /catalogue');
+            exit;
+        }
+
+        $collection = new BooksCollection($this->db);
+
+        $page    = max(1, (int)($_GET['page'] ?? 1));
+        $perPage = max(1, (int)($_GET['per_page'] ?? 10));
+
+        $filters = [
+            'category'  => $_GET['category'] ?? null,
+            'age'       => $_GET['age'] ?? null,
+            'search'    => $q,
+            'max_price' => $_GET['price'] ?? null,
+            'page'      => $page,
+            'per_page'  => $perPage,
+        ];
+
+        $result = $collection->getAll($filters);
+
+        if ($page > $result['totalPages'] || $page < 1) {
+            $this->abort(404, 'Página no encontrada');
+        }
+
+        $this->render('catalogue', [
+            'title'      => "Resultados de \"$q\" — PAWprints",
+            'styles'     => ['catalogo.css'],
+            'books'      => $result['items'],
+            'page'       => $result['page'],
+            'totalPages' => $result['totalPages'],
+            'perPage'    => $result['perPage'],
+            'total'      => $result['total'],
+        ]);
+    }
+
+    public function exportCsv(array $params): void
+    {
+        $collection = new BooksCollection($this->db);
+
+        $filters = [
+            'category'  => $_GET['category'] ?? null,
+            'age'       => $_GET['age'] ?? null,
+            'search'    => $_GET['search'] ?? null,
+            'max_price' => $_GET['price'] ?? null,
+            'paginate'  => false,
+        ];
+
+        $result = $collection->getAll($filters);
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="catalogo.csv"');
+
+        $output = fopen('php://output', 'w');
+
+        // BOM para que Excel interprete UTF-8 correctamente
+        fprintf($output, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        fputcsv($output, ['ID', 'Título', 'Autor', 'Precio', 'Stock', 'Categoría', 'Edad']);
+
+        foreach ($result['items'] as $book) {
+            fputcsv($output, [
+                $book['id'],
+                $book['title'],
+                $book['author'],
+                $book['price'],
+                $book['stock'],
+                $book['category'],
+                $book['age'],
+            ]);
+        }
+
+        fclose($output);
+        exit;
     }
 }

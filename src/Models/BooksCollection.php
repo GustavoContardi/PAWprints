@@ -14,11 +14,22 @@ class BooksCollection
     }
 
     /**
-     * Gets all books with optional filters
+     * Gets all books with optional filters and pagination.
+     *
+     * Supported filters:
+     *   - category (string|array)
+     *   - age (string|array)
+     *   - search (string) — ILIKE on title/author
+     *   - max_price (numeric)
+     *   - page (int, default 1)
+     *   - per_page (int, default 10)
+     *   - paginate (bool, default true) — set to false to skip pagination and return all rows
+     *
+     * @return array{items: array, total: int, page: int, perPage: int, totalPages: int}
      */
     public function getAll(array $filters = []): array
     {
-        $query = "SELECT * FROM books WHERE 1=1";
+        $where = " WHERE 1=1";
         $params = [];
 
         // Filter by categories (supports array)
@@ -30,9 +41,9 @@ class BooksCollection
                     $placeholders[] = ":$key";
                     $params[$key] = $cat;
                 }
-                $query .= " AND category IN (" . implode(',', $placeholders) . ")";
+                $where .= " AND category IN (" . implode(',', $placeholders) . ")";
             } else {
-                $query .= " AND category = :category";
+                $where .= " AND category = :category";
                 $params['category'] = $filters['category'];
             }
         }
@@ -46,30 +57,67 @@ class BooksCollection
                     $placeholders[] = ":$key";
                     $params[$key] = $e;
                 }
-                $query .= " AND age IN (" . implode(',', $placeholders) . ")";
+                $where .= " AND age IN (" . implode(',', $placeholders) . ")";
             } else {
-                $query .= " AND age = :age";
+                $where .= " AND age = :age";
                 $params['age'] = $filters['age'];
             }
         }
 
         if (!empty($filters['search'])) {
-            $query .= " AND (title ILIKE :search OR author ILIKE :search)";
+            $where .= " AND (title ILIKE :search OR author ILIKE :search)";
             $params['search'] = '%' . $filters['search'] . '%';
         }
 
         if (isset($filters['max_price']) && $filters['max_price'] !== '') {
-            $query .= " AND price <= :max_price";
+            $where .= " AND price <= :max_price";
             $params['max_price'] = (float)$filters['max_price'];
+        }
+
+        // ── COUNT total ──────────────────────────────────────────────────────
+        $countStmt = $this->db->prepare("SELECT COUNT(*) FROM books" . $where);
+        foreach ($params as $key => $value) {
+            $countStmt->bindValue($key, $value);
+        }
+        $countStmt->execute();
+        $total = (int)$countStmt->fetchColumn();
+
+        // ── Pagination parameters ────────────────────────────────────────────
+        $paginate = $filters['paginate'] ?? true;
+        $page     = max(1, (int)($filters['page'] ?? 1));
+        $perPage  = max(1, (int)($filters['per_page'] ?? 10));
+
+        $totalPages = $paginate ? (int)ceil($total / $perPage) : 1;
+        // Ensure at least 1 total page even with 0 results
+        $totalPages = max(1, $totalPages);
+
+        // ── Main query ───────────────────────────────────────────────────────
+        $query = "SELECT * FROM books" . $where . " ORDER BY id ASC";
+
+        if ($paginate) {
+            $offset = ($page - 1) * $perPage;
+            $query .= " LIMIT :limit OFFSET :offset";
         }
 
         $stmt = $this->db->prepare($query);
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
+
+        if ($paginate) {
+            $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        }
+
         $stmt->execute();
-        
-        return $stmt->fetchAll();
+
+        return [
+            'items'      => $stmt->fetchAll(),
+            'total'      => $total,
+            'page'       => $page,
+            'perPage'    => $perPage,
+            'totalPages' => $totalPages,
+        ];
     }
 
     public function getNew(int $limit = 10): array
