@@ -11,7 +11,7 @@
         </ul>
         -->
 
-        <p class="cat-titulo">Filtros</p>
+        <p class="cat-filtros-titulo">Filtros</p>
 
         <label class="cat-filtro-label">Precio ($)</label>
         <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">

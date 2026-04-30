@@ -283,7 +283,7 @@ section.cat-grid {
     align-items: flex-start;
     padding: 2rem;
     gap: 2rem;
-    max-width: 90%;
+    max-width: 92.5%;
     margin: 0 auto;
     width: 100%;
   }
@@ -299,17 +299,17 @@ section.cat-grid {
     border-radius: var(--radius);
     padding: 1.25rem;
     position: sticky;
-    top: 2rem;
+    top: 6rem;
+    height: fit-content;
     max-height: calc(100vh - 4rem);
     overflow-y: auto;
-    margin-top: 4rem;
   }
 
   .cat-filtros-titulo {
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--color-brand);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -480,7 +480,7 @@ section.cat-grid {
 
   form.cat-busqueda {
     flex: 0 0 auto;
-    width: 240px;
+    width: 400px;
     order: 1;
     background: var(--color-white);
   }
