@@ -196,7 +196,7 @@ button.ind-btn-siguiente {
    ============================================================ */
 .ind-card {
   position: relative;
-  width: 140px;
+  width: 180px;
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--color-white);
@@ -227,8 +227,8 @@ button.ind-btn-siguiente {
 }
 
 .ind-card-titulo {
-  bottom: 1.25rem;
-  font-size: 0.8125rem;
+  bottom: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--color-white);
   white-space: nowrap;
@@ -238,7 +238,7 @@ button.ind-btn-siguiente {
 
 .ind-card-precio {
   bottom: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.75);
 }
@@ -327,7 +327,17 @@ button.ind-btn-siguiente {
   }
 
   .ind-card {
-    width: 170px;
+    width: 240px;
+  }
+
+  .ind-card-titulo {
+    font-size: 1.125rem;
+    bottom: 1.75rem;
+  }
+
+  .ind-card-precio {
+    font-size: 1rem;
+    bottom: 0.6rem;
   }
 
   /* Botones ← → visibles en desktop */
