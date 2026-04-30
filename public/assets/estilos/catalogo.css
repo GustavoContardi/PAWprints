@@ -173,14 +173,13 @@ section.cat-grid {
 /*
   Grid de 2 columnas:
     col 1 (1fr)  → imagen, h3, autor, precio
-    col 2 (36px) → botón carrito, centrado verticalmente
-                   abarcando las 3 filas de texto
+    col 2 (auto) → botón carrito, alineado con el precio
 
   Filas:
     1 → imagen  (col 1-2)
-    2 → h3      (col 1) | btn (col 2, rows 2-4)
-    3 → autor   (col 1)
-    4 → precio  (col 1)
+    2 → h3      (col 1-2)
+    3 → autor   (col 1-2)
+    4 → precio  (col 1) | btn (col 2)
 */
 .cat-card {
   background: var(--color-white);
@@ -189,7 +188,7 @@ section.cat-grid {
   border: 1.5px solid var(--color-border);
   transition: box-shadow 0.2s;
   display: grid;
-  grid-template-columns: 1fr 64px;
+  grid-template-columns: 1fr auto;
   grid-template-rows: auto auto auto auto;
   align-items: center;
 }
@@ -198,9 +197,13 @@ section.cat-grid {
   box-shadow: 0 4px 16px rgba(92, 6, 140, 0.1);
 }
 
-.cat-card img {
+.cat-card>a {
   grid-column: 1 / -1;
   grid-row: 1;
+  display: block;
+}
+
+.cat-card img {
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
@@ -240,6 +243,8 @@ section.cat-grid {
   grid-row: 2 / 5;
   align-self: center;
   justify-self: center;
+  margin-right: 0.75rem;
+  margin-top: -0.25rem;
   width: 36px !important;
   height: 36px !important;
   min-width: unset !important;
@@ -278,7 +283,7 @@ section.cat-grid {
     align-items: flex-start;
     padding: 2rem;
     gap: 2rem;
-    max-width: 1300px;
+    max-width: 90%;
     margin: 0 auto;
     width: 100%;
   }
@@ -444,8 +449,8 @@ section.cat-grid {
 
   section.cat-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
     padding: 0;
   }
 }
