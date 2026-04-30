@@ -48,10 +48,12 @@ search.cat-barra {
   border: none;
   border-radius: 50% !important;
   cursor: pointer;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  font-size: 0;
+  line-height: 0;
 }
 
 .cat-btn-filtro::before {
