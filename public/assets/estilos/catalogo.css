@@ -232,7 +232,7 @@ section.cat-grid {
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--color-brand);
-  padding: 0 0.75rem 0.75rem;
+  padding: 0 0.75rem 1.25rem;
 }
 
 .cat-btn-carrito {

@@ -183,8 +183,8 @@
                         <img src="/assets/img/<?= htmlspecialchars($book['image'] ?? 'placeholder.jpg') ?>" alt="Portada del libro">
                     </a>
                     <h3><?= htmlspecialchars($book['title']) ?></h3>
-                    <p class="cat-card-author"><?= htmlspecialchars($book['author']) ?></p>
-                    <p class="cat-card-price">$<?= number_format($book['price'], 2, ',', '.') ?></p>
+                    <p class="cat-card-autor"><?= htmlspecialchars($book['author']) ?></p>
+                    <p class="cat-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
                     <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
                 </article>
             <?php endforeach; ?>
