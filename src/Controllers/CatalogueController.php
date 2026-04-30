@@ -17,7 +17,8 @@ class CatalogueController extends Controller
             'category'  => $_GET['category'] ?? null,
             'age'       => $_GET['age'] ?? null,
             'search'    => $_GET['search'] ?? null,
-            'max_price' => $_GET['price'] ?? null,
+            'min_price' => $_GET['min_price'] ?? null,
+            'max_price' => $_GET['max_price'] ?? null,
             'order'     => $_GET['order'] ?? null,
             'page'      => $page,
             'per_page'  => $perPage,
@@ -49,7 +50,8 @@ class CatalogueController extends Controller
             'category'  => $_GET['category'] ?? null,
             'age'       => $_GET['age'] ?? null,
             'search'    => $_GET['search'] ?? null,
-            'max_price' => $_GET['price'] ?? null,
+            'min_price' => $_GET['min_price'] ?? null,
+            'max_price' => $_GET['max_price'] ?? null,
             'paginate'  => false,
         ];
 

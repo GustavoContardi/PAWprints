@@ -69,6 +69,11 @@ class BooksCollection
             $params['search'] = '%' . $filters['search'] . '%';
         }
 
+        if (isset($filters['min_price']) && $filters['min_price'] !== '') {
+            $where .= " AND price >= :min_price";
+            $params['min_price'] = (float)$filters['min_price'];
+        }
+
         if (isset($filters['max_price']) && $filters['max_price'] !== '') {
             $where .= " AND price <= :max_price";
             $params['max_price'] = (float)$filters['max_price'];

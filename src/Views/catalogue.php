@@ -13,11 +13,12 @@
 
         <p class="cat-titulo">Filtros</p>
 
-        <label for="price-range" class="cat-filtro-label">
-            Precio <span id="rangeValue">$0-<?= htmlspecialchars($_GET['price'] ?? '25000') ?></span>
-        </label>
-        <input type="range" id="price-range" name="price" min="0" max="25000" value="<?= htmlspecialchars($_GET['price'] ?? '25000') ?>" step="100">
-
+        <label class="cat-filtro-label">Precio ($)</label>
+        <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
+            <input type="number" name="min_price" min="0" placeholder="Mín." value="<?= htmlspecialchars($_GET['min_price'] ?? '') ?>" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font);">
+            <span>-</span>
+            <input type="number" name="max_price" min="0" placeholder="Máx." value="<?= htmlspecialchars($_GET['max_price'] ?? '') ?>" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font);">
+        </div>
         <fieldset class="cat-checks">
             <legend class="cat-filtro-label">Género</legend>
             <?php 
