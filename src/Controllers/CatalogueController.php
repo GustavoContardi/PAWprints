@@ -18,6 +18,7 @@ class CatalogueController extends Controller
             'age'       => $_GET['age'] ?? null,
             'search'    => $_GET['search'] ?? null,
             'max_price' => $_GET['price'] ?? null,
+            'order'     => $_GET['order'] ?? null,
             'page'      => $page,
             'per_page'  => $perPage,
         ];

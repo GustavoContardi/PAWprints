@@ -24,6 +24,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 10.00,
                 'is_recommended' => true,
+                'sales'          => 134,
             ],
             [
                 'title'          => 'Rayuela',
@@ -37,6 +38,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 0.00,
                 'is_recommended' => true,
+                'sales'          => 89,
             ],
             [
                 'title'          => 'Cien años de soledad',
@@ -50,6 +52,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 15.00,
                 'is_recommended' => false,
+                'sales'          => 247,
             ],
             [
                 'title'          => 'Fundación',
@@ -63,6 +66,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 5.00,
                 'is_recommended' => true,
+                'sales'          => 56,
             ],
             [
                 'title'          => 'Orgullo y Prejuicio',
@@ -76,6 +80,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 0.00,
                 'is_recommended' => true,
+                'sales'          => 183,
             ],
             [
                 'title'          => 'La isla del tesoro',
@@ -89,6 +94,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 20.00,
                 'is_recommended' => false,
+                'sales'          => 72,
             ],
             [
                 'title'          => 'El nombre del viento',
@@ -102,6 +108,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 0.00,
                 'is_recommended' => true,
+                'sales'          => 211,
             ],
             [
                 'title'          => 'Sherlock Holmes: Estudio en escarlata',
@@ -115,6 +122,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 10.00,
                 'is_recommended' => false,
+                'sales'          => 38,
             ],
             [
                 'title'          => 'Sapiens: De animales a dioses',
@@ -128,6 +136,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 0.00,
                 'is_recommended' => false,
+                'sales'          => 165,
             ],
             [
                 'title'          => 'El Principito',
@@ -141,6 +150,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 0.00,
                 'is_recommended' => true,
+                'sales'          => 312,
             ],
             [
                 'title'          => 'Dune',
@@ -154,6 +164,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 12.00,
                 'is_recommended' => true,
+                'sales'          => 97,
             ],
             [
                 'title'          => 'Matilda',
@@ -167,6 +178,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 25.00,
                 'is_recommended' => false,
+                'sales'          => 143,
             ],
             [
                 'title'          => 'Cosmos',
@@ -180,6 +192,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 0.00,
                 'is_recommended' => false,
+                'sales'          => 23,
             ],
             [
                 'title'          => 'Harry Potter y la piedra filosofal',
@@ -193,6 +206,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 0.00,
                 'is_recommended' => true,
+                'sales'          => 389,
             ],
             [
                 'title'          => 'Los viajes de Gulliver',
@@ -206,6 +220,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 8.00,
                 'is_recommended' => false,
+                'sales'          => 15,
             ],
             [
                 'title'          => 'Breve historia del tiempo',
@@ -219,6 +234,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 0.00,
                 'is_recommended' => true,
+                'sales'          => 108,
             ],
             [
                 'title'          => 'Caperucita Roja (ilustrado)',
@@ -232,6 +248,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => true,
                 'discount'       => 30.00,
                 'is_recommended' => false,
+                'sales'          => 201,
             ],
             [
                 'title'          => 'Asesinato en el Orient Express',
@@ -245,6 +262,7 @@ class BookSeeder extends AbstractSeed
                 'is_new'         => false,
                 'discount'       => 5.00,
                 'is_recommended' => true,
+                'sales'          => 176,
             ],
         ];
 

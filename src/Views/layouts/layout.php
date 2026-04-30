@@ -20,7 +20,7 @@
             <ul>
                 <li><a href="/catalogue">Catálogo</a></li>
                 <li><a href="/special">Indispensables</a></li>
-                <li><a href="/catalogue">Más Vendidos</a></li>
+                <li><a href="/catalogue?order=popular">Más Vendidos</a></li>
                 <li><a href="/about-us">Sobre nosotros</a></li>
                 <li><a href="/contact">Contacto</a></li>
                 <li><a href="" class="nav-btn">Iniciar sesión</a></li>

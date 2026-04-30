@@ -92,7 +92,21 @@ class BooksCollection
         $totalPages = max(1, $totalPages);
 
         // ── Main query ───────────────────────────────────────────────────────
-        $query = "SELECT * FROM books" . $where . " ORDER BY id ASC";
+        $orderClause = " ORDER BY id ASC";
+        if (!empty($filters['order'])) {
+            switch ($filters['order']) {
+                case 'new':
+                    $orderClause = " ORDER BY is_new DESC, id DESC";
+                    break;
+                case 'popular':
+                    $orderClause = " ORDER BY sales DESC, id ASC";
+                    break;
+                case 'price':
+                    $orderClause = " ORDER BY price ASC, id ASC";
+                    break;
+            }
+        }
+        $query = "SELECT * FROM books" . $where . $orderClause;
 
         if ($paginate) {
             $offset = ($page - 1) * $perPage;

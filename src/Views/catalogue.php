@@ -93,7 +93,6 @@
                     </a>
                 </li>
             <?php endforeach; ?>
-            <li><button class="cat-chip" type="button">Género</button></li>
         </menu>
     </search>
 
