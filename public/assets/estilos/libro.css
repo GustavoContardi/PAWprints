@@ -31,11 +31,18 @@
   width: fit-content;
   background: #d4edda;
   color: #2d6a4f;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 0.2rem 0.65rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 20px;
   margin: 0 1.25rem 0.75rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.libro-genero:hover {
+  background: #c3e6cb;
+  transform: scale(1.02);
 }
 
 .libro-precio {
@@ -44,14 +51,6 @@
   letter-spacing: -0.02em;
   line-height: 1;
   padding: 0 1.25rem 0.25rem;
-}
-
-.libro-precio::before {
-  content: '$';
-  font-size: 1.25rem;
-  font-weight: 600;
-  vertical-align: super;
-  line-height: 0;
 }
 
 .libro-autor {

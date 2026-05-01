@@ -2,7 +2,7 @@
     <img class="libro-portada" src="/assets/img/<?= htmlspecialchars($book['image'] ?? 'placeholder.jpg') ?>" alt="Tapa de <?= htmlspecialchars($book['title']) ?>">
 
     <h2 class="libro-titulo"><?= htmlspecialchars($book['title']) ?></h2>
-    <p class="libro-genero"><?= htmlspecialchars($book['category'] ?? 'Sin categoría') ?></p>
+    <a href="/catalogue?category=<?= urlencode($book['category'] ?? '') ?>" class="libro-genero"><?= htmlspecialchars($book['category'] ?? 'Sin categoría') ?></a>
     <p class="libro-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
     <p class="libro-autor"><?= htmlspecialchars($book['author']) ?></p>
 
