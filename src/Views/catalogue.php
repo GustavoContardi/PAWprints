@@ -195,3 +195,5 @@
     <?php renderPagination($page, $totalPages, 'Paginación inferior'); ?>
 
 </section>
+
+<script src="/assets/scripts/catalogue.js?v=<?= time() ?>"></script>

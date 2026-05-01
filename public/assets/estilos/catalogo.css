@@ -26,6 +26,13 @@ main {
   display: none;
 }
 
+.cat-sidebar.sidebar-active {
+  display: block;
+  padding: 1.25rem;
+  background: var(--color-white);
+  border-bottom: 1.5px solid var(--color-border);
+}
+
 /* ============================================================
    BARRA SUPERIOR
    ============================================================ */
@@ -305,6 +312,12 @@ section.cat-grid {
     overflow-y: auto;
   }
 
+} /* Fin de layout desktop de la sidebar */
+
+/* ============================================================
+   ESTILOS DE FILTROS (MOBILE & DESKTOP)
+   ============================================================ */
+
   .cat-filtros-titulo {
     font-size: 0.8125rem;
     font-weight: 700;
@@ -456,6 +469,11 @@ section.cat-grid {
     border-color: var(--color-brand);
     background: rgba(92, 6, 140, 0.05);
   }
+
+/* ============================================================
+   DESKTOP: RESTO DE LAYOUT
+   ============================================================ */
+@media (min-width: 900px) {
 
   /* Contenido */
   .cat-contenido {

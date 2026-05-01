@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/img/image.png" type="image/png">
     <title><?= htmlspecialchars($title ?? 'PAWprints') ?></title>
     <link rel="stylesheet" href="/assets/estilos/base.css?v=<?= time() ?>">
     <link rel="stylesheet" href="/assets/estilos/layout.css?v=<?= time() ?>">
@@ -17,7 +18,8 @@
     <header>
         <a href="/"><img src="/assets/img/logo_PAWprints.svg" alt="Logo PAWprints"></a>
         <nav>
-            <ul>
+            <button id="menu-toggle" aria-label="Abrir menú" class="hamburger-btn"></button>
+            <ul id="nav-menu">
                 <li><a href="/catalogue">Catálogo</a></li>
                 <li><a href="/special">Indispensables</a></li>
                 <li><a href="/catalogue?order=popular">Más Vendidos</a></li>
@@ -25,7 +27,6 @@
                 <li><a href="/contact">Contacto</a></li>
                 <li><a href="" class="nav-btn">Iniciar sesión</a></li>
                 <li><a href="" class="nav-btn">Registrarse</a></li>
-                <li><a href="" aria-label="Menú">Menú</a></li>
             </ul>
         </nav>
     </header>
@@ -54,5 +55,6 @@
             <p>2025-2026 PAWprints libros S.A.</p>
         </address>
     </footer>
+    <script src="/assets/scripts/layout.js?v=<?= time() ?>"></script>
 </body>
 </html>

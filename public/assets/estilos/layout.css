@@ -21,49 +21,62 @@ header {
 }
 
 /* Logo */
-header > a:first-child img {
+header>a:first-child img {
   width: 150px;
   height: 55.2px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-/* Nav — mobile: solo muestra el último li (hamburguesa) */
+/* Nav — mobile: menú oculto por defecto */
 header nav ul {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--color-brand);
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Cuando el menú tiene la clase active, se muestra */
+header nav ul.menu-active {
   display: flex;
-  align-items: center;
-  gap: 0.25rem;
+}
+
+header nav ul li {
+  display: block;
+  text-align: center;
 }
 
 header nav ul li a {
-  font-size: 0.875rem;
+  display: block;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--color-white);
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
   transition: background 0.2s;
-  white-space: nowrap;
+}
+
+header nav ul li a.nav-btn {
+  display: inline-block;
+  width: 50%;
+  max-width: 300px;
+  margin: 0.25rem auto;
 }
 
 header nav ul li a:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/*
-  Mobile-first: ocultar links de navegación.
-  Solo el último li (hamburguesa) permanece visible.
-*/
-header nav ul li {
-  display: none;
-}
-
-header nav ul li:last-child {
-  display: list-item;
-}
-
 /* Ícono hamburguesa */
-header nav ul li:last-child a {
-  font-size: 0;
+.hamburger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
   width: 36px;
   height: 36px;
   display: flex;
@@ -71,42 +84,68 @@ header nav ul li:last-child a {
   justify-content: center;
   border-radius: 50%;
   padding: 0;
+  transition: background 0.2s;
 }
 
-header nav ul li:last-child a::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 16px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cline x1='3' y1='6' x2='21' y2='6'/%3E%3Cline x1='3' y1='12' x2='21' y2='12'/%3E%3Cline x1='3' y1='18' x2='21' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
+.hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hamburger-btn::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cline x1='3' y1='6' x2='21' y2='6'/%3E%3Cline x1='3' y1='12' x2='21' y2='12'/%3E%3Cline x1='3' y1='18' x2='21' y2='18'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
 /* Desktop (≥ 900px): mostrar todos los links, ocultar hamburguesa */
 @media (min-width: 900px) {
-    header {
-        padding: 0 2rem;
-        justify-content: flex-start;
-    }
+  header {
+    padding: 0 2rem;
+    justify-content: flex-start;
+  }
 
-    header nav {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-    }
+  header nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
 
-    /* Mostrar todos los links */
-    header nav ul li {
-        display: list-item;
-    }
+  /* Mostrar menú como fila y resetear estilos de mobile */
+  header nav ul {
+    display: flex !important;
+    /* Forza visible siempre */
+    flex-direction: row;
+    position: static;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    align-items: center;
+    gap: 0.25rem;
+  }
 
-    /* Ocultar solo la hamburguesa (último li) en desktop */
-    header nav ul li:last-child {
-        display: none;
-    }
+  header nav ul li a {
+    font-size: 0.875rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius);
+    white-space: nowrap;
+  }
 
-    header nav ul li:nth-child(1) {
-        margin-left: 25rem;
-    }
+  header nav ul li a.nav-btn {
+    width: auto;
+    margin: 0;
+  }
+
+  /* Ocultar hamburguesa en desktop */
+  .hamburger-btn {
+    display: none;
+  }
+
+  header nav ul li:nth-child(1) {
+    margin-left: 25rem;
+  }
 }
 
 /* ============================================================
