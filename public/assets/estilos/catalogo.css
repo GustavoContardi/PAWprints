@@ -194,6 +194,7 @@ section.cat-grid {
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto auto auto;
   align-items: center;
+  position: relative;
 }
 
 .cat-card:hover {
@@ -242,18 +243,14 @@ section.cat-grid {
 }
 
 .cat-btn-carrito {
-  grid-column: 2;
-  grid-row: 2 / 5;
-  align-self: center;
-  justify-self: center;
-  margin-right: 0.75rem;
-  margin-top: -0.25rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   width: 36px !important;
   height: 36px !important;
   min-width: unset !important;
   padding: 0 !important;
   background: var(--color-brand) !important;
-  border: none;
   border-radius: 50% !important;
   cursor: pointer;
   display: flex !important;

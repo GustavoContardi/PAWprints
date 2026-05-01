@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'PAWprints') ?></title>
-    <link rel="stylesheet" href="/assets/estilos/base.css">
-    <link rel="stylesheet" href="/assets/estilos/layout.css">
-    <link rel="stylesheet" href="/assets/estilos/components.css">
+    <link rel="stylesheet" href="/assets/estilos/base.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/estilos/layout.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/estilos/components.css?v=<?= time() ?>">
     <?php if (!empty($styles)): ?>
         <?php foreach ($styles as $style): ?>
-            <link rel="stylesheet" href="/assets/estilos/<?= htmlspecialchars($style) ?>">
+            <link rel="stylesheet" href="/assets/estilos/<?= htmlspecialchars($style) ?>?v=<?= time() ?>">
         <?php endforeach; ?>
     <?php endif; ?>
 </head>

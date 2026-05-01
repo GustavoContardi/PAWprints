@@ -113,8 +113,13 @@ main {
   border-bottom: 2px solid var(--color-border);
 }
 
-.ind-seccion:nth-of-type(even) { background: var(--color-bg); }
-.ind-seccion:nth-of-type(odd)  { background: var(--color-white); }
+.ind-seccion:nth-of-type(even) {
+  background: var(--color-bg);
+}
+
+.ind-seccion:nth-of-type(odd) {
+  background: var(--color-white);
+}
 
 .ind-seccion-titulo {
   font-size: 1.5rem;
@@ -156,7 +161,8 @@ button.ind-btn-siguiente {
   border-radius: unset;
   letter-spacing: unset;
   padding: unset;
-  display: none; /* ocultos en mobile */
+  display: none;
+  /* ocultos en mobile */
 }
 
 /* ============================================================
@@ -265,7 +271,6 @@ button.ind-btn-siguiente {
   min-width: unset !important;
   padding: 0 !important;
   background: var(--color-brand) !important;
-  border: none;
   border-radius: 50% !important;
   cursor: pointer;
   display: flex !important;
@@ -361,8 +366,13 @@ button.ind-btn-siguiente {
     z-index: 1;
   }
 
-  button.ind-btn-anterior { left: 0.75rem; }
-  button.ind-btn-siguiente { right: 0.75rem; }
+  button.ind-btn-anterior {
+    left: 0.75rem;
+  }
+
+  button.ind-btn-siguiente {
+    right: 0.75rem;
+  }
 
   button.ind-btn-anterior::before,
   button.ind-btn-siguiente::before {

@@ -185,7 +185,7 @@
                     <h3><?= htmlspecialchars($book['title']) ?></h3>
                     <p class="cat-card-autor"><?= htmlspecialchars($book['author']) ?></p>
                     <p class="cat-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                    <button class="cat-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    <a href="/reserve/<?= $book['id'] ?>" class="cat-btn-carrito" aria-label="Reservar libro"></a>
                 </article>
             <?php endforeach; ?>
         <?php endif; ?>

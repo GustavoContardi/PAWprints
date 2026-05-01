@@ -20,8 +20,8 @@
   --color-brand-dark:  #44036a;
   --color-white:       #ffffff;
   --color-bg:          #efefef;
-  --color-text:        #2a2a2a;
-  --color-text-muted:  #888888;
+  --color-text:        #000000;
+  --color-text-muted:  #333333;
   --color-border:      #d8d8d8;
 
   /* Tokens de UI */

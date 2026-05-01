@@ -25,7 +25,7 @@
                     </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
                     <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                    <button class="ind-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    <a href="/reserve/<?= $book['id'] ?>" class="ind-btn-carrito" aria-label="Reservar libro"></a>
                 </article>
             </li>
         <?php endforeach; ?>
@@ -50,7 +50,7 @@
                     </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
                     <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                    <button class="ind-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    <a href="/reserve/<?= $book['id'] ?>" class="ind-btn-carrito" aria-label="Reservar libro"></a>
                 </article>
             </li>
         <?php endforeach; ?>
@@ -75,7 +75,7 @@
                     </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
                     <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                    <button class="ind-btn-carrito" type="button" aria-label="Agregar al carrito"></button>
+                    <a href="/reserve/<?= $book['id'] ?>" class="ind-btn-carrito" aria-label="Reservar libro"></a>
                 </article>
             </li>
         <?php endforeach; ?>
