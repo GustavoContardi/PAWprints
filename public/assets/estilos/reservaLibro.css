@@ -97,6 +97,47 @@ main > form button[type="submit"] {
 }
 
 /* ============================================================
+   ÉXITO
+   ============================================================ */
+.reserva-exito {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 3rem;
+  padding: 2.5rem 1.25rem 2rem;
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.reserva-exito-icono {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 0.5rem;
+  color: var(--color-brand);
+}
+
+.reserva-exito p {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.reserva-exito p span {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
    DESKTOP (≥ 900px)
    ============================================================ */
 @media (min-width: 900px) {
@@ -126,5 +167,11 @@ main > form button[type="submit"] {
   main > form {
     max-width: 480px;
     padding: 2.5rem 0 4rem;
+  }
+
+  .reserva-exito {
+    max-width: 480px;
+    padding: 3rem 2rem 2.5rem;
+    margin-top: 2.5rem;
   }
 }

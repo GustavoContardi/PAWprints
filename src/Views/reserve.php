@@ -11,11 +11,15 @@ $success = $success ?? false;
 
 <?php if ($success): ?>
     <div class="reserva-exito">
-        <p>Reserva enviada correctamente. Nos pondremos en contacto.</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reserva-exito-icono">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <p>¡Reserva enviada correctamente!<br><span>Nos pondremos en contacto a la brevedad.</span></p>
         <?php if ($book): ?>
-            <p><a href="/book/<?= $book['id'] ?>">Volver al libro</a></p>
+            <a href="/book/<?= $book['id'] ?>" class="btn-link">Volver al libro</a>
         <?php else: ?>
-            <p><a href="/catalogue">Volver al catálogo</a></p>
+            <a href="/catalogue" class="btn-link">Volver al catálogo</a>
         <?php endif; ?>
     </div>
 <?php else: ?>
