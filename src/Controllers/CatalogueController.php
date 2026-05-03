@@ -57,18 +57,11 @@ class CatalogueController extends Controller
 
         $result = $collection->getAll($filters);
 
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename="catalogo.csv"');
-
-        $output = fopen('php://output', 'w');
-
-        // BOM para que Excel interprete UTF-8 correctamente
-        fprintf($output, chr(0xEF) . chr(0xBB) . chr(0xBF));
-
-        fputcsv($output, ['ID', 'Título', 'Autor', 'Precio', 'Stock', 'Categoría', 'Edad']);
+        $headers = ['ID', 'Título', 'Autor', 'Precio', 'Stock', 'Categoría', 'Edad'];
+        $rows = [];
 
         foreach ($result['items'] as $book) {
-            fputcsv($output, [
+            $rows[] = [
                 $book['id'],
                 $book['title'],
                 $book['author'],
@@ -76,10 +69,9 @@ class CatalogueController extends Controller
                 $book['stock'],
                 $book['category'],
                 $book['age'],
-            ]);
+            ];
         }
 
-        fclose($output);
-        exit;
+        \Core\CsvResponse::send('catalogo.csv', $headers, $rows);
     }
 }

@@ -56,8 +56,21 @@
             <?php endforeach; ?>
         </fieldset>
 
+        <label class="cat-filtro-label" for="per_page">Libros por página</label>
+        <select name="per_page" id="per_page" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font); margin-bottom: 1rem;">
+            <?php foreach ([12, 24, 48] as $val): ?>
+                <option value="<?= $val ?>" <?= (int)($perPage ?? 12) === $val ? 'selected' : '' ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
+
         <button type="submit" class="cat-btn-aplicar">Aplicar Filtros</button>
         <a href="/catalogue" class="cat-btn-limpiar">Limpiar</a>
+
+        <hr style="border: 0; border-top: 1px solid var(--color-border); margin: 1rem 0;">
+        
+        <a href="/catalogue/export?<?= http_build_query($_GET) ?>" class="cat-btn-exportar" style="display: block; text-align: center; padding: 0.6rem; background: #27ae60; color: white; text-decoration: none; border-radius: var(--radius); font-weight: 500;">
+            Exportar a CSV
+        </a>
     </form>
 </aside>
 

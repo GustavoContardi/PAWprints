@@ -111,25 +111,9 @@ class ReserveController extends Controller
         $to      = $_ENV['MAIL_RESERVA'] ?? 'reservas@pawprints.com';
         $subject = "Nueva reserva: " . $libro;
         $body    = "Nombre: $nombre\nTeléfono: $telefono\nEmail: $email\nLibro: $libro\nCopias: $copias";
-        $headers = "From: noreply@pawprints.com\r\nReply-To: $email";
 
-        $enviado = @mail($to, $subject, $body, $headers);
-
-        if ($enviado) {
-            $logger->info('Reserva enviada por email', [
-                'to'     => $to,
-                'libro'  => $libro,
-                'copias' => $copias,
-                'email'  => $email,
-            ]);
-        } else {
-            $logger->error('Error al enviar email de reserva', [
-                'to'     => $to,
-                'libro'  => $libro,
-                'copias' => $copias,
-                'email'  => $email,
-            ]);
-        }
+        $mailer = new \Core\Mailer($logger);
+        $mailer->send($to, $subject, $body, $email);
 
         // ── Renderizar vista con mensaje de éxito ────────────────────────────
         $this->render('reserve', [
