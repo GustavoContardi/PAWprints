@@ -1,5 +1,5 @@
 <?php
-
+// ruta relativa
 require_once __DIR__ . '/../src/bootstrap.php';
 
 use Core\Router;
