@@ -188,7 +188,11 @@
 
     <section class="cat-grid">
         <?php if (empty($books)): ?>
-            <p>No se encontraron libros con los filtros seleccionados.</p>
+            <div class="cat-empty-state">
+                <div class="cat-empty-state-icon"></div>
+                <h3>Sin resultados</h3>
+                <p>No se encontraron libros que coincidan con tu búsqueda o los filtros seleccionados.</p>
+            </div>
         <?php else: ?>
             <?php foreach ($books as $book): ?>
                 <article class="cat-card">
