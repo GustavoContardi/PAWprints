@@ -9,7 +9,7 @@ use Whoops\Handler\PrettyPageHandler;
 
 // ── 1. Variables de entorno ──────────────────────────────────────────────────
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+$dotenv->safeLoad();
 
 $dotenv->required(['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD']);
 
