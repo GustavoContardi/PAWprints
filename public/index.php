@@ -1,6 +1,6 @@
 <?php
 
-require_once '/var/www/app/src/bootstrap.php';
+require_once __DIR__ . '/../src/bootstrap.php';
 
 use Core\Router;
 
