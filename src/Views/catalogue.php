@@ -1,15 +1,18 @@
 <aside class="cat-sidebar">
-    <form class="cat-filtros" method="get" action="/catalogue">
+    <div class="cat-sidebar-header">
+        <span style="font-weight: 700; color: var(--color-brand); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8125rem;">Filtros</span>
+        <button type="button" class="cat-sidebar-close" aria-label="Cerrar filtros">&times;</button>
+    </div>
 
-        <!--
-        <p class="cat-filtros-titulo">Keywords</p>
-    
-        <ul class="cat-keywords">
-            <li class="cat-keyword">Spring <button type="button">×</button></li>
-            <li class="cat-keyword">Smart <button type="button">×</button></li>
-            <li class="cat-keyword">Modern <button type="button">×</button></li>
+    <!-- Contenedor dinámico de búsquedas recientes -->
+    <div id="recent-searches-container" style="display: none; margin-bottom: 1.5rem;">
+        <p class="cat-filtros-titulo">Búsquedas Recientes</p>
+        <ul class="cat-keywords" id="recent-searches-list">
+            <!-- Inyectado dinámicamente con JS -->
         </ul>
-        -->
+    </div>
+
+    <form class="cat-filtros" method="get" action="/catalogue" onsubmit="event.preventDefault();">
 
         <p class="cat-filtros-titulo">Filtros</p>
 
@@ -63,6 +66,12 @@
             <?php endforeach; ?>
         </select>
 
+        <label class="cat-filtro-label" for="paginacion_mode">Tipo de paginación</label>
+        <select name="paginacion_mode" id="paginacion_mode" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font); margin-bottom: 1rem;">
+            <option value="traditional">Paginado tradicional</option>
+            <option value="infinite">Scroll infinito</option>
+        </select>
+
         <button type="submit" class="cat-btn-aplicar">Aplicar Filtros</button>
         <a href="/catalogue" class="cat-btn-limpiar">Limpiar</a>
 
@@ -79,7 +88,7 @@
     <search class="cat-barra">
         <button class="cat-btn-filtro" type="button" aria-label="Filtros"></button>
 
-        <form class="cat-busqueda" method="get" action="/catalogue">
+        <form class="cat-busqueda" method="get" action="/catalogue" onsubmit="event.preventDefault();">
             <label for="busqueda" class="sr-only">Buscar</label>
             <input type="search" id="busqueda" name="search" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" placeholder="Buscar">
             <button type="submit" aria-label="Buscar"></button>
@@ -212,5 +221,9 @@
     <?php renderPagination($page, $totalPages, 'Paginación inferior'); ?>
 
 </section>
+
+<script id="books-json" type="application/json">
+<?= json_encode($allBooks) ?>
+</script>
 
 <script src="/assets/scripts/catalogue.js?v=<?= time() ?>"></script>

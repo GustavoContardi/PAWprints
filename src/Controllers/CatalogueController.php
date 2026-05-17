@@ -10,35 +10,24 @@ class CatalogueController extends Controller
     {
         $collection = new BooksCollection($this->db);
 
-        $page    = max(1, (int)($_GET['page'] ?? 1));
-        $perPage = max(1, (int)($_GET['per_page'] ?? 12));
+        // Fetch all books unfiltered and unpaginated
+        $result = $collection->getAll(['paginate' => false]);
 
-        $filters = [
-            'category'  => $_GET['category'] ?? null,
-            'age'       => $_GET['age'] ?? null,
-            'search'    => $_GET['search'] ?? null,
-            'min_price' => $_GET['min_price'] ?? null,
-            'max_price' => $_GET['max_price'] ?? null,
-            'order'     => $_GET['order'] ?? null,
-            'page'      => $page,
-            'per_page'  => $perPage,
-        ];
-
-        $result = $collection->getAll($filters);
-
-        // Validar que la página solicitada esté en rango
-        if ($page > $result['totalPages'] || $page < 1) {
-            $this->abort(404, 'Página no encontrada');
-        }
+        // For initial HTML load (SEO/fallback), slice the first 12 books
+        $initialBooks = array_slice($result['items'], 0, 12);
+        $total = count($result['items']);
+        $perPage = 12;
+        $totalPages = (int)ceil($total / $perPage);
 
         $this->render('catalogue', [
             'title'      => 'Catálogo — PAWprints',
             'styles'     => ['catalogo.css'],
-            'books'      => $result['items'],
-            'page'       => $result['page'],
-            'totalPages' => $result['totalPages'],
-            'perPage'    => $result['perPage'],
-            'total'      => $result['total'],
+            'books'      => $initialBooks,
+            'allBooks'   => $result['items'],
+            'page'       => 1,
+            'totalPages' => $totalPages,
+            'perPage'    => $perPage,
+            'total'      => $total,
         ]);
     }
 

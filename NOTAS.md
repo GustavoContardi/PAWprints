@@ -17,4 +17,4 @@ Generar un componente que permita cargar, vía Drag and Drop, archivos de imagen
 
 Nota: Prestar principal atención a los detalles de usabilidad en la versión Mobile.
 
-5. ontinuando el ejercicio de la búsqueda en el catálogo de libros de la práctica anterior, agregue la posibilidad de recordar las últimas 5 búsquedas realizadas por el usuario. Para ello, utilice la API de Local Storage. Si la cantidad de consultas es mayor a 5, debe eliminarse la más antigua.
+4. Continuando el ejercicio de la búsqueda en el catálogo de libros de la práctica anterior, agregue la posibilidad de recordar las últimas 5 búsquedas realizadas por el usuario. Para ello, utilice la API de Local Storage. Si la cantidad de consultas es mayor a 5, debe eliminarse la más antigua.
