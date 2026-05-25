@@ -16,5 +16,7 @@ $router->get('/special',          'PagesController',     'special');
 $router->post('/process-contact', 'PagesController',     'processContact');
 $router->get('/reserve/{id}',     'ReserveController',   'show');
 $router->post('/reserve',         'ReserveController',   'process');
+$router->get('/books/new',        'BookController',      'new');
+$router->post('/books/new',       'BookController',      'store');
 
 $router->resolve();
