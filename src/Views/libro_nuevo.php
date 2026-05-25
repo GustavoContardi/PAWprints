@@ -31,7 +31,6 @@ $success = $success ?? false;
 
     <form method="post" action="/books/new" enctype="multipart/form-data" novalidate id="form-libro-nuevo">
         <fieldset>
-            <legend>Cargar nuevo libro</legend>
 
             <!-- Título -->
             <div class="form-group <?= isset($errors['title']) ? 'has-error' : '' ?>">

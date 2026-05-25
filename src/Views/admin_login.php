@@ -1,0 +1,153 @@
+<?php
+$error = $error ?? null;
+?>
+
+<h1>PAWprints</h1>
+<h2>Acceso restringido</h2>
+
+<form method="post" action="" class="admin-login-form" novalidate>
+    <?php if ($error): ?>
+        <p class="admin-login-error"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
+    <div class="form-group">
+        <label for="admin_password">Contraseña</label>
+        <input
+            type="password"
+            name="admin_password"
+            id="admin_password"
+            placeholder="Ingresá la contraseña"
+            autocomplete="current-password"
+            autofocus
+        >
+    </div>
+
+    <button type="submit">Ingresar</button>
+</form>
+
+<style>
+    /* Hero & Titulados de Acceso Restringido */
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main > h1,
+    main > h2 {
+        text-align: center;
+    }
+
+    main > h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+        padding: 2rem 1.25rem 0.25rem;
+    }
+
+    main > h2 {
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: var(--color-text-muted);
+        padding: 0 1.25rem 2rem;
+    }
+
+    .admin-login-form {
+        width: 100%;
+        max-width: 360px;
+        margin: 2rem auto 4rem;
+        padding: 2rem 1.5rem;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius);
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        background: var(--color-white, #fff);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .admin-login-error {
+        background: #ffebee;
+        color: #c62828;
+        border: 1.5px solid #ef9a9a;
+        border-radius: var(--radius);
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .admin-login-form .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .admin-login-form label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--color-text-muted);
+    }
+
+    .admin-login-form input[type="password"] {
+        width: 100%;
+        padding: 0.625rem 0.875rem;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius);
+        font-size: 1rem;
+        color: var(--color-text);
+        background: var(--color-white, #fff);
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .admin-login-form input[type="password"]:focus {
+        outline: none;
+        border-color: var(--color-brand);
+        box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
+    }
+
+    .admin-login-form button[type="submit"] {
+        background: var(--color-brand);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.15s;
+    }
+
+    .admin-login-form button[type="submit"]:hover {
+        opacity: 0.88;
+    }
+
+    /* Desktop styles to match layout and alignment */
+    @media (min-width: 900px) {
+        main > h1,
+        main > h2 {
+            background: var(--color-white);
+            color: var(--color-text);
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin: 0;
+        }  
+
+        main > h1 {
+            padding-top: 2rem;
+            padding-bottom: 0.25rem;
+            font-size: 3.5rem;
+        }
+
+        main > h2 {
+            color: var(--color-text-muted);
+            padding-bottom: 2rem;
+            border-bottom: 6px solid var(--color-brand);
+        }
+
+        .admin-login-form {
+            margin-top: 4rem;
+            margin-bottom: 6rem;
+        }
+    }
+</style>

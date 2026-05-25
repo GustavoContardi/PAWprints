@@ -29,8 +29,41 @@ class BookController extends Controller
         ]);
     }
 
+    // ── Autenticación simple (temporal, sin roles) ────────────────────────────
+    private function requirePassword(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_password'])) {
+            $adminPassword = $_ENV['ADMIN_PASSWORD'] ?? 'changeme';
+            if ($_POST['admin_password'] === $adminPassword) {
+                $_SESSION['admin_auth'] = true;
+                header('Location: /books/new');
+                exit;
+            } else {
+                $this->render('admin_login', [
+                    'title' => 'Acceso restringido — PAWprints',
+                    'error' => 'Contraseña incorrecta.',
+                ]);
+                exit;
+            }
+        }
+
+        if (empty($_SESSION['admin_auth'])) {
+            $this->render('admin_login', [
+                'title' => 'Acceso restringido — PAWprints',
+                'error' => null,
+            ]);
+            exit;
+        }
+    }
+
     public function new(array $params): void
     {
+        $this->requirePassword();
+
         $this->render('libro_nuevo', [
             'title'  => 'Cargar libro — PAWprints',
             'styles' => ['libro_nuevo.css'],
@@ -39,21 +72,23 @@ class BookController extends Controller
 
     public function store(array $params): void
     {
+        $this->requirePassword();
+
         // 1. Leer y sanitizar $_POST
-        $title = isset($_POST['title']) ? trim($_POST['title']) : '';
-        $author = isset($_POST['author']) ? trim($_POST['author']) : '';
-        $price = isset($_POST['price']) ? trim($_POST['price']) : '';
-        $stock = isset($_POST['stock']) ? trim($_POST['stock']) : '';
-        $discount = isset($_POST['discount']) ? trim($_POST['discount']) : '';
-        $category = isset($_POST['category']) ? trim($_POST['category']) : '';
-        $age = isset($_POST['age']) ? trim($_POST['age']) : '';
-        $description = isset($_POST['description']) ? trim($_POST['description']) : '';
-        $is_new = isset($_POST['is_new']) ? true : false;
+        $title          = isset($_POST['title'])          ? trim($_POST['title'])          : '';
+        $author         = isset($_POST['author'])         ? trim($_POST['author'])         : '';
+        $price          = isset($_POST['price'])          ? trim($_POST['price'])          : '';
+        $stock          = isset($_POST['stock'])          ? trim($_POST['stock'])          : '';
+        $discount       = isset($_POST['discount'])       ? trim($_POST['discount'])       : '';
+        $category       = isset($_POST['category'])       ? trim($_POST['category'])       : '';
+        $age            = isset($_POST['age'])            ? trim($_POST['age'])            : '';
+        $description    = isset($_POST['description'])    ? trim($_POST['description'])    : '';
+        $is_new         = isset($_POST['is_new'])         ? true : false;
         $is_recommended = isset($_POST['is_recommended']) ? true : false;
 
         $errors = [];
 
-        // 2. Validar server-side (mismas reglas que el JS)
+        // 2. Validar server-side
         if ($title === '') {
             $errors['title'] = 'El título es requerido.';
         } elseif (mb_strlen($title) > 255) {
@@ -104,7 +139,7 @@ class BookController extends Controller
             $errors['age'] = 'La edad recomendada seleccionada no es válida.';
         }
 
-        // Manejar upload de imagen si existe
+        // 3. Manejar upload de imagen
         $imageName = null;
         if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
             $file = $_FILES['image'];
@@ -112,11 +147,10 @@ class BookController extends Controller
                 $errors['image'] = 'Error al subir la imagen.';
             } else {
                 $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-                $fileType = mime_content_type($file['tmp_name']);
-                
-                $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-                $allowedExts = ['jpg', 'jpeg', 'png', 'webp'];
-                
+                $fileType     = mime_content_type($file['tmp_name']);
+                $ext          = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $allowedExts  = ['jpg', 'jpeg', 'png', 'webp'];
+
                 if (!in_array($fileType, $allowedTypes) || !in_array($ext, $allowedExts)) {
                     $errors['image'] = 'Formatos permitidos: JPG, JPEG, PNG, WEBP.';
                 } elseif ($file['size'] > 2 * 1024 * 1024) {
@@ -127,18 +161,18 @@ class BookController extends Controller
             }
         }
 
-        // 3. Si hay errores: render('libro_nuevo', ['errors' => $errors, 'old' => $_POST, ...])
+        // 4. Si hay errores, volver al formulario
         if (!empty($errors)) {
             $this->render('libro_nuevo', [
                 'title'  => 'Cargar libro — PAWprints',
                 'styles' => ['libro_nuevo.css'],
                 'errors' => $errors,
-                'old'    => $_POST
+                'old'    => $_POST,
             ]);
             return;
         }
 
-        // 4. Manejar upload de imagen (mover el archivo)
+        // 5. Mover imagen al servidor
         if ($imageName && isset($file)) {
             $destDir = __DIR__ . '/../../public/assets/img/libros/';
             if (!is_dir($destDir)) {
@@ -150,36 +184,32 @@ class BookController extends Controller
                     'title'  => 'Cargar libro — PAWprints',
                     'styles' => ['libro_nuevo.css'],
                     'errors' => $errors,
-                    'old'    => $_POST
+                    'old'    => $_POST,
                 ]);
                 return;
             }
         }
 
-        // 5. Instanciar Book con los datos y llamar $book->save($this->db)
-        $bookData = [
-            'title' => $title,
-            'author' => $author,
-            'price' => (float)$price,
-            'description' => $description === '' ? null : $description,
-            'stock' => (int)$stock,
-            'image' => $imageName ? 'libros/' . $imageName : null,
-            'category' => $category === '' ? null : $category,
-            'age' => $age === '' ? null : $age,
-            'is_new' => $is_new,
-            'discount' => ($discount !== '') ? (float)$discount : 0.0,
-            'is_recommended' => $is_recommended
-        ];
+        // 6. Guardar libro en la DB
+        $book = new Book([
+            'title'          => $title,
+            'author'         => $author,
+            'price'          => (float)$price,
+            'description'    => $description === '' ? null : $description,
+            'stock'          => (int)$stock,
+            'image'          => $imageName ? 'libros/' . $imageName : null,
+            'category'       => $category === '' ? null : $category,
+            'age'            => $age === '' ? null : $age,
+            'is_new'         => $is_new,
+            'discount'       => $discount !== '' ? (float)$discount : 0.0,
+            'is_recommended' => $is_recommended,
+        ]);
 
-        $book = new Book($bookData);
-        $success = $book->save($this->db);
-
-        // 6. Si ok: render('libro_nuevo', ['success' => true, ...])
-        if ($success) {
+        if ($book->save($this->db)) {
             $this->render('libro_nuevo', [
                 'title'   => 'Libro cargado — PAWprints',
                 'styles'  => ['libro_nuevo.css'],
-                'success' => true
+                'success' => true,
             ]);
         } else {
             $errors['general'] = 'Hubo un problema al guardar el libro en la base de datos.';
@@ -187,9 +217,8 @@ class BookController extends Controller
                 'title'  => 'Cargar libro — PAWprints',
                 'styles' => ['libro_nuevo.css'],
                 'errors' => $errors,
-                'old'    => $_POST
+                'old'    => $_POST,
             ]);
         }
     }
 }
-
