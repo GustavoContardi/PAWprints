@@ -336,13 +336,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }).format(book.price).replace('ARS', '$').trim();
 
             card.innerHTML = `
-                <a href="/book/${book.id}">
+                <a href="/book/${escapeHtml(String(book.id))}">
                     <img src="/assets/img/${escapeHtml(book.image || 'placeholder.jpg')}" alt="Portada del libro">
                 </a>
                 <h3>${escapeHtml(book.title)}</h3>
                 <p class="cat-card-autor">${escapeHtml(book.author)}</p>
                 <p class="cat-card-precio">${formattedPrice}</p>
-                <a href="/reserve/${book.id}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
+                <a href="/reserve/${escapeHtml(String(book.id))}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
             `;
             grid.appendChild(card);
         });

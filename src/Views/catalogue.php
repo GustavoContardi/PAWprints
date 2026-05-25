@@ -77,7 +77,7 @@
 
         <hr style="border: 0; border-top: 1px solid var(--color-border); margin: 1rem 0;">
         
-        <a href="/catalogue/export?<?= http_build_query($_GET) ?>" class="cat-btn-exportar" style="display: block; text-align: center; padding: 0.6rem; background: #27ae60; color: white; text-decoration: none; border-radius: var(--radius); font-weight: 500;">
+        <a href="/catalogue/export?<?= htmlspecialchars(http_build_query($_GET)) ?>" class="cat-btn-exportar" style="display: block; text-align: center; padding: 0.6rem; background: #27ae60; color: white; text-decoration: none; border-radius: var(--radius); font-weight: 500;">
             Exportar a CSV
         </a>
     </form>
@@ -110,7 +110,7 @@
                     $params['order'] = $valor;
                 ?>
                 <li>
-                    <a href="?<?= http_build_query($params) ?>" 
+                    <a href="?<?= htmlspecialchars(http_build_query($params)) ?>" 
                        class="cat-chip <?= $current_order === $valor ? 'cat-chip--activo' : '' ?>">
                         <?= $texto ?>
                     </a>
@@ -131,7 +131,7 @@
         $buildUrl = function (int $p) {
             $params = $_GET;
             $params['page'] = $p;
-            return '?' . http_build_query($params);
+            return '?' . htmlspecialchars(http_build_query($params));
         };
 
         // Rango de páginas a mostrar (ventana deslizante de hasta 5)
@@ -205,13 +205,13 @@
         <?php else: ?>
             <?php foreach ($books as $book): ?>
                 <article class="cat-card">
-                    <a href="/book/<?= $book['id'] ?>">
+                    <a href="/book/<?= htmlspecialchars((string)$book['id']) ?>">
                         <img src="/assets/img/<?= htmlspecialchars($book['image'] ?? 'placeholder.jpg') ?>" alt="Portada del libro">
                     </a>
                     <h3><?= htmlspecialchars($book['title']) ?></h3>
                     <p class="cat-card-autor"><?= htmlspecialchars($book['author']) ?></p>
                     <p class="cat-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                    <a href="/reserve/<?= $book['id'] ?>" class="cat-btn-carrito" aria-label="Reservar libro"></a>
+                    <a href="/reserve/<?= htmlspecialchars((string)$book['id']) ?>" class="cat-btn-carrito" aria-label="Reservar libro"></a>
                 </article>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -223,7 +223,7 @@
 </section>
 
 <script id="books-json" type="application/json">
-<?= json_encode($allBooks) ?>
+<?= json_encode($allBooks, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>
 </script>
 
 <script src="/assets/scripts/catalogue.js?v=<?= time() ?>"></script>

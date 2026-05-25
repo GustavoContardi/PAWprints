@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /**
+     * Obtiene el campo de forma segura previniendo vulnerabilidades de Prototype Pollution.
+     */
+    function getField(fieldName) {
+        return Object.prototype.hasOwnProperty.call(fields, fieldName) ? fields[fieldName] : null;
+    }
+
+    /**
      * Valida un campo individualmente y retorna el mensaje de error o cadena vacía.
      */
     function validateField(name, value, file = null) {
@@ -103,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function showError(fieldName, message) {
         const errorSpan = document.getElementById(`error-${fieldName}`);
-        const field = fields[fieldName];
+        const field = getField(fieldName);
         if (!field) return;
         
         const group = field.closest('.form-group');
@@ -122,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function clearError(fieldName) {
         const errorSpan = document.getElementById(`error-${fieldName}`);
-        const field = fields[fieldName];
+        const field = getField(fieldName);
         if (!field) return;
         
         const group = field.closest('.form-group');
@@ -148,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Validador en evento Blur (salir del foco del campo).
      */
     function handleBlur(fieldName) {
-        const field = fields[fieldName];
+        const field = getField(fieldName);
         if (!field) return;
         
         const val = field.value;
@@ -166,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Validador en tiempo real (evento input) sólo si el campo ya tenía un error.
      */
     function handleInput(fieldName) {
-        const field = fields[fieldName];
+        const field = getField(fieldName);
         if (!field) return;
         
         const group = field.closest('.form-group');
@@ -188,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Asociar escuchas de eventos a cada campo
     Object.keys(fields).forEach(fieldName => {
-        const field = fields[fieldName];
+        const field = getField(fieldName);
         if (!field) return;
 
         field.addEventListener('blur', () => handleBlur(fieldName));
@@ -204,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let hasErrors = false;
         
         Object.keys(fields).forEach(fieldName => {
-            const field = fields[fieldName];
+            const field = getField(fieldName);
             if (!field) return;
             
             const val = field.value;
