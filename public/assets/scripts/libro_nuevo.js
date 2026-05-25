@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         price: document.getElementById('price'),
         stock: document.getElementById('stock'),
         discount: document.getElementById('discount'),
+        age: document.getElementById('age'),
         image: document.getElementById('image')
     };
 

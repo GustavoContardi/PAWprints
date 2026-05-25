@@ -3,6 +3,65 @@
    Estilos específicos para el formulario de carga de libros.
    ============================================================ */
 
+/* Hero & Titulados del Formulario */
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+main > h1,
+main > h2 {
+  text-align: center;
+}
+
+main > h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  padding: 2rem 1.25rem 0.25rem;
+}
+
+main > h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  padding: 0 1.25rem 2rem;
+}
+
+/* Centrado y límites del Formulario */
+main > form {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  padding: 0 1.25rem 3rem;
+}
+
+main > form fieldset legend {
+  position: static;
+  width: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  padding: 1rem 0 0.75rem;
+}
+
+main > form button[type="submit"] {
+  margin-top: 1.25rem;
+}
+
+/* Alinear contenedor de errores del servidor */
+.reserva-errores {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Form groups and labels */
 .form-group {
   margin-bottom: 1.25rem;
   display: flex;
@@ -19,8 +78,11 @@
   color: var(--color-text-muted);
 }
 
-/* Number inputs styled consistently with text inputs */
-input[type="number"] {
+/* Inputs, Textareas, Selects */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
   width: 100%;
   padding: 0.55rem 0.85rem;
   font-family: var(--font);
@@ -35,12 +97,17 @@ input[type="number"] {
   display: block;
 }
 
-input[type="number"]::placeholder {
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
   color: var(--color-text-muted);
   opacity: 0.7;
 }
 
-input[type="number"]:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
   border-color: var(--color-brand);
   box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
 }
@@ -127,37 +194,82 @@ input[type="file"]:hover {
   box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
 }
 
-/* Success block styling matching the existing pattern */
+/* Success block styling */
 .reserva-exito {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 3rem;
+  padding: 2.5rem 1.25rem 2rem;
   background: var(--color-white);
   border-radius: var(--radius);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-  padding: 3rem 2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .reserva-exito-icono {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 0.5rem;
+  color: var(--color-brand);
   animation: scaleUp 0.3s ease-out;
 }
 
 .reserva-exito p {
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--color-text);
-  line-height: 1.6;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .reserva-exito p span {
-  font-size: 0.95rem;
+  display: block;
+  font-size: 0.9375rem;
   font-weight: 400;
   color: var(--color-text-muted);
+  margin-top: 0.5rem;
 }
 
 @keyframes scaleUp {
   0% { transform: scale(0.8); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+/* Desktop styles to match layout and alignment */
+@media (min-width: 900px) {
+  main > h1,
+  main > h2 {
+    background: var(--color-white);
+    color: var(--color-text);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0;
+  }  
+
+  main > h1 {
+    padding-top: 2rem;
+    padding-bottom: 0.25rem;
+    font-size: 3.5rem;
+  }
+
+  main > h2 {
+    color: var(--color-text-muted);
+    padding-bottom: 2rem;
+    border-bottom: 6px solid var(--color-brand);
+  }
+
+  main > form {
+    max-width: 480px;
+    padding: 2.5rem 0 4rem;
+  }
+
+  .reserva-exito {
+    max-width: 480px;
+    padding: 3rem 2rem 2.5rem;
+    margin-top: 2.5rem;
+  }
 }

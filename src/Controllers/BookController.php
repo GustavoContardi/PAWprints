@@ -99,6 +99,11 @@ class BookController extends Controller
             $discountFloat = 0.0;
         }
 
+        $allowedAges = ['Cualquier edad', 'Infantil (0-8)', 'Juvenil (9-14)', 'Adolescente (15-17)', 'Adulto (18+)'];
+        if ($age !== '' && !in_array($age, $allowedAges)) {
+            $errors['age'] = 'La edad recomendada seleccionada no es válida.';
+        }
+
         // Manejar upload de imagen si existe
         $imageName = null;
         if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -135,7 +140,7 @@ class BookController extends Controller
 
         // 4. Manejar upload de imagen (mover el archivo)
         if ($imageName && isset($file)) {
-            $destDir = __DIR__ . '/../../public/assets/img/';
+            $destDir = __DIR__ . '/../../public/assets/img/libros/';
             if (!is_dir($destDir)) {
                 mkdir($destDir, 0755, true);
             }
@@ -158,7 +163,7 @@ class BookController extends Controller
             'price' => (float)$price,
             'description' => $description === '' ? null : $description,
             'stock' => (int)$stock,
-            'image' => $imageName,
+            'image' => $imageName ? 'libros/' . $imageName : null,
             'category' => $category === '' ? null : $category,
             'age' => $age === '' ? null : $age,
             'is_new' => $is_new,

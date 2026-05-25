@@ -90,6 +90,7 @@ $success = $success ?? false;
                     <option value="">-- Seleccionar edad --</option>
                     <?php 
                     $ages = [
+                        'Cualquier edad' => 'Cualquier edad',
                         'Infantil (0-8)' => 'Infantil (0-8)',
                         'Juvenil (9-14)' => 'Juvenil (9-14)',
                         'Adolescente (15-17)' => 'Adolescente (15-17)',
