@@ -1,0 +1,163 @@
+/* ============================================================
+   PAWprints — libro_nuevo.css
+   Estilos específicos para el formulario de carga de libros.
+   ============================================================ */
+
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form-group label {
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Number inputs styled consistently with text inputs */
+input[type="number"] {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  display: block;
+}
+
+input[type="number"]::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+input[type="number"]:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
+}
+
+/* File input styling */
+input[type="file"] {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  background: var(--color-white);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+input[type="file"]:hover {
+  background-color: rgba(92, 6, 140, 0.02);
+  border-color: var(--color-brand);
+}
+
+/* Checkbox inline layout */
+.form-group-checkboxes {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.form-group-inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  cursor: pointer;
+  width: auto;
+}
+
+.form-group-inline input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+  accent-color: var(--color-brand);
+}
+
+.form-group-inline label.label-inline {
+  margin: 0;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Inline validation errors styling */
+.form-error {
+  display: none;
+  color: #d32f2f;
+  font-size: 0.75rem;
+  margin-top: 0.35rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.form-error.visible,
+.form-group.has-error .form-error {
+  display: block;
+}
+
+/* Red borders when error exists */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: #d32f2f !important;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.12) !important;
+}
+
+/* Green borders when field is valid */
+.form-group.is-valid input:not([type="file"]),
+.form-group.is-valid select,
+.form-group.is-valid textarea {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
+}
+
+/* Success block styling matching the existing pattern */
+.reserva-exito {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.reserva-exito-icono {
+  animation: scaleUp 0.3s ease-out;
+}
+
+.reserva-exito p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.reserva-exito p span {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+@keyframes scaleUp {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}

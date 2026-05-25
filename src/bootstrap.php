@@ -49,3 +49,8 @@ try {
     }
     throw $e;
 }
+
+if (isset($router)) {
+    $router->get('/books/new', 'BookController', 'new');
+    $router->post('/books/new', 'BookController', 'store');
+}
