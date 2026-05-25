@@ -330,6 +330,10 @@ section.cat-grid {
     letter-spacing: 0.05em;
   }
 
+  #recent-searches-container {
+    overflow: hidden;
+  }
+
   .cat-keywords {
     display: flex;
     flex-wrap: wrap;
@@ -348,6 +352,14 @@ section.cat-grid {
     border-radius: 999px;
     padding: 0.2rem 0.6rem;
     color: var(--color-brand);
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .cat-keyword span {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .cat-keyword button {
@@ -657,17 +669,25 @@ nav.cat-paginacion:first-of-type {
 }
 
 .cat-sidebar-close {
-  background: transparent;
+  background: transparent !important;
   border: none;
   font-size: 1.75rem;
   line-height: 1;
   cursor: pointer;
-  color: var(--color-text-muted);
+  color: var(--color-text-muted) !important;
   transition: color 0.2s;
+  width: auto !important;
+  padding: 0 !important;
+  transform: none !important;
 }
 
 .cat-sidebar-close:hover {
-  color: var(--color-brand);
+  color: var(--color-brand) !important;
+  background: transparent !important;
+}
+
+.cat-sidebar-close:active {
+  transform: none !important;
 }
 
 @media (min-width: 900px) {
