@@ -85,6 +85,10 @@
             <button type="submit" aria-label="Buscar"></button>
         </form>
 
+        <div class="cat-historial" id="cat-historial" aria-label="Búsquedas recientes">
+            <!-- Poblado dinámicamente por catalogue.js -->
+        </div>
+
         <menu class="cat-chips">
             <?php
                 $current_order = $_GET['order'] ?? 'new';

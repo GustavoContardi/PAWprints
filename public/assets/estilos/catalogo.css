@@ -643,3 +643,49 @@ nav.cat-paginacion:first-of-type {
   max-width: 400px;
   margin: 0 auto;
 }
+
+/* ============================================================
+   HISTORIAL DE BÚSQUEDAS
+   ============================================================ */
+.cat-historial {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.25rem 0;
+}
+
+.cat-historial-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-right: 0.25rem;
+}
+
+.cat-historial-btn {
+  padding: 0.35rem 0.85rem !important;
+  font-size: 0.8125rem !important;
+  height: auto !important;
+  min-height: unset !important;
+  display: inline-flex;
+  align-items: center;
+  border-color: var(--color-border) !important;
+}
+
+.cat-historial-btn:hover {
+  border-color: var(--color-brand) !important;
+  color: var(--color-brand) !important;
+}
+
+@media (min-width: 900px) {
+  search.cat-barra {
+    flex-wrap: wrap !important;
+  }
+  .cat-historial {
+    order: 3;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+}
