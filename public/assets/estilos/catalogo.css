@@ -643,3 +643,39 @@ nav.cat-paginacion:first-of-type {
   max-width: 400px;
   margin: 0 auto;
 }
+
+/* ============================================================
+   JS FILTERS & DYNAMIC LAYOUT ADDITIONS
+   ============================================================ */
+.cat-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1.5px solid var(--color-border);
+  padding-bottom: 0.5rem;
+}
+
+.cat-sidebar-close {
+  background: transparent;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+}
+
+.cat-sidebar-close:hover {
+  color: var(--color-brand);
+}
+
+@media (min-width: 900px) {
+  .cat-sidebar-header {
+    display: none !important;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
