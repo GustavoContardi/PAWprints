@@ -36,8 +36,11 @@ class PAWprintsCarrousel {
             slide.className = 'paw-slide';
             if (index === 0) slide.classList.add('active');
             
-            // Pasar el contenido interno del elemento (por ejemplo, el article .ind-card) al slide
-            slide.innerHTML = item.innerHTML;
+            // Clonar el contenido del item de forma segura, sin usar innerHTML,
+            // para evitar la ejecución de scripts en el contenido copiado.
+            const fragment = document.createDocumentFragment();
+            Array.from(item.childNodes).forEach(child => fragment.appendChild(child.cloneNode(true)));
+            slide.appendChild(fragment);
             
             this.slidesWrapper.appendChild(slide);
             this.slides.push(slide);
