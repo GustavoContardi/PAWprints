@@ -38,23 +38,6 @@ class PAWprintsCarrousel {
             
             // Pasar el contenido interno del elemento (por ejemplo, el article .ind-card) al slide
             slide.innerHTML = item.innerHTML;
-
-            // Inyectar caption mobile (visible sólo en pantallas pequeñas vía CSS)
-            const imgPanel = slide.querySelector('.card-slider-img');
-            if (imgPanel) {
-                const titleEl  = item.querySelector('.card-slider-title');
-                const authorEl = item.querySelector('.card-slider-author');
-                const priceEl  = item.querySelector('.card-slider-price');
-
-                const caption = document.createElement('div');
-                caption.className = 'paw-mobile-caption';
-                caption.innerHTML = `
-                    ${titleEl  ? `<p class="paw-mob-title">${titleEl.textContent}</p>`   : ''}
-                    ${authorEl ? `<p class="paw-mob-author">${authorEl.textContent}</p>` : ''}
-                    ${priceEl  ? `<p class="paw-mob-price">${priceEl.textContent}</p>`   : ''}
-                `;
-                imgPanel.appendChild(caption);
-            }
             
             this.slidesWrapper.appendChild(slide);
             this.slides.push(slide);
@@ -86,6 +69,20 @@ class PAWprintsCarrousel {
         this.loaderWrapper.appendChild(this.loaderText);
         this.loaderWrapper.appendChild(this.progressBarContainer);
         this.container.appendChild(this.loaderWrapper);
+
+        // Crear dots de paginación
+        this.dotsWrapper = document.createElement('div');
+        this.dotsWrapper.className = 'paw-dots-wrapper';
+        this.dots = [];
+        this.items.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.className = 'paw-dot';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => this.goTo(index));
+            this.dotsWrapper.appendChild(dot);
+            this.dots.push(dot);
+        });
+        this.container.appendChild(this.dotsWrapper);
 
         this.setupNavigation();
     }
@@ -189,14 +186,24 @@ class PAWprintsCarrousel {
         
         // Remover clase activa del actual
         this.slides[this.currentIndex].classList.remove('active');
-        this.thumbs[this.currentIndex].classList.remove('active');
+        if (this.thumbs[this.currentIndex]) {
+            this.thumbs[this.currentIndex].classList.remove('active');
+        }
+        if (this.dots && this.dots[this.currentIndex]) {
+            this.dots[this.currentIndex].classList.remove('active');
+        }
         
         // Actualizar índice
         this.currentIndex = index;
         
         // Agregar clase activa al nuevo
         this.slides[this.currentIndex].classList.add('active');
-        this.thumbs[this.currentIndex].classList.add('active');
+        if (this.thumbs[this.currentIndex]) {
+            this.thumbs[this.currentIndex].classList.add('active');
+        }
+        if (this.dots && this.dots[this.currentIndex]) {
+            this.dots[this.currentIndex].classList.add('active');
+        }
     }
 
     prev() {

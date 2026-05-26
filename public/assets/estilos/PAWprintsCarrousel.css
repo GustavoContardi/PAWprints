@@ -248,31 +248,50 @@
    (image full-bleed, overlay text, hidden text panel)
    DESKTOP is 100% untouched: all rules below are max-width only.
    ========================================= */
+/* Default hidden pagination dots for desktop */
+.paw-dots-wrapper {
+    display: none;
+}
+
+/* =========================================
+   Mobile — Slider card looks like catalogue card
+   (image full-bleed, overlay text, hidden text panel)
+   DESKTOP is 100% untouched: all rules below are max-width only.
+   ========================================= */
 @media (max-width: 768px) {
 
-    /* The slide itself fills the viewport */
-    .paw-slide .ind-card-slider {
-        flex-direction: column;
-        width: 100%;
-        max-width: 100%;
-        max-height: 100vh;
-        height: 100%;
-        border-radius: 0;
-        box-shadow: none;
-        overflow: hidden;
-        background: transparent;
-        position: relative;
+    /* Hide the navigation buttons (arrows) and the image thumbnails selector below */
+    .paw-ui-wrapper {
+        display: none !important;
     }
 
-    /* Image panel: fills everything */
+    /* The slide container: a beautiful centered vertical card on mobile */
+    .paw-slide .ind-card-slider {
+        flex-direction: column;
+        width: 85%;
+        max-width: 320px;
+        height: auto;
+        max-height: 80vh;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        background: #f2f2f2;
+        position: relative;
+        display: flex;
+    }
+
+    /* Image panel: taking a fixed height, zero padding, occupying the entire space */
     .card-slider-img {
-        flex: 1 1 100%;
-        height: 100%;
+        flex: 0 0 260px;
+        height: 260px;
         width: 100%;
         padding: 0;
         border-right: none;
-        border-bottom: none;
-        background: #000;
+        border-bottom: 1px solid #ddd;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
     }
 
@@ -285,90 +304,127 @@
     .card-slider-img img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center;
+        max-width: 100%;
+        object-fit: cover; /* fills the container completely */
         border: none;
         box-shadow: none;
     }
 
-    /* Gradient overlay at the bottom (like .ind-card::before) */
+    /* Remove gradient overlay from the image panel */
     .card-slider-img::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 45%;
-        background: linear-gradient(to top, rgba(44, 0, 68, 0.85) 0%, transparent 100%);
-        pointer-events: none;
-    }
-
-    /* Hide the entire right text panel */
-    .card-slider-content {
         display: none !important;
     }
 
-    /* Place title & author & price absolutely over the image */
-    .card-slider-img {
-        display: flex;
+    /* Display the right/bottom content panel on mobile */
+    .card-slider-content {
+        display: flex !important;
+        flex: 1;
+        padding: 15px 15px 20px;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: flex-start;
+        background: #f2f2f2;
+        position: relative;
+        box-sizing: border-box;
     }
 
-    /* We use a pseudo-wrapper for text placed over the image.
-       We do this via the article's ::before / overlay divs trick —
-       instead, we'll repurpose .card-slider-img as a relative container
-       and use a small absolutely-positioned caption block */
-    .ind-card-slider::before {
-        content: attr(data-title);
-        display: none; /* We rely on visible DOM elements below */
+    .card-slider-header {
+        margin-bottom: 4px;
+        width: 100%;
+        position: relative;
     }
 
-    /* Mobile title overlay — visible over the image */
-    .paw-mobile-caption {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 0 0.75rem 0.6rem;
-        pointer-events: none;
-        z-index: 5;
-    }
-
-    .paw-mobile-caption .paw-mob-title {
-        font-size: 1.25rem;
+    .card-slider-title {
+        font-size: 1.15rem;
         font-weight: 700;
-        color: #fff;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 0 0 0.15rem;
-    }
-
-    .paw-mobile-caption .paw-mob-author {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--color-brand, #7B2FBE);
-        margin: 0 0 0.15rem;
-    }
-
-    .paw-mobile-caption .paw-mob-price {
-        font-size: 1rem;
-        font-weight: 700;
-        color: rgba(255,255,255,0.9);
+        color: #111;
         margin: 0;
+        line-height: 1.25;
+        padding-right: 40px; /* Leave space for the floating cart button */
+        text-align: left;
     }
 
-    /* Cart button — repositioned to top-right of the image panel */
+    .card-slider-author {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0 0 10px 0;
+        text-align: left;
+    }
+
+    .card-slider-price {
+        font-size: 1.3rem;
+        font-weight: 850;
+        color: #000;
+        margin: 10px 0 0 0;
+        text-align: left;
+    }
+
+    /* Cart button positioned relative to card-slider-content */
     .card-slider-btn-floating {
         position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
+        top: 15px;
+        right: 15px;
         bottom: auto;
         left: auto;
-        transform: scale(1.65);
+        transform: scale(1.15);
         transform-origin: top right;
         z-index: 10;
+    }
+
+    /* Hide unused sections in mobile */
+    .card-slider-chips,
+    .card-slider-options,
+    .card-slider-synopsis {
+        display: none !important;
+    }
+
+    /* Pagination dots shown at the bottom of the screen on mobile */
+    .paw-dots-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 15;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 8px 16px;
+        border-radius: 20px;
+        pointer-events: auto;
+    }
+
+    .paw-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .paw-dot.active {
+        background: #fff;
+        transform: scale(1.25);
+    }
+
+    /* Pulse swipe helper animation at the bottom of content card */
+    .card-slider-content::after {
+        content: 'Desliza para ver más ↔';
+        display: block;
+        text-align: center;
+        font-size: 0.7rem;
+        color: #888;
+        margin-top: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        animation: swipeHintPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes swipeHintPulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
     }
 }
 
