@@ -245,12 +245,14 @@
 }
 
 .card-slider-synopsis {
+    max-height: 200px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 15px;
+    padding: 20px;
     width: 100%;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .card-slider-synopsis .synopsis-title {
