@@ -7,21 +7,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form-libro-nuevo');
     if (!form) return;
 
-    const fields = {
-        title: document.getElementById('title'),
-        author: document.getElementById('author'),
-        price: document.getElementById('price'),
-        stock: document.getElementById('stock'),
-        discount: document.getElementById('discount'),
-        age: document.getElementById('age'),
-        image: document.getElementById('image')
-    };
+    const fields = new Map([
+        ['title', document.getElementById('title')],
+        ['author', document.getElementById('author')],
+        ['price', document.getElementById('price')],
+        ['stock', document.getElementById('stock')],
+        ['discount', document.getElementById('discount')],
+        ['age', document.getElementById('age')],
+        ['image', document.getElementById('image')]
+    ]);
+
+    const fieldNames = Array.from(fields.keys());
 
     /**
      * Obtiene el campo de forma segura previniendo vulnerabilidades de Prototype Pollution.
      */
     function getField(fieldName) {
-        return Object.prototype.hasOwnProperty.call(fields, fieldName) ? fields[fieldName] : null;
+        return fields.get(fieldName) || null;
     }
 
     /**
@@ -194,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Asociar escuchas de eventos a cada campo
-    Object.keys(fields).forEach(fieldName => {
+    fieldNames.forEach(fieldName => {
         const field = getField(fieldName);
         if (!field) return;
 
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         let hasErrors = false;
         
-        Object.keys(fields).forEach(fieldName => {
+        fieldNames.forEach(fieldName => {
             const field = getField(fieldName);
             if (!field) return;
             

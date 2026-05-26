@@ -335,15 +335,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 minimumFractionDigits: 2
             }).format(book.price).replace('ARS', '$').trim();
 
-            card.innerHTML = `
-                <a href="/book/${escapeHtml(String(book.id))}">
-                    <img src="/assets/img/${escapeHtml(book.image || 'placeholder.jpg')}" alt="Portada del libro">
-                </a>
-                <h3>${escapeHtml(book.title)}</h3>
-                <p class="cat-card-autor">${escapeHtml(book.author)}</p>
-                <p class="cat-card-precio">${formattedPrice}</p>
-                <a href="/reserve/${escapeHtml(String(book.id))}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
-            `;
+            const linkCover = document.createElement('a');
+            linkCover.href = `/book/${book.id}`;
+            const imgCover = document.createElement('img');
+            imgCover.src = `/assets/img/${book.image || 'placeholder.jpg'}`;
+            imgCover.alt = 'Portada del libro';
+            linkCover.appendChild(imgCover);
+
+            const title = document.createElement('h3');
+            title.textContent = book.title;
+
+            const author = document.createElement('p');
+            author.className = 'cat-card-autor';
+            author.textContent = book.author;
+
+            const price = document.createElement('p');
+            price.className = 'cat-card-precio';
+            price.textContent = formattedPrice;
+
+            const linkReserve = document.createElement('a');
+            linkReserve.href = `/reserve/${book.id}`;
+            linkReserve.className = 'cat-btn-carrito';
+            linkReserve.setAttribute('aria-label', 'Reservar libro');
+
+            card.appendChild(linkCover);
+            card.appendChild(title);
+            card.appendChild(author);
+            card.appendChild(price);
+            card.appendChild(linkReserve);
+
             grid.appendChild(card);
         });
 
@@ -740,16 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleWindowScroll);
     window.addEventListener('resize', handleWindowScroll);
 
-    // Helper to escape HTML characters
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.toString()
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
+
 
     // ── 12. Bootstrap / Initialization ───────────────────────────────────────
     syncStateFromURL();
