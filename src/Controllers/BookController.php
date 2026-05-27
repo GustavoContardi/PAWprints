@@ -161,7 +161,7 @@ class BookController extends Controller
             $discountFloat = 0.0;
         }
 
-        $allowedAges = ['Cualquier edad', 'Infantil (0-8)', 'Juvenil (9-14)', 'Adolescente (15-17)', 'Adulto (18+)'];
+        $allowedAges = ['infantil', 'juvenil', 'adulto'];
         if ($age !== '' && !in_array($age, $allowedAges)) {
             $errors['age'] = 'La edad recomendada seleccionada no es válida.';
         }

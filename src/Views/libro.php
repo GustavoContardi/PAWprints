@@ -3,7 +3,7 @@
         $img = $book['image'] ?? 'placeholder.jpg';
         $src = (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) ? $img : '/assets/img/' . $img;
     ?>
-    <img class="libro-portada" src="<?= htmlspecialchars($src) ?>" alt="Tapa de <?= htmlspecialchars($book['title']) ?>">
+    <img class="libro-portada" src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Tapa de <?= htmlspecialchars($book['title']) ?>">
 
     <h2 class="libro-titulo"><?= htmlspecialchars($book['title']) ?></h2>
     <a href="/catalogue?category=<?= urlencode($book['category'] ?? '') ?>" class="libro-genero"><?= htmlspecialchars($book['category'] ?? 'Sin categoría') ?></a>

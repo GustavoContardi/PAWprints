@@ -73,10 +73,19 @@ $success = $success ?? false;
                 <select name="category" id="category">
                     <option value="">-- Seleccionar categoría --</option>
                     <?php 
-                    $categories = ['Ficción', 'No ficción', 'Infantil', 'Juvenil', 'Académico', 'Otros'];
+                    $categories = [
+                        'ciencia-ficcion' => 'Ciencia ficción',
+                        'romance' => 'Romance',
+                        'aventura' => 'Aventura',
+                        'fantasia' => 'Fantasía',
+                        'misterio' => 'Misterio',
+                        'historia' => 'Historia',
+                        'no-ficcion' => 'No Ficción',
+                        'otros' => 'Otros'
+                    ];
                     $selectedCategory = $old['category'] ?? '';
-                    foreach ($categories as $cat): ?>
-                        <option value="<?= $cat ?>" <?= $selectedCategory === $cat ? 'selected' : '' ?>><?= $cat ?></option>
+                    foreach ($categories as $val => $label): ?>
+                        <option value="<?= $val ?>" <?= $selectedCategory === $val ? 'selected' : '' ?>><?= $label ?></option>
                     <?php endforeach; ?>
                 </select>
                 <span class="form-error <?= isset($errors['category']) ? 'visible' : '' ?>" id="error-category"><?= htmlspecialchars($errors['category'] ?? '') ?></span>
@@ -89,11 +98,9 @@ $success = $success ?? false;
                     <option value="">-- Seleccionar edad --</option>
                     <?php 
                     $ages = [
-                        'Cualquier edad' => 'Cualquier edad',
-                        'Infantil (0-8)' => 'Infantil (0-8)',
-                        'Juvenil (9-14)' => 'Juvenil (9-14)',
-                        'Adolescente (15-17)' => 'Adolescente (15-17)',
-                        'Adulto (18+)' => 'Adulto (18+)'
+                        'infantil' => 'Infantil',
+                        'juvenil' => 'Juvenil',
+                        'adulto' => 'Adulto'
                     ];
                     $selectedAge = $old['age'] ?? '';
                     foreach ($ages as $key => $label): ?>

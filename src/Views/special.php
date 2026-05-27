@@ -22,7 +22,7 @@
                 <article class="ind-card-slider">
                     <div class="card-slider-img">
                         <a href="/book/<?= $book['id'] ?>">
-                            <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                            <img src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Portada de Libro">
                         </a>
                     </div>
                     <div class="card-slider-content">
@@ -74,7 +74,7 @@
                 <article class="ind-card-slider">
                     <div class="card-slider-img">
                         <a href="/book/<?= $book['id'] ?>">
-                            <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                            <img src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Portada de Libro">
                         </a>
                     </div>
                     <div class="card-slider-content">
@@ -117,7 +117,7 @@
                 <article class="ind-card-slider">
                     <div class="card-slider-img">
                         <a href="/book/<?= $book['id'] ?>">
-                            <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                            <img src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Portada de Libro">
                         </a>
                     </div>
                     <div class="card-slider-content">
