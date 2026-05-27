@@ -127,7 +127,10 @@
     {
         if ($totalPages <= 1) return;
 
-        // Preservar todos los query params actuales, cambiando solo "page"
+        // Preservar todos los query params actuales, cambiando solo "page".
+        // NOTA: $buildUrl devuelve una URL sin codificación HTML. Cada sitio de salida
+        // aplica htmlspecialchars() explícitamente para que el análisis de código estático
+        // pueda verificar la sanitización en el punto de salida.
         $buildUrl = function (int $p) {
             $params = $_GET;
             $params['page'] = $p;
@@ -155,12 +158,12 @@
         if ($page === 1) {
             echo '<li><span class="disabled" aria-label="Página anterior">&#8592;</span></li>';
         } else {
-            echo '<li><a href="' . $buildUrl($page - 1) . '" aria-label="Página anterior">&#8592;</a></li>';
+            echo '<li><a href="' . htmlspecialchars($buildUrl($page - 1), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" aria-label="Página anterior">&#8592;</a></li>';
         }
 
         // Números de página
         if ($start > 1) {
-            echo '<li><a href="' . $buildUrl(1) . '">1</a></li>';
+            echo '<li><a href="' . htmlspecialchars($buildUrl(1), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '">1</a></li>';
             if ($start > 2) {
                 echo '<li><span class="ellipsis">…</span></li>';
             }
@@ -168,9 +171,9 @@
 
         for ($i = $start; $i <= $end; $i++) {
             if ($i === $page) {
-                echo '<li><a href="' . $buildUrl($i) . '" aria-current="page">' . $i . '</a></li>';
+                echo '<li><a href="' . htmlspecialchars($buildUrl($i), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" aria-current="page">' . $i . '</a></li>';
             } else {
-                echo '<li><a href="' . $buildUrl($i) . '">' . $i . '</a></li>';
+                echo '<li><a href="' . htmlspecialchars($buildUrl($i), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '">' . $i . '</a></li>';
             }
         }
 
@@ -178,14 +181,14 @@
             if ($end < $totalPages - 1) {
                 echo '<li><span class="ellipsis">…</span></li>';
             }
-            echo '<li><a href="' . $buildUrl($totalPages) . '">' . $totalPages . '</a></li>';
+            echo '<li><a href="' . htmlspecialchars($buildUrl($totalPages), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '">' . $totalPages . '</a></li>';
         }
 
         // Flecha derecha
         if ($page === $totalPages) {
             echo '<li><span class="disabled" aria-label="Página siguiente">&#8594;</span></li>';
         } else {
-            echo '<li><a href="' . $buildUrl($page + 1) . '" aria-label="Página siguiente">&#8594;</a></li>';
+            echo '<li><a href="' . htmlspecialchars($buildUrl($page + 1), ENT_QUOTES | ENT_HTML5, 'UTF-8') . '" aria-label="Página siguiente">&#8594;</a></li>';
         }
 
         echo '</ol>';

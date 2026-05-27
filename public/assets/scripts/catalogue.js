@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxPriceInput = document.querySelector('input[name="max_price"]');
     const perPageSelect = document.getElementById('per_page');
     const paginacionModeSelect = document.getElementById('paginacion_mode');
-    
+
     // ── 2. State Variables ───────────────────────────────────────────────────
     let allBooks = [];
     let filteredBooks = [];
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortKey = 'new'; // 'new', 'popular', 'price'
     let sortOrder = 'desc'; // 'asc' or 'desc'
     let paginationMode = 'traditional'; // 'traditional' or 'infinite'
-    
+
     // Infinite scroll loading variables
     let loadedInfiniteCount = 12;
     let loadingMore = false;
-    
+
     // Recent searches list
     let recentSearches = [];
 
@@ -225,11 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── 7. URL State Synchronization ─────────────────────────────────────────
     function syncStateFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
-        
+
         if (urlParams.has('search')) searchQuery = urlParams.get('search');
         if (urlParams.has('min_price')) minPrice = parseFloat(urlParams.get('min_price')) || null;
         if (urlParams.has('max_price')) maxPrice = parseFloat(urlParams.get('max_price')) || null;
-        
+
         if (urlParams.has('category[]')) {
             selectedCategories = urlParams.getAll('category[]');
         } else if (urlParams.has('category')) {
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${escapeHtml(book.title)}</h3>
                 <p class="cat-card-autor">${escapeHtml(book.author)}</p>
                 <p class="cat-card-precio">${formattedPrice}</p>
-                <a href="/reserve/${book.id}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
+                <a href="/reserve/${encodeURIComponent(book.id)}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
             `;
             grid.appendChild(card);
         });
@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Read form element states to keep variables accurate
         if (minPriceInput) minPrice = minPriceInput.value !== '' ? parseFloat(minPriceInput.value) : null;
         if (maxPriceInput) maxPrice = maxPriceInput.value !== '' ? parseFloat(maxPriceInput.value) : null;
-        
+
         selectedCategories = [];
         document.querySelectorAll('input[name="category[]"]:checked').forEach(cb => {
             selectedCategories.push(cb.value);
@@ -573,7 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Correct bounds
         applyFilters();
-        
+
         const totalPages = Math.max(1, Math.ceil(filteredBooks.length / perPage));
         if (currentPage > totalPages) {
             currentPage = totalPages;
@@ -586,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── 10. Listeners & Reactive Filtering ────────────────────────────────────
-    
+
     // Intercept form submissions
     if (filterForm) {
         filterForm.addEventListener('submit', (e) => {
@@ -617,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clearBtn) {
         clearBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            
+
             searchQuery = '';
             minPrice = null;
             maxPrice = null;
@@ -632,10 +632,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (searchInput) searchInput.value = '';
             if (minPriceInput) minPriceInput.value = '';
             if (maxPriceInput) maxPriceInput.value = '';
-            
+
             document.querySelectorAll('input[name="category[]"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('input[name="age[]"]').forEach(cb => cb.checked = false);
-            
+
             updateCatalogue();
             closeSidebar();
         });
@@ -729,7 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loadedInfiniteCount >= filteredBooks.length) return;
 
         loadingMore = true;
-        
+
         // Simulating minor visual loading delay for sleek feel
         setTimeout(() => {
             loadedInfiniteCount += perPage;
