@@ -21,7 +21,11 @@
             <li>
                 <article class="ind-card">
                     <a href="/book/<?= $book['id'] ?>">
-                        <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                        <?php 
+                            $img = $book['image'] ?? 'placeholder.jpg';
+                            $src = (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) ? $img : '/assets/img/' . $img;
+                        ?>
+                        <img src="<?= htmlspecialchars($src) ?>" alt="Portada de Libro">
                     </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
                     <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
@@ -46,7 +50,11 @@
             <li>
                 <article class="ind-card">
                     <a href="/book/<?= $book['id'] ?>">
-                        <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                        <?php 
+                            $img = $book['image'] ?? 'placeholder.jpg';
+                            $src = (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) ? $img : '/assets/img/' . $img;
+                        ?>
+                        <img src="<?= htmlspecialchars($src) ?>" alt="Portada de Libro">
                     </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
                     <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>
@@ -71,7 +79,11 @@
             <li>
                 <article class="ind-card">
                     <a href="/book/<?= $book['id'] ?>">
-                        <img src="/assets/img/<?= htmlspecialchars($book['image']) ?>" alt="Portada de Libro">
+                        <?php 
+                            $img = $book['image'] ?? 'placeholder.jpg';
+                            $src = (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) ? $img : '/assets/img/' . $img;
+                        ?>
+                        <img src="<?= htmlspecialchars($src) ?>" alt="Portada de Libro">
                     </a>
                     <p class="ind-card-titulo"><?= htmlspecialchars($book['title']) ?></p>
                     <p class="ind-card-precio">$<?= number_format($book['price'], 2, ',', '.') ?></p>

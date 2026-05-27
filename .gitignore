@@ -1,5 +1,6 @@
 # Dependencias
 /vendor/
+/vendor.old/
 /composer.lock
 
 # Archivos de entorno

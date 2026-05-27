@@ -206,7 +206,11 @@
             <?php foreach ($books as $book): ?>
                 <article class="cat-card">
                     <a href="/book/<?= $book['id'] ?>">
-                        <img src="/assets/img/<?= htmlspecialchars($book['image'] ?? 'placeholder.jpg') ?>" alt="Portada del libro">
+                        <?php 
+                            $img = $book['image'] ?? 'placeholder.jpg';
+                            $src = (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) ? $img : '/assets/img/' . $img;
+                        ?>
+                        <img src="<?= htmlspecialchars($src) ?>" alt="Portada del libro">
                     </a>
                     <h3><?= htmlspecialchars($book['title']) ?></h3>
                     <p class="cat-card-autor"><?= htmlspecialchars($book['author']) ?></p>

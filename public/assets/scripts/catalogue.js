@@ -335,9 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 minimumFractionDigits: 2
             }).format(book.price).replace('ARS', '$').trim();
 
+            const img = book.image || 'placeholder.jpg';
+            const imgSrc = (img.startsWith('http://') || img.startsWith('https://')) ? img : `/assets/img/${img}`;
+
             card.innerHTML = `
                 <a href="/book/${book.id}">
-                    <img src="/assets/img/${escapeHtml(book.image || 'placeholder.jpg')}" alt="Portada del libro">
+                    <img src="${escapeHtml(imgSrc)}" alt="Portada del libro">
                 </a>
                 <h3>${escapeHtml(book.title)}</h3>
                 <p class="cat-card-autor">${escapeHtml(book.author)}</p>
