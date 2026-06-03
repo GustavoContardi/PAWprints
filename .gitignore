@@ -31,6 +31,7 @@ yarn-error.log*
 /cache/
 /tmp/
 /*.cache
+/storage/
 
 # Archivos compilados / build
 /build/

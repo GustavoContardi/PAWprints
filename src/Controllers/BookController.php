@@ -22,10 +22,33 @@ class BookController extends Controller
             return;
         }
 
+        $bookArray = $book->toArray();
+
+        // Build Book microdata
+        $microdata = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Book',
+            'name' => $bookArray['title'],
+            'author' => [
+                '@type' => 'Person',
+                'name' => $bookArray['author']
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => $bookArray['price'],
+                'priceCurrency' => 'ARS',
+                'availability' => $bookArray['stock'] > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+            ],
+            'image' => (str_starts_with($bookArray['image'] ?? '', 'http') ? $bookArray['image'] : '/assets/img/' . ($bookArray['image'] ?? 'placeholder.jpg')),
+            'genre' => $bookArray['category'],
+            'description' => $bookArray['description']
+        ];
+
         $this->render('libro', [
             'title'  => "{$book->getTitle()} — PAWprints",
             'styles' => ['libro.css'],
-            'book'   => $book->toArray()
+            'book'   => $bookArray,
+            'microdata' => $microdata
         ]);
     }
 
