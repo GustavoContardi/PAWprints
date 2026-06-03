@@ -1,6 +1,21 @@
+{% extends 'layouts/base.twig' %}
 
-<link rel="stylesheet" href="/assets/estilos/PAWprintsCarrousel.css">
+{% block title %}Indispensables - PAWprints{% endblock %}
 
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ asset('estilos/PAWprintsCarrousel.css') }}">
+{% endblock %}
+
+{% block microdata_head %}
+{% if microdata is defined %}
+  {% set items = microdata is iterable and microdata[0] is iterable ? microdata : [microdata] %}
+  {% for schema in items %}
+    <script type="application/ld+json">{{ schema|json_encode(64 b-or 256)|raw }}</script>
+  {% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
 <!-- Hero -->
 <section class="ind-hero">
     <p class="ind-hero-sub">Nuestros</p>
@@ -17,27 +32,27 @@
     <h2 class="ind-seccion-titulo"><a href="/catalogue">Novedades</a></h2>
 
     <ul class="ind-carrusel">
-        <?php foreach($new as $book): ?>
+        {% for book in new %}
             <li>
                 <article class="ind-card-slider">
                     <div class="card-slider-img">
-                        <a href="/book/<?= $book['id'] ?>">
-                            <img src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Portada de Libro">
+                        <a href="/book/{{ book.id }}">
+                            <img src="{{ image_url(book) }}" alt="Portada de Libro">
                         </a>
                     </div>
                     <div class="card-slider-content">
-                        <a href="/reserve/<?= $book['id'] ?>" class="ind-btn-carrito card-slider-btn-floating" aria-label="Reservar libro"></a>
+                        <a href="/reserve/{{ book.id }}" class="ind-btn-carrito card-slider-btn-floating" aria-label="Reservar libro"></a>
                         
                         <div class="card-slider-header">
-                            <h3 class="card-slider-title"><?= htmlspecialchars($book['title']) ?></h3>
+                            <h3 class="card-slider-title">{{ book.title }}</h3>
                         </div>
                         
                         <div class="card-slider-chips">
-                            <span class="chip"><?= htmlspecialchars($book['category'] ?? 'Ficción') ?></span>
+                            <span class="chip">{{ book.category }}</span>
                         </div>
                         
-                        <p class="card-slider-price">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                        <p class="card-slider-author"><?= htmlspecialchars($book['author'] ?? 'Autor Desconocido') ?></p>
+                        <p class="card-slider-price">${{ book.price|price_format }}</p>
+                        <p class="card-slider-author">{{ book.author }}</p>
                         
                         <div class="card-slider-options">
                             <div class="option-group">
@@ -52,12 +67,12 @@
                         
                         <div class="card-slider-synopsis">
                             <h4 class="synopsis-title">Sinopsis</h4>
-                            <p><?= htmlspecialchars($book['description'] ?? 'Sin sinopsis disponible.') ?></p>
+                            <p>{{ book.description }}</p>
                         </div>
                     </div>
                 </article>
             </li>
-        <?php endforeach; ?>
+        {% endfor %}
     </ul>
     
 </section>
@@ -66,91 +81,81 @@
 <section class="ind-seccion">
     <h2 class="ind-seccion-titulo"><a href="/catalogue">Descuentos</a></h2>
     
-
-    
-                            <ul class="ind-carrusel" data-effect="fade">
-        <?php foreach($sales as $book): ?>
+    <ul class="ind-carrusel" data-effect="fade">
+        {% for book in sales %}
             <li>
                 <article class="ind-card-slider">
                     <div class="card-slider-img">
-                        <a href="/book/<?= $book['id'] ?>">
-                            <img src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Portada de Libro">
+                        <a href="/book/{{ book.id }}">
+                            <img src="{{ image_url(book) }}" alt="Portada de Libro">
                         </a>
                     </div>
                     <div class="card-slider-content">
-                        <a href="/reserve/<?= $book['id'] ?>" class="ind-btn-carrito card-slider-btn-floating" aria-label="Reservar libro"></a>
+                        <a href="/reserve/{{ book.id }}" class="ind-btn-carrito card-slider-btn-floating" aria-label="Reservar libro"></a>
                         <div class="card-slider-header">
-                            <h3 class="card-slider-title"><?= htmlspecialchars($book['title']) ?></h3>
+                            <h3 class="card-slider-title">{{ book.title }}</h3>
                         </div>
                         <div class="card-slider-chips">
-                            <span class="chip"><?= htmlspecialchars($book['category'] ?? 'Ficción') ?></span>
+                            <span class="chip">{{ book.category }}</span>
                         </div>
-                        <p class="card-slider-price">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                        <p class="card-slider-author"><?= htmlspecialchars($book['author'] ?? 'Autor Desconocido') ?></p>
+                        <p class="card-slider-price">${{ book.price|price_format }}</p>
+                        <p class="card-slider-author">{{ book.author }}</p>
                         <div class="card-slider-options">
                             <div class="option-group"><span class="option-label">Formato:</span> <span class="option-value">PDF, EPUB</span></div>
                             <div class="option-group"><span class="option-label">Idioma:</span> <span class="option-value">Español, Inglés</span></div>
                         </div>
                         <div class="card-slider-synopsis">
                             <h4 class="synopsis-title">Sinopsis</h4>
-                            <p><?= htmlspecialchars($book['description'] ?? 'Sin sinopsis disponible.') ?></p>
+                            <p>{{ book.description }}</p>
                         </div>
                     </div>
                 </article>
             </li>
-        <?php endforeach; ?>
+        {% endfor %}
     </ul>
-    
-
-    
 </section>
 
 <!-- Recomendados -->
 <section class="ind-seccion">
     <h2 class="ind-seccion-titulo"><a href="/catalogue">Recomendados</a></h2>
     
-
-    
-                            <ul class="ind-carrusel" data-effect="slide">
-        <?php foreach($recommended as $book): ?>
+    <ul class="ind-carrusel" data-effect="slide">
+        {% for book in recommended %}
             <li>
                 <article class="ind-card-slider">
                     <div class="card-slider-img">
-                        <a href="/book/<?= $book['id'] ?>">
-                            <img src="<?= htmlspecialchars(str_starts_with($book['image'] ?? '', 'http') ? $book['image'] : '/assets/img/' . ($book['image'] ?? 'placeholder.jpg')) ?>" alt="Portada de Libro">
+                        <a href="/book/{{ book.id }}">
+                            <img src="{{ image_url(book) }}" alt="Portada de Libro">
                         </a>
                     </div>
                     <div class="card-slider-content">
-                        <a href="/reserve/<?= $book['id'] ?>" class="ind-btn-carrito card-slider-btn-floating" aria-label="Reservar libro"></a>
+                        <a href="/reserve/{{ book.id }}" class="ind-btn-carrito card-slider-btn-floating" aria-label="Reservar libro"></a>
                         <div class="card-slider-header">
-                            <h3 class="card-slider-title"><?= htmlspecialchars($book['title']) ?></h3>
+                            <h3 class="card-slider-title">{{ book.title }}</h3>
                         </div>
                         <div class="card-slider-chips">
-                            <span class="chip"><?= htmlspecialchars($book['category'] ?? 'Ficción') ?></span>
+                            <span class="chip">{{ book.category }}</span>
                         </div>
-                        <p class="card-slider-price">$<?= number_format($book['price'], 2, ',', '.') ?></p>
-                        <p class="card-slider-author"><?= htmlspecialchars($book['author'] ?? 'Autor Desconocido') ?></p>
+                        <p class="card-slider-price">${{ book.price|price_format }}</p>
+                        <p class="card-slider-author">{{ book.author }}</p>
                         <div class="card-slider-options">
                             <div class="option-group"><span class="option-label">Formato:</span> <span class="option-value">PDF, EPUB</span></div>
                             <div class="option-group"><span class="option-label">Idioma:</span> <span class="option-value">Español, Inglés</span></div>
                         </div>
                         <div class="card-slider-synopsis">
                             <h4 class="synopsis-title">Sinopsis</h4>
-                            <p><?= htmlspecialchars($book['description'] ?? 'Sin sinopsis disponible.') ?></p>
+                            <p>{{ book.description }}</p>
                         </div>
                     </div>
                 </article>
             </li>
-        <?php endforeach; ?>
+        {% endfor %}
     </ul>
-    
-
-    
 </section>
 
 <!-- Scripts del Nuevo Carrusel Fullscreen -->
-<script src="/assets/scripts/PAWprintsPreloaderIMG.js"></script>
-<script src="/assets/scripts/PAWprintsCarrousel.js"></script>
+<script src="{{ asset('scripts/PAWprintsPreloaderIMG.js') }}"></script>
+<script src="{{ asset('scripts/PAWprintsCarrousel.js') }}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const carruseles = document.querySelectorAll('.ind-carrusel');
@@ -160,3 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+{% endblock %}

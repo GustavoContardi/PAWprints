@@ -1,0 +1,9 @@
+<article class="cat-card">
+    <a href="/book/{{ book.id }}">
+        <img src="{{ image_url(book) }}" alt="Portada del libro">
+    </a>
+    <h3>{{ book.title }}</h3>
+    <p class="cat-card-autor">{{ book.author }}</p>
+    <p class="cat-card-precio">${{ book.price|price_format }}</p>
+    <a href="/reserve/{{ book.id }}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
+</article>

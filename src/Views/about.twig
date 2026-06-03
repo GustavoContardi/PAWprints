@@ -1,3 +1,41 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}PAWprints - Sobre Nosotros{% endblock %}
+
+{% block microdata_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Sobre Nosotros — PAWprints",
+  "url": "https://pawprints.com/about-us"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BookStore",
+  "name": "PAWprints libros S.A.",
+  "url": "https://pawprints.com",
+  "telephone": "+54-11-1234-5678",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Humberto Primo 666",
+    "addressLocality": "Luján",
+    "addressRegion": "Buenos Aires",
+    "postalCode": "6700",
+    "addressCountry": "AR"
+  },
+  "sameAs": [
+    "https://www.instagram.com/pawprints",
+    "https://www.x.com/pawprints",
+    "https://www.youtube.com/pawprints"
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
 <h1>PAWprints</h1>
 <h2>Sobre Nosotros</h2>
 <section>
@@ -11,3 +49,4 @@
     <p>En PAWprints, nuestra misión es facilitar el acceso a la cultura y el conocimiento a través de una experiencia de compra intuitiva y personalizada. Nos esforzamos por ser el puente entre los autores y sus lectores, garantizando que cada libro en nuestras estanterías virtuales sea una invitación a descubrir nuevas perspectivas. Buscamos que cada interacción con nuestra librería deje una huella positiva, fomentando el hábito de la lectura en nuestra comunidad.</p>
     <img src="/assets/img/logo_PAWprints2.svg" alt="Logotipo de la Libreria PAWprints">
 </section>
+{% endblock %}

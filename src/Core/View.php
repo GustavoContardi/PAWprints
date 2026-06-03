@@ -4,14 +4,18 @@ namespace Core;
 
 class View
 {
+    private static ?\Twig\Environment $twig = null;
+
+    public static function getTwig(): \Twig\Environment
+    {
+        if (self::$twig === null) {
+            self::$twig = TwigFactory::create();
+        }
+        return self::$twig;
+    }
+
     public static function render(string $view, array $data = []): void
     {
-        extract($data);
-
-        ob_start();
-        require __DIR__ . '/../Views/' . $view . '.php';
-        $content = ob_get_clean();
-
-        require __DIR__ . '/../Views/layouts/layout.php';
+        echo self::getTwig()->render($view . '.twig', $data);
     }
 }

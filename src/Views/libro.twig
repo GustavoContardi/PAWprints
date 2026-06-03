@@ -1,0 +1,59 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}{{ book.title }} - PAWprints{% endblock %}
+
+{% block microdata_head %}
+{% if microdata is defined %}
+  {% set items = microdata is iterable and microdata[0] is iterable ? microdata : [microdata] %}
+  {% for schema in items %}
+    <script type="application/ld+json">{{ schema|json_encode(64 b-or 256)|raw }}</script>
+  {% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="seccion-libro">
+    <img class="libro-portada" src="{{ image_url(book) }}" alt="Tapa de {{ book.title }}">
+
+    <h2 class="libro-titulo">{{ book.title }}</h2>
+    <a href="/catalogue?category={{ book.category|url_encode }}" class="libro-genero">{{ book.category }}</a>
+    <p class="libro-precio">${{ book.price|price_format }}</p>
+    <p class="libro-autor">{{ book.author }}</p>
+
+    <div class="libro-form">
+        <label for="formatoLibro">Formato</label>
+        <select id="formatoLibro" name="formato">
+            <option value="" disabled selected>Valor</option>
+            <option value="pdf">PDF</option>
+            <option value="tapa-dura">Tapa dura</option>
+            <option value="tapa-blanda">Tapa blanda</option>
+        </select>
+
+        <label for="idiomaLibro">Idioma</label>
+        <select id="idiomaLibro" name="idioma">
+            <option value="" disabled selected>Valor</option>
+            <option value="ingles">Inglés</option>
+            <option value="espanol">Español</option>
+            <option value="frances">Francés</option>
+        </select>
+
+        <a href="/reserve/{{ book.id }}"
+           class="btn-comprar"
+           {% if book.stock <= 0 %}style="pointer-events:none;opacity:0.5"{% endif %}>
+            {% if book.stock > 0 %}Reservar Libro{% else %}No disponible{% endif %}
+        </a>
+    </div>
+
+    <details class="libro-sinopsis">
+        <summary>Sinopsis</summary>
+        <p>{{ book.description }}</p>
+    </details>
+</section>
+
+<section class="seccion-autor">
+    <img class="autor-foto" src="/assets/img/avatar_placeholder.jpg" alt="Foto de {{ book.author }}">
+    <h2 class="autor-titulo">Información del autor</h2>
+    <h3 class="autor-nombre">{{ book.author }}</h3>
+    <p class="autor-bio">Información del autor no disponible.</p>
+</section>
+{% endblock %}
