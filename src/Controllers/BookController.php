@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\Book;
+use Services\OpenLibraryService;
 
 class BookController extends Controller
 {
@@ -58,6 +59,25 @@ class BookController extends Controller
             ]);
             exit;
         }
+    }
+
+    public function apiSearchBook(array $params): void
+    {
+        $query = trim($_GET['q'] ?? '');
+        if ($query === '') {
+            http_response_code(400);
+            echo json_encode(['error' => 'El parámetro "q" es requerido.']);
+            return;
+        }
+
+        header('Content-Type: application/json');
+        $results = OpenLibraryService::searchByTitle($query);
+        if ($results === null) {
+            echo json_encode(['results' => []]);
+            return;
+        }
+
+        echo json_encode(['results' => $results]);
     }
 
     public function new(array $params): void
@@ -187,6 +207,30 @@ class BookController extends Controller
                     'old'    => $_POST,
                 ]);
                 return;
+            }
+        }
+
+        // 5b. Si no se subió imagen, intentar recuperar portada desde Open Library
+        if (!$imageName) {
+            $coverId = isset($_POST['cover_id']) ? (int)$_POST['cover_id'] : null;
+            $destDir = __DIR__ . '/../../public/assets/img/libros/';
+            if (!is_dir($destDir)) {
+                mkdir($destDir, 0755, true);
+            }
+
+            if ($coverId > 0) {
+                $downloaded = OpenLibraryService::downloadCover($coverId, $destDir);
+                if ($downloaded) {
+                    $imageName = $downloaded;
+                }
+            }
+
+            if (!$imageName && $title !== '') {
+                $searchQuery = $title . ($author !== '' ? ' ' . $author : '');
+                $downloaded = OpenLibraryService::searchAndDownloadFirstCover($searchQuery, $destDir);
+                if ($downloaded) {
+                    $imageName = $downloaded;
+                }
             }
         }
 

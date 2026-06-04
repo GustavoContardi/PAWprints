@@ -186,6 +186,157 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ── Open Library Auto-fill ──────────────────────────────────────────────
+    const olQuery = document.getElementById('ol-query');
+    const olSearchBtn = document.getElementById('ol-search-btn');
+    const olResults = document.getElementById('ol-results');
+    const coverIdInput = document.getElementById('cover_id');
+    const coverPreview = document.getElementById('cover-preview');
+
+    if (olQuery && olSearchBtn && olResults) {
+        olSearchBtn.addEventListener('click', async () => {
+            const q = olQuery.value.trim();
+            if (!q) return;
+
+            olSearchBtn.disabled = true;
+            olSearchBtn.textContent = 'Buscando...';
+            olResults.innerHTML = '';
+            olResults.classList.remove('visible');
+
+            try {
+                const res = await fetch(`/api/search-book?q=${encodeURIComponent(q)}`);
+                const data = await res.json();
+
+                olResults.classList.add('visible');
+
+                if (!data.results || data.results.length === 0) {
+                    olResults.innerHTML = '<div class="ol-no-results">Sin resultados.</div>';
+                    return;
+                }
+
+                data.results.forEach((book, idx) => {
+                    const item = document.createElement('div');
+                    item.className = 'ol-result-item';
+                    item.tabIndex = 0;
+                    item.setAttribute('role', 'button');
+                    item.dataset.index = idx;
+
+                    const img = book.cover_url
+                        ? `<img src="${book.cover_url}" alt="" loading="lazy">`
+                        : '<div style="width:48px;height:72px;background:var(--color-border);border-radius:4px;flex-shrink:0"></div>';
+
+                    const year = book.first_publish_year ? `(${book.first_publish_year})` : '';
+
+                    item.innerHTML = `
+                        ${img}
+                        <div class="ol-result-info">
+                            <p class="ol-result-title">${escapeHtml(book.title)}</p>
+                            <p class="ol-result-author">${escapeHtml(book.author)} ${year}</p>
+                        </div>
+                    `;
+
+                    item.addEventListener('click', () => fillBookData(book));
+                    item.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            fillBookData(book);
+                        }
+                    });
+
+                    olResults.appendChild(item);
+                });
+            } catch (err) {
+                olResults.classList.add('visible');
+                olResults.innerHTML = '<div class="ol-error">Error al conectar con Open Library.</div>';
+            } finally {
+                olSearchBtn.disabled = false;
+                olSearchBtn.textContent = 'Buscar';
+            }
+        });
+
+        olQuery.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                olSearchBtn.click();
+            }
+        });
+    }
+
+    function fillBookData(book) {
+        const titleField = document.getElementById('title');
+        const authorField = document.getElementById('author');
+        const descField = document.getElementById('description');
+        const categoryField = document.getElementById('category');
+
+        if (titleField && book.title) {
+            titleField.value = book.title;
+            titleField.dispatchEvent(new Event('input'));
+        }
+        if (authorField && book.author) {
+            authorField.value = book.author;
+            authorField.dispatchEvent(new Event('input'));
+        }
+        if (descField && book.description) {
+            descField.value = book.description;
+            descField.dispatchEvent(new Event('input'));
+        }
+
+        // Mapear subjects a categoría local
+        if (categoryField && book.subjects && book.subjects.length > 0) {
+            const mapped = mapSubjectToCategory(book.subjects);
+            if (mapped) {
+                categoryField.value = mapped;
+            }
+        }
+
+        // Guardar cover_id para recuperar portada al persistir
+        if (coverIdInput && book.cover_i) {
+            coverIdInput.value = book.cover_i;
+        }
+
+        // Mostrar preview de portada
+        if (coverPreview && book.cover_url) {
+            coverPreview.innerHTML = `<img src="${book.cover_url}" alt="Portada prevista">`;
+            coverPreview.classList.add('visible');
+        } else if (coverPreview) {
+            coverPreview.innerHTML = '';
+            coverPreview.classList.remove('visible');
+        }
+
+        // Scroll al formulario
+        const form = document.getElementById('form-libro-nuevo');
+        if (form) {
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function mapSubjectToCategory(subjects) {
+        const subjectLower = subjects.map(s => s.toLowerCase()).join(' ');
+        if (/\b(fiction|novel|story|fantasy|mystery|romance|thriller|science fiction|horror)\b/.test(subjectLower)) {
+            return 'Ficción';
+        }
+        if (/\b(history|science|biography|philosophy|essay|cooking|travel|art|music|non-fiction|nonfiction|technology)\b/.test(subjectLower)) {
+            return 'No ficción';
+        }
+        if (/\b(children|juvenile|picture book|kids|infantil)\b/.test(subjectLower)) {
+            return 'Infantil';
+        }
+        if (/\b(young adult|teen|ya |adolescent)\b/.test(subjectLower)) {
+            return 'Juvenil';
+        }
+        if (/\b(textbook|education|academic|school|study|university|college)\b/.test(subjectLower)) {
+            return 'Académico';
+        }
+        return '';
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
     // Asociar escuchas de eventos a cada campo
     Object.keys(fields).forEach(fieldName => {
         const field = fields[fieldName];

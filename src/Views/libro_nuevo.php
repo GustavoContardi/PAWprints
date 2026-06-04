@@ -29,6 +29,16 @@ $success = $success ?? false;
         </div>
     <?php endif; ?>
 
+    <div class="openlibrary-search" id="ol-search-section">
+        <h3>Buscar en Open Library</h3>
+        <p class="ol-search-hint">Buscá por título para auto-llenar los datos del libro.</p>
+        <div class="ol-search-row">
+            <input type="text" id="ol-query" placeholder="Ej: El Principito" value="">
+            <button type="button" id="ol-search-btn">Buscar</button>
+        </div>
+        <div id="ol-results" class="ol-results"></div>
+    </div>
+
     <form method="post" action="/books/new" enctype="multipart/form-data" novalidate id="form-libro-nuevo">
         <fieldset>
 
@@ -110,10 +120,14 @@ $success = $success ?? false;
                 <span class="form-error <?= isset($errors['description']) ? 'visible' : '' ?>" id="error-description"><?= htmlspecialchars($errors['description'] ?? '') ?></span>
             </div>
 
+            <!-- Cover ID oculto (para auto-fetch desde Open Library) -->
+            <input type="hidden" name="cover_id" id="cover_id" value="<?= htmlspecialchars($old['cover_id'] ?? '') ?>">
+
             <!-- Imagen -->
             <div class="form-group <?= isset($errors['image']) ? 'has-error' : '' ?>">
                 <label for="image">Imagen de portada</label>
                 <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg, image/webp">
+                <div id="cover-preview" class="cover-preview"></div>
                 <span class="form-error <?= isset($errors['image']) ? 'visible' : '' ?>" id="error-image"><?= htmlspecialchars($errors['image'] ?? '') ?></span>
             </div>
 

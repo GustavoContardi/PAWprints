@@ -18,5 +18,6 @@ $router->get('/reserve/{id}',     'ReserveController',   'show');
 $router->post('/reserve',         'ReserveController',   'process');
 $router->get('/books/new',        'BookController',      'new');
 $router->post('/books/new',       'BookController',      'store');
+$router->get('/api/search-book',  'BookController',      'apiSearchBook');
 
 $router->resolve();

@@ -1,9 +1,10 @@
 <?php
-// Variables disponibles: $book (array|null), $errors (array|null), $old (array|null), $success (bool|null)
+// Variables disponibles: $book (array|null), $errors (array|null), $old (array|null), $success (bool|null), $reserve (array|null)
 $book    = $book ?? null;
 $errors  = $errors ?? [];
 $old     = $old ?? [];
 $success = $success ?? false;
+$reserve = $reserve ?? null;
 ?>
 
 <h1>PAWprints</h1>
@@ -16,6 +17,18 @@ $success = $success ?? false;
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
         <p>¡Reserva enviada correctamente!<br><span>Nos pondremos en contacto a la brevedad.</span></p>
+
+        <?php if ($reserve): ?>
+        <div class="reserva-datos">
+            <p><strong>Libro:</strong> <?= htmlspecialchars($reserve['book_title'] ?? ($book['title'] ?? '')) ?></p>
+            <p><strong>Nombre:</strong> <?= htmlspecialchars($reserve['buyer_name']) ?></p>
+            <p><strong>Teléfono:</strong> <?= htmlspecialchars($reserve['phone']) ?></p>
+            <p><strong>Email:</strong> <?= htmlspecialchars($reserve['email']) ?></p>
+            <p><strong>Copias:</strong> <?= (int)$reserve['copies'] ?></p>
+            <p><strong>Fecha:</strong> <?= htmlspecialchars($reserve['created_at']) ?></p>
+        </div>
+        <?php endif; ?>
+
         <?php if ($book): ?>
             <a href="/book/<?= $book['id'] ?>" class="btn-link">Volver al libro</a>
         <?php else: ?>

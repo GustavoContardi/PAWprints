@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\Book;
+use Models\Reserve;
 
 class ReserveController extends Controller
 {
@@ -107,6 +108,17 @@ class ReserveController extends Controller
             return;
         }
 
+        // ── Persistir la reserva en la base de datos ──────────────────────────
+        $reserve = new Reserve([
+            'book_id'  => $libroId > 0 ? $libroId : null,
+            'libro'    => $libro,
+            'nombre'   => $nombre,
+            'telefono' => $telefono,
+            'email'    => $email,
+            'copias'   => $copias,
+        ]);
+        $reserveSaved = $reserve->save($this->db);
+
         // ── Envío de email ───────────────────────────────────────────────────
         $to      = $_ENV['MAIL_RESERVA'] ?? 'reservas@pawprints.com';
         $subject = "Nueva reserva: " . $libro;
@@ -120,6 +132,7 @@ class ReserveController extends Controller
             'title'   => 'Reserva confirmada — PAWprints',
             'styles'  => ['reservaLibro.css'],
             'book'    => $bookData,
+            'reserve' => $reserveSaved ? $reserve->toArray() : null,
             'success' => true,
         ]);
     }

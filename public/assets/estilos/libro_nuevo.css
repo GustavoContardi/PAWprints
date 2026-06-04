@@ -239,6 +239,168 @@ input[type="file"]:hover {
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* ── Open Library Search Section ─────────────────────────── */
+.openlibrary-search {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+  padding: 1.25rem;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.openlibrary-search h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: var(--color-text);
+}
+
+.ol-search-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.ol-search-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ol-search-row input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ol-search-row input:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
+}
+
+.ol-search-row button {
+  padding: 0.5rem 1rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-white);
+  background: var(--color-brand);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.ol-search-row button:hover {
+  opacity: 0.9;
+}
+
+.ol-search-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ol-results {
+  margin-top: 0.75rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ol-results.visible {
+  display: flex;
+}
+
+.ol-result-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.65rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  align-items: center;
+}
+
+.ol-result-item:hover {
+  border-color: var(--color-brand);
+  background-color: rgba(92, 6, 140, 0.03);
+}
+
+.ol-result-item img {
+  width: 48px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: var(--color-border);
+}
+
+.ol-result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ol-result-info .ol-result-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin: 0 0 0.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ol-result-info .ol-result-author {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.1rem;
+}
+
+.ol-result-info .ol-result-year {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.ol-no-results {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 1rem;
+}
+
+.ol-error {
+  font-size: 0.85rem;
+  color: #d32f2f;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* Cover preview from Open Library */
+.cover-preview {
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.cover-preview.visible {
+  display: block;
+}
+
+.cover-preview img {
+  max-width: 120px;
+  max-height: 180px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
 /* Desktop styles to match layout and alignment */
 @media (min-width: 900px) {
   main > h1,
