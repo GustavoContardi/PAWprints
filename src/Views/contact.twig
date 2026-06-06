@@ -1,3 +1,41 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}PAWprints - Contacto{% endblock %}
+
+{% block microdata_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contacto — PAWprints",
+  "url": "https://pawprints.com/contact"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BookStore",
+  "name": "PAWprints libros S.A.",
+  "url": "https://pawprints.com",
+  "telephone": "+54-11-1234-5678",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Humberto Primo 666",
+    "addressLocality": "Luján",
+    "addressRegion": "Buenos Aires",
+    "postalCode": "6700",
+    "addressCountry": "AR"
+  },
+  "sameAs": [
+    "https://www.instagram.com/pawprints",
+    "https://www.x.com/pawprints",
+    "https://www.youtube.com/pawprints"
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
 <h1>PAWprints</h1>
 <h2>Pedidos, consultas y más</h2>  
 
@@ -22,3 +60,4 @@
         <button type="submit">Enviar</button>
     </fieldset>
 </form>
+{% endblock %}

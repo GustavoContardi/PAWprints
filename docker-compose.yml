@@ -6,6 +6,8 @@ services:
     volumes:
       - .:/var/www/app
       - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    security_opt:
+      - label:disable
     depends_on:
       - php
 
@@ -15,6 +17,8 @@ services:
       dockerfile: docker/php.Dockerfile
     volumes:
       - .:/var/www/app
+    security_opt:
+      - label:disable
     working_dir: /var/www/app
 
   db:

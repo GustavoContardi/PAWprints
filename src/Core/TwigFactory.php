@@ -1,0 +1,47 @@
+<?php
+
+namespace Core;
+
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
+
+class TwigFactory
+{
+    public static function create(): Environment
+    {
+        $loader = new FilesystemLoader(__DIR__ . '/../Views/');
+
+        $cache = ($_ENV['APP_ENV'] ?? 'development') !== 'production'
+            ? false
+            : __DIR__ . '/../../storage/twig_cache/';
+
+        $twig = new Environment($loader, [
+            'cache' => $cache,
+            'auto_reload' => true,
+        ]);
+
+        // Global variable for cache-busting
+        $twig->addGlobal('asset_version', time());
+
+        // Custom asset() function
+        $twig->addFunction(new TwigFunction('asset', function (string $path): string {
+            return '/assets/' . $path . '?v=' . time();
+        }));
+
+        // Custom image_url() function
+        $twig->addFunction(new TwigFunction('image_url', function (array $book): string {
+            $image = $book['image'] ?? 'placeholder.jpg';
+            return (str_starts_with($image, 'http://') || str_starts_with($image, 'https://'))
+                ? $image
+                : '/assets/img/' . $image;
+        }));
+
+        // Custom price_format filter
+        $twig->addFilter(new \Twig\TwigFilter('price_format', function (float $value): string {
+            return number_format($value, 2, ',', '.');
+        }));
+
+        return $twig;
+    }
+}

@@ -23,10 +23,33 @@ class BookController extends Controller
             return;
         }
 
+        $bookArray = $book->toArray();
+
+        // Build Book microdata
+        $microdata = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Book',
+            'name' => $bookArray['title'],
+            'author' => [
+                '@type' => 'Person',
+                'name' => $bookArray['author']
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'price' => $bookArray['price'],
+                'priceCurrency' => 'ARS',
+                'availability' => $bookArray['stock'] > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+            ],
+            'image' => (str_starts_with($bookArray['image'] ?? '', 'http') ? $bookArray['image'] : '/assets/img/' . ($bookArray['image'] ?? 'placeholder.jpg')),
+            'genre' => $bookArray['category'],
+            'description' => $bookArray['description']
+        ];
+
         $this->render('libro', [
             'title'  => "{$book->getTitle()} — PAWprints",
             'styles' => ['libro.css'],
-            'book'   => $book->toArray()
+            'book'   => $bookArray,
+            'microdata' => $microdata
         ]);
     }
 
@@ -88,6 +111,33 @@ class BookController extends Controller
             'title'  => 'Cargar libro — PAWprints',
             'styles' => ['libro_nuevo.css'],
         ]);
+    }
+
+    private function uploadToR2(array $file, string $imageName): string|false
+    {
+        try {
+            $s3 = new \Aws\S3\S3Client([
+                'version'     => 'latest',
+                'region'      => 'auto',
+                'endpoint'    => 'https://' . ($_ENV['R2_ACCOUNT_ID'] ?? '') . '.r2.cloudflarestorage.com',
+                'credentials' => [
+                    'key'    => $_ENV['R2_ACCESS_KEY_ID'] ?? '',
+                    'secret' => $_ENV['R2_SECRET_ACCESS_KEY'] ?? '',
+                ],
+            ]);
+
+            $s3->putObject([
+                'Bucket'      => $_ENV['R2_BUCKET'] ?? '',
+                'Key'         => $imageName,
+                'SourceFile'  => $file['tmp_name'],
+                'ContentType' => mime_content_type($file['tmp_name']),
+            ]);
+
+            return rtrim($_ENV['R2_PUBLIC_URL'] ?? '', '/') . '/' . $imageName;
+
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function store(array $params): void
@@ -154,7 +204,7 @@ class BookController extends Controller
             $discountFloat = 0.0;
         }
 
-        $allowedAges = ['Cualquier edad', 'Infantil (0-8)', 'Juvenil (9-14)', 'Adolescente (15-17)', 'Adulto (18+)'];
+        $allowedAges = ['infantil', 'juvenil', 'adulto'];
         if ($age !== '' && !in_array($age, $allowedAges)) {
             $errors['age'] = 'La edad recomendada seleccionada no es válida.';
         }
@@ -192,13 +242,10 @@ class BookController extends Controller
             return;
         }
 
-        // 5. Mover imagen al servidor
+        // 5. Subir imagen a Cloudflare R2
         if ($imageName && isset($file)) {
-            $destDir = __DIR__ . '/../../public/assets/img/libros/';
-            if (!is_dir($destDir)) {
-                mkdir($destDir, 0755, true);
-            }
-            if (!move_uploaded_file($file['tmp_name'], $destDir . $imageName)) {
+            $imageUrl = $this->uploadToR2($file, $imageName);
+            if ($imageUrl === false) {
                 $errors['image'] = 'No se pudo guardar la imagen en el servidor.';
                 $this->render('libro_nuevo', [
                     'title'  => 'Cargar libro — PAWprints',
@@ -241,7 +288,7 @@ class BookController extends Controller
             'price'          => (float)$price,
             'description'    => $description === '' ? null : $description,
             'stock'          => (int)$stock,
-            'image'          => $imageName ? 'libros/' . $imageName : null,
+            'image'          => isset($imageUrl) ? $imageUrl : null,
             'category'       => $category === '' ? null : $category,
             'age'            => $age === '' ? null : $age,
             'is_new'         => $is_new,

@@ -19,6 +19,29 @@ class CatalogueController extends Controller
         $perPage = 12;
         $totalPages = (int)ceil($total / $perPage);
 
+        // Build ItemList microdata
+        $itemListElements = [];
+        foreach ($initialBooks as $index => $book) {
+            $itemListElements[] = [
+                '@type' => 'ListItem',
+                'position' => $index + 1,
+                'item' => [
+                    '@type' => 'Book',
+                    'name' => $book['title'],
+                    'url' => 'https://pawprints.com/book/' . $book['id'],
+                    'author' => ['@type' => 'Person', 'name' => $book['author']],
+                    'offers' => ['@type' => 'Offer', 'price' => $book['price'], 'priceCurrency' => 'ARS']
+                ]
+            ];
+        }
+
+        $microdata = [
+            '@context' => 'https://schema.org',
+            '@type' => 'ItemList',
+            'name' => 'Catálogo de libros — PAWprints',
+            'itemListElement' => $itemListElements
+        ];
+
         $this->render('catalogue', [
             'title'      => 'Catálogo — PAWprints',
             'styles'     => ['catalogo.css'],
@@ -28,6 +51,8 @@ class CatalogueController extends Controller
             'totalPages' => $totalPages,
             'perPage'    => $perPage,
             'total'      => $total,
+            'queryParams' => $_GET,
+            'microdata'  => $microdata
         ]);
     }
 

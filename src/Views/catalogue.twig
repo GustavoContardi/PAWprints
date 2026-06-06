@@ -1,0 +1,214 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Catálogo - PAWprints{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ asset('estilos/catalogue.css') }}">
+{% endblock %}
+
+{% block microdata_head %}
+{% if microdata is defined %}
+  {% set items = microdata is iterable and microdata[0] is iterable ? microdata : [microdata] %}
+  {% for schema in items %}
+    <script type="application/ld+json">{{ schema|json_encode(64 b-or 256)|raw }}</script>
+  {% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% set queryParams = queryParams is defined ? queryParams : {} %}
+{% set current_order = queryParams.order ?? 'new' %}
+{% set selected_categories = queryParams.category ?? [] %}
+{% set selected_ages = queryParams.age ?? [] %}
+
+<aside class="cat-sidebar">
+    <div class="cat-sidebar-header">
+        <span style="font-weight: 700; color: var(--color-brand); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8125rem;">Filtros</span>
+        <button type="button" class="cat-sidebar-close" aria-label="Cerrar filtros">&times;</button>
+    </div>
+
+    <div id="recent-searches-container" style="display: none; margin-bottom: 1.5rem;">
+        <p class="cat-filtros-titulo">Búsquedas Recientes</p>
+        <ul class="cat-keywords" id="recent-searches-list">
+        </ul>
+    </div>
+
+    <form class="cat-filtros" method="get" action="/catalogue" onsubmit="event.preventDefault();">
+
+        <p class="cat-filtros-titulo">Filtros</p>
+
+        <label class="cat-filtro-label">Precio ($)</label>
+        <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
+            <input type="number" name="min_price" min="0" placeholder="Mín." value="{{ queryParams.min_price ?? '' }}" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font);">
+            <span>-</span>
+            <input type="number" name="max_price" min="0" placeholder="Máx." value="{{ queryParams.max_price ?? '' }}" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font);">
+        </div>
+        <fieldset class="cat-checks">
+            <legend class="cat-filtro-label">Género</legend>
+            {% set categories = {
+                'ciencia-ficcion': 'Ciencia ficción',
+                'romance': 'Romance',
+                'aventura': 'Aventura',
+                'fantasia': 'Fantasía',
+                'misterio': 'Misterio',
+                'historia': 'Historia',
+                'no-ficcion': 'No Ficción',
+                'otros': 'Otros'
+            } %}
+            {% for value, label in categories %}
+                {% set checked = value in selected_categories %}
+                <label><input type="checkbox" name="category[]" value="{{ value }}" {% if checked %}checked{% endif %}> {{ label }}</label>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset class="cat-checks">
+            <legend class="cat-filtro-label">Edad</legend>
+            {% set ages = {
+                'infantil': 'Infantil',
+                'juvenil': 'Juvenil',
+                'adulto': 'Adulto'
+            } %}
+            {% for value, label in ages %}
+                {% set checked = value in selected_ages %}
+                <label><input type="checkbox" name="age[]" value="{{ value }}" {% if checked %}checked{% endif %}> {{ label }}</label>
+            {% endfor %}
+        </fieldset>
+
+        <label class="cat-filtro-label" for="per_page">Libros por página</label>
+        <select name="per_page" id="per_page" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font); margin-bottom: 1rem;">
+            {% for val in [12, 24, 48] %}
+                <option value="{{ val }}" {% if (perPage ?? 12) == val %}selected{% endif %}>{{ val }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="cat-filtro-label" for="paginacion_mode">Tipo de paginación</label>
+        <select name="paginacion_mode" id="paginacion_mode" style="width: 100%; padding: 0.4rem; border: 1.5px solid var(--color-border); border-radius: var(--radius); font-family: var(--font); margin-bottom: 1rem;">
+            <option value="traditional">Paginado tradicional</option>
+            <option value="infinite">Scroll infinito</option>
+        </select>
+
+        <button type="submit" class="cat-btn-aplicar">Aplicar Filtros</button>
+        <a href="/catalogue" class="cat-btn-limpiar">Limpiar</a>
+
+        <hr style="border: 0; border-top: 1px solid var(--color-border); margin: 1rem 0;">
+        
+        <a href="/catalogue/export?{{ queryParams|url_encode }}" class="cat-btn-exportar" style="display: block; text-align: center; padding: 0.6rem; background: #27ae60; color: white; text-decoration: none; border-radius: var(--radius); font-weight: 500;">
+            Exportar a CSV
+        </a>
+    </form>
+</aside>
+
+<section class="cat-contenido">
+
+    <search class="cat-barra">
+        <button class="cat-btn-filtro" type="button" aria-label="Filtros"></button>
+
+        <form class="cat-busqueda" method="get" action="/catalogue" onsubmit="event.preventDefault();">
+            <label for="busqueda" class="sr-only">Buscar</label>
+            <input type="search" id="busqueda" name="search" value="{{ queryParams.search ?? '' }}" placeholder="Buscar">
+            <button type="submit" aria-label="Buscar"></button>
+        </form>
+
+        <menu class="cat-chips">
+            {% set order_options = {
+                'new': 'Nuevo',
+                'popular': 'Popular',
+                'price': 'Precio'
+            } %}
+            {% for valor, texto in order_options %}
+                {% set params = queryParams|merge({'order': valor}) %}
+                <li>
+                    <a href="?{{ params|url_encode }}" 
+                       class="cat-chip {% if current_order == valor %}cat-chip--activo{% endif %}">
+                        {{ texto }}
+                    </a>
+                </li>
+            {% endfor %}
+        </menu>
+    </search>
+
+    {% macro renderPagination(page, totalPages, queryParams, ariaLabel) %}
+        {% if totalPages > 1 %}
+            {% macro buildUrl(p, params) %}
+                {% set newParams = params|merge({'page': p}) %}
+                ?{{ newParams|url_encode }}
+            {% endmacro %}
+            
+            {% set delta = 2 %}
+            {% set start = max(1, page - delta) %}
+            {% set end = min(totalPages, page + delta) %}
+
+            {% if end - start < 4 and totalPages >= 5 %}
+                {% if start == 1 %}
+                    {% set end = min(totalPages, start + 4) %}
+                {% elseif end == totalPages %}
+                    {% set start = max(1, end - 4) %}
+                {% endif %}
+            {% endif %}
+
+            <nav class="cat-paginacion" aria-label="{{ ariaLabel }}">
+                <ol>
+                    {% if page == 1 %}
+                        <li><span class="disabled" aria-label="Página anterior">&#8592;</span></li>
+                    {% else %}
+                        <li><a href="{{ _self.buildUrl(page - 1, queryParams) }}" aria-label="Página anterior">&#8592;</a></li>
+                    {% endif %}
+
+                    {% if start > 1 %}
+                        <li><a href="{{ _self.buildUrl(1, queryParams) }}">1</a></li>
+                        {% if start > 2 %}
+                            <li><span class="ellipsis">…</span></li>
+                        {% endif %}
+                    {% endif %}
+
+                    {% for i in range(start, end) %}
+                        {% if i == page %}
+                            <li><a href="{{ _self.buildUrl(i, queryParams) }}" aria-current="page">{{ i }}</a></li>
+                        {% else %}
+                            <li><a href="{{ _self.buildUrl(i, queryParams) }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if end < totalPages %}
+                        {% if end < totalPages - 1 %}
+                            <li><span class="ellipsis">…</span></li>
+                        {% endif %}
+                        <li><a href="{{ _self.buildUrl(totalPages, queryParams) }}">{{ totalPages }}</a></li>
+                    {% endif %}
+
+                    {% if page == totalPages %}
+                        <li><span class="disabled" aria-label="Página siguiente">&#8594;</span></li>
+                    {% else %}
+                        <li><a href="{{ _self.buildUrl(page + 1, queryParams) }}" aria-label="Página siguiente">&#8594;</a></li>
+                    {% endif %}
+                </ol>
+            </nav>
+        {% endif %}
+    {% endmacro %}
+
+    {{ _self.renderPagination(page, totalPages, queryParams, 'Paginación superior') }}
+
+    <section class="cat-grid">
+        {% if books is empty %}
+            <div class="cat-empty-state">
+                <div class="cat-empty-state-icon"></div>
+                <h3>Sin resultados</h3>
+                <p>No se encontraron libros que coincidan con tu búsqueda o los filtros seleccionados.</p>
+            </div>
+        {% else %}
+            {% for book in books %}
+                {% include 'partials/book_card.twig' with {book: book} %}
+            {% endfor %}
+        {% endif %}
+    </section>
+
+    {{ _self.renderPagination(page, totalPages, queryParams, 'Paginación inferior') }}
+
+</section>
+
+<script id="books-json" type="application/json">
+{{ allBooks|json_encode }}
+</script>
+
+<script src="{{ asset('scripts/catalogue.js') }}"></script>
+{% endblock %}

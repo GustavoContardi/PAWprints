@@ -1,0 +1,154 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Cargar nuevo libro - PAWprints{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ asset('estilos/libro_nuevo.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set errors = errors ?? [] %}
+{% set old = old ?? [] %}
+{% set success = success ?? false %}
+
+<h1>PAWprints</h1>
+<h2>Cargar nuevo libro</h2>
+
+{% if success %}
+    <div class="reserva-exito">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reserva-exito-icono">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <p>¡Libro cargado con éxito!<br><span>El nuevo título ya está disponible en el catálogo.</span></p>
+        <a href="/catalogue" class="btn-link">Volver al catálogo</a>
+    </div>
+{% else %}
+
+    {% if errors is not empty %}
+        <div class="reserva-errores" style="background-color: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a; border-radius: var(--radius); padding: 1rem; margin-bottom: 1.5rem;">
+            <p style="font-weight: 600; margin-bottom: 0.5rem;">Por favor, corrija los siguientes errores:</p>
+            <ul style="list-style-type: disc; margin-left: 1.5rem;">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" action="/books/new" enctype="multipart/form-data" novalidate id="form-libro-nuevo">
+        <fieldset>
+
+            <!-- Título -->
+            <div class="form-group {% if errors.title is defined %}has-error{% endif %}">
+                <label for="title">Título *</label>
+                <input type="text" name="title" id="title" placeholder="Ej: El Principito" value="{{ old.title ?? '' }}">
+                <span class="form-error {% if errors.title is defined %}visible{% endif %}" id="error-title">{{ errors.title ?? '' }}</span>
+            </div>
+
+            <!-- Autor -->
+            <div class="form-group {% if errors.author is defined %}has-error{% endif %}">
+                <label for="author">Autor *</label>
+                <input type="text" name="author" id="author" placeholder="Ej: Antoine de Saint-Exupéry" value="{{ old.author ?? '' }}">
+                <span class="form-error {% if errors.author is defined %}visible{% endif %}" id="error-author">{{ errors.author ?? '' }}</span>
+            </div>
+
+            <!-- Precio -->
+            <div class="form-group {% if errors.price is defined %}has-error{% endif %}">
+                <label for="price">Precio *</label>
+                <input type="number" name="price" id="price" min="0" step="0.01" placeholder="Ej: 1500.00" value="{{ old.price ?? '' }}">
+                <span class="form-error {% if errors.price is defined %}visible{% endif %}" id="error-price">{{ errors.price ?? '' }}</span>
+            </div>
+
+            <!-- Stock -->
+            <div class="form-group {% if errors.stock is defined %}has-error{% endif %}">
+                <label for="stock">Stock *</label>
+                <input type="number" name="stock" id="stock" min="0" step="1" placeholder="Ej: 15" value="{{ old.stock ?? '' }}">
+                <span class="form-error {% if errors.stock is defined %}visible{% endif %}" id="error-stock">{{ errors.stock ?? '' }}</span>
+            </div>
+
+            <!-- Descuento -->
+            <div class="form-group {% if errors.discount is defined %}has-error{% endif %}">
+                <label for="discount">Descuento (%)</label>
+                <input type="number" name="discount" id="discount" min="0" max="100" step="0.01" placeholder="Ej: 15" value="{{ old.discount ?? '' }}">
+                <span class="form-error {% if errors.discount is defined %}visible{% endif %}" id="error-discount">{{ errors.discount ?? '' }}</span>
+            </div>
+
+            <!-- Categoría -->
+            <div class="form-group {% if errors.category is defined %}has-error{% endif %}">
+                <label for="category">Categoría</label>
+                <select name="category" id="category">
+                    <option value="">-- Seleccionar categoría --</option>
+                    {% set categories = {
+                        'ciencia-ficcion': 'Ciencia ficción',
+                        'romance': 'Romance',
+                        'aventura': 'Aventura',
+                        'fantasia': 'Fantasía',
+                        'misterio': 'Misterio',
+                        'historia': 'Historia',
+                        'no-ficcion': 'No Ficción',
+                        'otros': 'Otros'
+                    } %}
+                    {% set selectedCategory = old.category ?? '' %}
+                    {% for val, label in categories %}
+                        <option value="{{ val }}" {% if selectedCategory == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <span class="form-error {% if errors.category is defined %}visible{% endif %}" id="error-category">{{ errors.category ?? '' }}</span>
+            </div>
+
+            <!-- Edad Recomendada -->
+            <div class="form-group {% if errors.age is defined %}has-error{% endif %}">
+                <label for="age">Edad recomendada</label>
+                <select name="age" id="age">
+                    <option value="">-- Seleccionar edad --</option>
+                    {% set ages = {
+                        'infantil': 'Infantil',
+                        'juvenil': 'Juvenil',
+                        'adulto': 'Adulto'
+                    } %}
+                    {% set selectedAge = old.age ?? '' %}
+                    {% for key, label in ages %}
+                        <option value="{{ key }}" {% if selectedAge == key %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <span class="form-error {% if errors.age is defined %}visible{% endif %}" id="error-age">{{ errors.age ?? '' }}</span>
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-group {% if errors.description is defined %}has-error{% endif %}">
+                <label for="description">Descripción</label>
+                <textarea name="description" id="description" placeholder="Sinopsis o descripción del libro...">{{ old.description ?? '' }}</textarea>
+                <span class="form-error {% if errors.description is defined %}visible{% endif %}" id="error-description">{{ errors.description ?? '' }}</span>
+            </div>
+
+            <!-- Imagen -->
+            <div class="form-group {% if errors.image is defined %}has-error{% endif %}">
+                <label for="image">Imagen de portada</label>
+                <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg, image/webp">
+                <span class="form-error {% if errors.image is defined %}visible{% endif %}" id="error-image">{{ errors.image ?? '' }}</span>
+            </div>
+
+            <!-- Novedad y Recomendado Checkboxes -->
+            <div class="form-group-checkboxes">
+                <div class="form-group form-group-inline {% if errors.is_new is defined %}has-error{% endif %}">
+                    <input type="checkbox" name="is_new" id="is_new" value="1" {% if old.is_new is defined and old.is_new %}checked{% endif %}>
+                    <label for="is_new" class="label-inline">Es novedad</label>
+                    <span class="form-error {% if errors.is_new is defined %}visible{% endif %}" id="error-is_new">{{ errors.is_new ?? '' }}</span>
+                </div>
+
+                <div class="form-group form-group-inline {% if errors.is_recommended is defined %}has-error{% endif %}">
+                    <input type="checkbox" name="is_recommended" id="is_recommended" value="1" {% if old.is_recommended is defined and old.is_recommended %}checked{% endif %}>
+                    <label for="is_recommended" class="label-inline">Es recomendado</label>
+                    <span class="form-error {% if errors.is_recommended is defined %}visible{% endif %}" id="error-is_recommended">{{ errors.is_recommended ?? '' }}</span>
+                </div>
+            </div>
+
+            <button type="submit">Cargar libro</button>
+        </fieldset>
+    </form>
+
+{% endif %}
+
+<script src="{{ asset('scripts/libro_nuevo.js') }}"></script>
+{% endblock %}

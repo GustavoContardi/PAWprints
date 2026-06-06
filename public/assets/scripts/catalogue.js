@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxPriceInput = document.querySelector('input[name="max_price"]');
     const perPageSelect = document.getElementById('per_page');
     const paginacionModeSelect = document.getElementById('paginacion_mode');
-    
+
     // ── 2. State Variables ───────────────────────────────────────────────────
     let allBooks = [];
     let filteredBooks = [];
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortKey = 'new'; // 'new', 'popular', 'price'
     let sortOrder = 'desc'; // 'asc' or 'desc'
     let paginationMode = 'traditional'; // 'traditional' or 'infinite'
-    
+
     // Infinite scroll loading variables
     let loadedInfiniteCount = 12;
     let loadingMore = false;
-    
+
     // Recent searches list
     let recentSearches = [];
 
@@ -225,11 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── 7. URL State Synchronization ─────────────────────────────────────────
     function syncStateFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
-        
+
         if (urlParams.has('search')) searchQuery = urlParams.get('search');
         if (urlParams.has('min_price')) minPrice = parseFloat(urlParams.get('min_price')) || null;
         if (urlParams.has('max_price')) maxPrice = parseFloat(urlParams.get('max_price')) || null;
-        
+
         if (urlParams.has('category[]')) {
             selectedCategories = urlParams.getAll('category[]');
         } else if (urlParams.has('category')) {
@@ -335,9 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 minimumFractionDigits: 2
             }).format(book.price).replace('ARS', '$').trim();
 
+            const img = book.image || 'placeholder.jpg';
+            const imgSrc = (img.startsWith('http://') || img.startsWith('https://')) ? img : `/assets/img/${img}`;
+
             card.innerHTML = `
-                <a href="/book/${encodeURIComponent(book.id)}">
-                    <img src="/assets/img/${escapeHtml(book.image || 'placeholder.jpg')}" alt="Portada del libro">
+                <a href="/book/${book.id}">
+                    <img src="${escapeHtml(imgSrc)}" alt="Portada del libro">
                 </a>
                 <h3>${escapeHtml(book.title)}</h3>
                 <p class="cat-card-autor">${escapeHtml(book.author)}</p>
@@ -554,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Read form element states to keep variables accurate
         if (minPriceInput) minPrice = minPriceInput.value !== '' ? parseFloat(minPriceInput.value) : null;
         if (maxPriceInput) maxPrice = maxPriceInput.value !== '' ? parseFloat(maxPriceInput.value) : null;
-        
+
         selectedCategories = [];
         document.querySelectorAll('input[name="category[]"]:checked').forEach(cb => {
             selectedCategories.push(cb.value);
@@ -570,7 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Correct bounds
         applyFilters();
-        
+
         const totalPages = Math.max(1, Math.ceil(filteredBooks.length / perPage));
         if (currentPage > totalPages) {
             currentPage = totalPages;
@@ -583,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── 10. Listeners & Reactive Filtering ────────────────────────────────────
-    
+
     // Intercept form submissions
     if (filterForm) {
         filterForm.addEventListener('submit', (e) => {
@@ -614,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clearBtn) {
         clearBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            
+
             searchQuery = '';
             minPrice = null;
             maxPrice = null;
@@ -629,10 +632,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (searchInput) searchInput.value = '';
             if (minPriceInput) minPriceInput.value = '';
             if (maxPriceInput) maxPriceInput.value = '';
-            
+
             document.querySelectorAll('input[name="category[]"]').forEach(cb => cb.checked = false);
             document.querySelectorAll('input[name="age[]"]').forEach(cb => cb.checked = false);
-            
+
             updateCatalogue();
             closeSidebar();
         });
@@ -726,7 +729,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loadedInfiniteCount >= filteredBooks.length) return;
 
         loadingMore = true;
-        
+
         // Simulating minor visual loading delay for sleek feel
         setTimeout(() => {
             loadedInfiniteCount += perPage;

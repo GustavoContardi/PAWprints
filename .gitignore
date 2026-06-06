@@ -1,5 +1,6 @@
 # Dependencias
 /vendor/
+/vendor.old/
 /composer.lock
 
 # Archivos de entorno
@@ -30,6 +31,7 @@ yarn-error.log*
 /cache/
 /tmp/
 /*.cache
+/storage/
 
 # Archivos compilados / build
 /build/

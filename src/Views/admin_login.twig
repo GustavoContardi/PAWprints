@@ -1,14 +1,17 @@
-<?php
-$error = $error ?? null;
-?>
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Acceso restringido - PAWprints{% endblock %}
+
+{% block content %}
+{% set error = error ?? null %}
 
 <h1>PAWprints</h1>
 <h2>Acceso restringido</h2>
 
 <form method="post" action="" class="admin-login-form" novalidate>
-    <?php if ($error): ?>
-        <p class="admin-login-error"><?= htmlspecialchars($error) ?></p>
-    <?php endif; ?>
+    {% if error %}
+        <p class="admin-login-error">{{ error }}</p>
+    {% endif %}
 
     <div class="form-group">
         <label for="admin_password">Contraseña</label>
@@ -151,3 +154,4 @@ $error = $error ?? null;
         }
     }
 </style>
+{% endblock %}

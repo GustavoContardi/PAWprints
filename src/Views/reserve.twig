@@ -10,7 +10,7 @@ $reserve = $reserve ?? null;
 <h1>PAWprints</h1>
 <h2>Datos de reserva</h2>
 
-<?php if ($success): ?>
+{% if success %}
     <div class="reserva-exito">
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reserva-exito-icono">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
@@ -33,19 +33,19 @@ $reserve = $reserve ?? null;
             <a href="/book/<?= $book['id'] ?>" class="btn-link">Volver al libro</a>
         <?php else: ?>
             <a href="/catalogue" class="btn-link">Volver al catálogo</a>
-        <?php endif; ?>
+        {% endif %}
     </div>
-<?php else: ?>
+{% else %}
 
-    <?php if (!empty($errors)): ?>
+    {% if errors is not empty %}
         <div class="reserva-errores">
             <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= htmlspecialchars($error) ?></li>
-                <?php endforeach; ?>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
             </ul>
         </div>
-    <?php endif; ?>
+    {% endif %}
 
     <form method="post" action="/reserve">
         <fieldset>
@@ -55,49 +55,50 @@ $reserve = $reserve ?? null;
             <input type="text" name="nombre" id="nombre"
                    placeholder="eg. Juan Perez"
                    maxlength="255"
-                   value="<?= htmlspecialchars($old['nombre'] ?? '') ?>"
+                   value="{{ old.nombre ?? '' }}"
                    required>
 
             <label for="tel">Teléfono</label>
             <input type="text" name="telefono" id="tel"
                    placeholder="eg. +54 11 1234 5678"
                    maxlength="50"
-                   value="<?= htmlspecialchars($old['telefono'] ?? '') ?>"
+                   value="{{ old.telefono ?? '' }}"
                    required>
 
             <label for="email">Correo electrónico</label>
             <input type="email" name="email" id="email"
                    placeholder="eg. juanperez@yahoo.com"
-                   value="<?= htmlspecialchars($old['email'] ?? '') ?>"
+                   value="{{ old.email ?? '' }}"
                    required>
 
             <label for="busqueda">Libro a reservar</label>
-            <?php if ($book): ?>
+            {% if book %}
                 <input type="text" id="busqueda" name="libro"
-                       value="<?= htmlspecialchars($book['title']) ?>"
+                       value="{{ book.title }}"
                        readonly required>
-                <input type="hidden" name="libro_id" value="<?= $book['id'] ?>">
-            <?php else: ?>
+                <input type="hidden" name="libro_id" value="{{ book.id }}">
+            {% else %}
                 <input type="text" id="busqueda" name="libro"
                        placeholder="Título del libro"
-                       value="<?= htmlspecialchars($old['libro'] ?? '') ?>"
+                       value="{{ old.libro ?? '' }}"
                        required>
-                <?php if (!empty($old['libro_id'])): ?>
-                    <input type="hidden" name="libro_id" value="<?= (int)$old['libro_id'] ?>">
-                <?php endif; ?>
-            <?php endif; ?>
+                {% if old.libro_id is defined and old.libro_id is not empty %}
+                    <input type="hidden" name="libro_id" value="{{ old.libro_id }}">
+                {% endif %}
+            {% endif %}
 
             <span class="reserva-copias-label">
                 <label for="copias">Cantidad de copias</label>
-                <output for="copias" id="copias-valor"><?= htmlspecialchars($old['copias'] ?? '1') ?></output>
+                <output for="copias" id="copias-valor">{{ old.copias ?? '1' }}</output>
             </span>
             <input type="range" id="copias" name="copias"
                    min="1" max="100"
-                   value="<?= (int)($old['copias'] ?? 1) ?>" step="1"
+                   value="{{ old.copias ?? 1 }}" step="1"
                    oninput="document.getElementById('copias-valor').value = this.value">
 
             <button type="submit">Guardar reserva</button>
         </fieldset>
     </form>
 
-<?php endif; ?>
+{% endif %}
+{% endblock %}
