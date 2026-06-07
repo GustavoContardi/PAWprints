@@ -1,3 +1,5 @@
+**8. Implementar las funcionalidades necesarias para que cada página tenga la microdata que corresponda.**
+
 **a. ¿Toda la microdata es estática?**
 
 No. La microdata puede ser **estática o dinámica**, según el contenido que describe.
