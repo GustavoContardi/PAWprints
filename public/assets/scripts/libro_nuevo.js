@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         price: document.getElementById('price'),
         stock: document.getElementById('stock'),
         discount: document.getElementById('discount'),
+        category: document.getElementById('category'),
         age: document.getElementById('age'),
         image: document.getElementById('image')
     };
@@ -79,6 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 break;
                 
+            case 'category':
+                if (!value || value === '') {
+                    error = 'La categoría es requerida.';
+                }
+                break;
+
             case 'image':
                 if (file) {
                     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
@@ -135,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Agregar clase 'is-valid' si tiene contenido válido o si es opcional y no tiene error
             const val = field.type === 'file' ? field.files[0] : field.value;
-            const requiredFields = ['title', 'author', 'price', 'stock'];
+            const requiredFields = ['title', 'author', 'price', 'stock', 'category'];
             if (requiredFields.includes(fieldName) || (val && val !== '')) {
                 group.classList.add('is-valid');
             } else {
