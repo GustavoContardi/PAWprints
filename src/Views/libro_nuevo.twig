@@ -37,6 +37,16 @@
     {% endif %}
 
     <form method="post" action="/books/new" enctype="multipart/form-data" novalidate id="form-libro-nuevo">
+
+    <div class="openlibrary-search">
+        <h3>Búsqueda rápida</h3>
+        <p class="ol-search-hint">Buscá por título o autor y autorellená el formulario. La búsqueda es de texto completo, por lo que pueden aparecer resultados relacionados.</p>
+        <div class="ol-search-row">
+            <input type="text" id="ol-query" placeholder="Ej: El Principito">
+            <button type="button" id="ol-search-btn">Buscar</button>
+        </div>
+        <div id="ol-results" class="ol-results"></div>
+    </div>
         <fieldset>
 
             <!-- Título -->
@@ -76,7 +86,7 @@
 
             <!-- Categoría -->
             <div class="form-group {% if errors.category is defined %}has-error{% endif %}">
-                <label for="category">Categoría</label>
+                <label for="category">Categoría *</label>
                 <select name="category" id="category">
                     <option value="">-- Seleccionar categoría --</option>
                     {% set categories = {
@@ -143,6 +153,9 @@
                     <span class="form-error {% if errors.is_recommended is defined %}visible{% endif %}" id="error-is_recommended">{{ errors.is_recommended ?? '' }}</span>
                 </div>
             </div>
+
+            <input type="hidden" id="cover_id" name="cover_id" value="{{ old.cover_id ?? '' }}">
+            <div id="cover-preview" class="cover-preview"></div>
 
             <button type="submit">Cargar libro</button>
         </fieldset>

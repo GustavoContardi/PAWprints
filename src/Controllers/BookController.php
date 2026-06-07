@@ -204,6 +204,13 @@ class BookController extends Controller
             $discountFloat = 0.0;
         }
 
+        $allowedCategories = ['ciencia-ficcion', 'romance', 'aventura', 'fantasia', 'misterio', 'historia', 'no-ficcion', 'otros'];
+        if ($category === '') {
+            $errors['category'] = 'La categoría es requerida.';
+        } elseif (!in_array($category, $allowedCategories)) {
+            $errors['category'] = 'La categoría seleccionada no es válida.';
+        }
+
         $allowedAges = ['infantil', 'juvenil', 'adulto'];
         if ($age !== '' && !in_array($age, $allowedAges)) {
             $errors['age'] = 'La edad recomendada seleccionada no es válida.';
@@ -288,7 +295,7 @@ class BookController extends Controller
             'price'          => (float)$price,
             'description'    => $description === '' ? null : $description,
             'stock'          => (int)$stock,
-            'image'          => isset($imageUrl) ? $imageUrl : null,
+            'image'          => isset($imageUrl) ? $imageUrl : (isset($imageName) ? 'libros/' . $imageName : null),
             'category'       => $category === '' ? null : $category,
             'age'            => $age === '' ? null : $age,
             'is_new'         => $is_new,
