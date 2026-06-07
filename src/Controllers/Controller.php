@@ -47,6 +47,7 @@ abstract class Controller
     protected function requireAuth(): void
     {
         if (!\Core\Session::isAuthenticated()) {
+            \Core\Session::set('redirect_to', $_SERVER['REQUEST_URI']);
             header('Location: /login');
             exit;
         }

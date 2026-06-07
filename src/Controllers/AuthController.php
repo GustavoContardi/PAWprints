@@ -44,7 +44,11 @@ class AuthController extends Controller
         }
 
         Session::login($employee->getId(), $employee->getName());
-        header('Location: /admin/reserves');
+        
+        $redirectTo = Session::get('redirect_to', '/admin/reserves');
+        Session::remove('redirect_to');
+
+        header('Location: ' . $redirectTo);
         exit;
     }
 

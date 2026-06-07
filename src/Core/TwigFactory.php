@@ -46,6 +46,17 @@ class TwigFactory
                 : '/assets/img/' . $image;
         }));
 
+        // Custom author_image_url() function
+        $twig->addFunction(new TwigFunction('author_image_url', function (array $book): string {
+            $image = $book['author_image'] ?? '';
+            if (empty($image)) {
+                return '/assets/img/avatar_placeholder.jpg';
+            }
+            return (str_starts_with($image, 'http://') || str_starts_with($image, 'https://'))
+                ? $image
+                : '/assets/img/' . $image;
+        }));
+
         // Custom price_format filter
         $twig->addFilter(new \Twig\TwigFilter('price_format', function (float $value): string {
             return number_format($value, 2, ',', '.');

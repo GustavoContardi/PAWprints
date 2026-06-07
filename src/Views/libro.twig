@@ -42,6 +42,12 @@
            {% if book.stock <= 0 %}style="pointer-events:none;opacity:0.5"{% endif %}>
             {% if book.stock > 0 %}Reservar Libro{% else %}No disponible{% endif %}
         </a>
+
+        {% if is_authenticated %}
+            <a href="/book/{{ book.id }}/edit" class="btn-comprar" style="background-color: var(--color-brand); color: #fff; text-align: center; margin-top: 1rem; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                Editar Libro
+            </a>
+        {% endif %}
     </div>
 
     <details class="libro-sinopsis">
@@ -51,9 +57,9 @@
 </section>
 
 <section class="seccion-autor">
-    <img class="autor-foto" src="/assets/img/avatar_placeholder.jpg" alt="Foto de {{ book.author }}">
+    <img class="autor-foto" src="{{ author_image_url(book) }}" alt="Foto de {{ book.author }}">
     <h2 class="autor-titulo">Información del autor</h2>
     <h3 class="autor-nombre">{{ book.author }}</h3>
-    <p class="autor-bio">Información del autor no disponible.</p>
+    <p class="autor-bio">{{ book.author_bio|default('Información del autor no disponible.') }}</p>
 </section>
 {% endblock %}

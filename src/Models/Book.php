@@ -18,6 +18,8 @@ class Book
     private bool $is_new;
     private float $discount;
     private bool $is_recommended;
+    private ?string $author_bio;
+    private ?string $author_image;
 
     public function __construct(array $data = [])
     {
@@ -33,6 +35,8 @@ class Book
         $this->is_new = (bool)($data['is_new'] ?? $data['es_novedad'] ?? false);
         $this->discount = (float)($data['discount'] ?? $data['descuento'] ?? 0);
         $this->is_recommended = (bool)($data['is_recommended'] ?? $data['es_recomendado'] ?? false);
+        $this->author_bio = $data['author_bio'] ?? null;
+        $this->author_image = $data['author_image'] ?? null;
     }
 
     public static function find(PDO $pdo, int $id): ?self
@@ -46,17 +50,19 @@ class Book
     public function save(PDO $pdo): bool
     {
         if ($this->id) {
-            $stmt = $pdo->prepare("UPDATE books SET title = ?, author = ?, price = ?, description = ?, stock = ?, image = ?, category = ?, age = ?, is_new = ?, discount = ?, is_recommended = ? WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE books SET title = ?, author = ?, price = ?, description = ?, stock = ?, image = ?, category = ?, age = ?, is_new = ?, discount = ?, is_recommended = ?, author_bio = ?, author_image = ? WHERE id = ?");
             return $stmt->execute([
                 $this->title, $this->author, $this->price, $this->description, $this->stock, $this->image,
                 $this->category, $this->age, $this->is_new, $this->discount, $this->is_recommended,
+                $this->author_bio, $this->author_image,
                 $this->id
             ]);
         } else {
-            $stmt = $pdo->prepare("INSERT INTO books (title, author, price, description, stock, image, category, age, is_new, discount, is_recommended) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO books (title, author, price, description, stock, image, category, age, is_new, discount, is_recommended, author_bio, author_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
                 $this->title, $this->author, $this->price, $this->description, $this->stock, $this->image,
-                $this->category, $this->age, $this->is_new, $this->discount, $this->is_recommended
+                $this->category, $this->age, $this->is_new, $this->discount, $this->is_recommended,
+                $this->author_bio, $this->author_image
             ]);
             if ($result) {
                 $this->id = (int)$pdo->lastInsertId();
@@ -78,6 +84,8 @@ class Book
     public function isNew(): bool { return $this->is_new; }
     public function getDiscount(): float { return $this->discount; }
     public function isRecommended(): bool { return $this->is_recommended; }
+    public function getAuthorBio(): ?string { return $this->author_bio; }
+    public function getAuthorImage(): ?string { return $this->author_image; }
 
     public function toArray(): array
     {
@@ -93,7 +101,9 @@ class Book
             'age' => $this->age,
             'is_new' => $this->is_new,
             'discount' => $this->discount,
-            'is_recommended' => $this->is_recommended
+            'is_recommended' => $this->is_recommended,
+            'author_bio' => $this->author_bio,
+            'author_image' => $this->author_image
         ];
     }
 }

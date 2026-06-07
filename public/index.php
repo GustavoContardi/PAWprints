@@ -10,6 +10,8 @@ $router->get('/',                 'HomeController',     'index');
 $router->get('/catalogue/export', 'CatalogueController', 'exportCsv');
 $router->get('/catalogue',        'CatalogueController', 'index');
 $router->get('/book/{id}',        'BookController',      'show');
+$router->get('/book/{id}/edit',   'BookController',      'edit');
+$router->post('/book/{id}/edit',  'BookController',      'update');
 $router->get('/about-us',         'PagesController',     'about');
 $router->get('/contact',          'PagesController',     'contact');
 $router->get('/special',          'PagesController',     'special');
