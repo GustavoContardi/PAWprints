@@ -12,6 +12,7 @@ $router->get('/catalogue',        'CatalogueController', 'index');
 $router->get('/book/{id}',        'BookController',      'show');
 $router->get('/book/{id}/edit',   'BookController',      'edit');
 $router->post('/book/{id}/edit',  'BookController',      'update');
+$router->post('/book/{id}/delete', 'BookController',     'delete');
 $router->get('/about-us',         'PagesController',     'about');
 $router->get('/contact',          'PagesController',     'contact');
 $router->get('/special',          'PagesController',     'special');

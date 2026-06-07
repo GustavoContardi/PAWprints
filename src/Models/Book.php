@@ -106,4 +106,13 @@ class Book
             'author_image' => $this->author_image
         ];
     }
+
+    public function delete(PDO $pdo): bool
+    {
+        if (!$this->id) {
+            return false;
+        }
+        $stmt = $pdo->prepare("DELETE FROM books WHERE id = ?");
+        return $stmt->execute([$this->id]);
+    }
 }

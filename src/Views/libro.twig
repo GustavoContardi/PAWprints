@@ -37,16 +37,25 @@
             <option value="frances">Francés</option>
         </select>
 
-        <a href="/reserve/{{ book.id }}"
-           class="btn-comprar"
-           {% if book.stock <= 0 %}style="pointer-events:none;opacity:0.5"{% endif %}>
-            {% if book.stock > 0 %}Reservar Libro{% else %}No disponible{% endif %}
-        </a>
-
-        {% if is_authenticated %}
-            <a href="/book/{{ book.id }}/edit" class="btn-comprar" style="background-color: var(--color-brand); color: #fff; text-align: center; margin-top: 1rem; text-decoration: none; display: flex; align-items: center; justify-content: center;">
-                Editar Libro
+        {% if not is_authenticated %}
+            <a href="/reserve/{{ book.id }}"
+               class="btn-comprar"
+               {% if book.stock <= 0 %}style="pointer-events:none;opacity:0.5"{% endif %}>
+                {% if book.stock > 0 %}Reservar Libro{% else %}No disponible{% endif %}
             </a>
+        {% endif %}
+        {% if is_authenticated %}
+            <div class="libro-admin-actions">
+                <a href="/book/{{ book.id }}/edit">
+                    Editar Libro
+                </a>
+                <form id="delete-book-form" action="/book/{{ book.id }}/delete" method="POST" style="margin: 0; padding: 0; display: block; width: 100%;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="button" id="trigger-delete-btn">
+                        Dar de baja
+                    </button>
+                </form>
+            </div>
         {% endif %}
     </div>
 
@@ -62,4 +71,80 @@
     <h3 class="autor-nombre">{{ book.author }}</h3>
     <p class="autor-bio">{{ book.author_bio|default('Información del autor no disponible.') }}</p>
 </section>
+
+{% if is_authenticated %}
+<!-- Modal de confirmación para dar de baja -->
+<div id="confirm-delete-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Dar de baja libro</h3>
+            <button type="button" class="modal-close-btn" id="modal-close-x">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>¿Está seguro de que desea dar de baja <strong>{{ book.title }}</strong>?</p>
+            <p class="modal-warning-text">Esta acción es permanente y no se puede deshacer.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="modal-btn-cancel" id="modal-cancel-btn">Cancelar</button>
+            <button type="button" class="modal-btn-confirm" id="modal-confirm-btn">Dar de baja</button>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+{% if is_authenticated %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const triggerBtn = document.getElementById('trigger-delete-btn');
+    const modal = document.getElementById('confirm-delete-modal');
+    const closeX = document.getElementById('modal-close-x');
+    const cancelBtn = document.getElementById('modal-cancel-btn');
+    const confirmBtn = document.getElementById('modal-confirm-btn');
+    const deleteForm = document.getElementById('delete-book-form');
+
+    function openModal() {
+        modal.style.display = 'flex';
+        setTimeout(function() {
+            modal.classList.add('active');
+        }, 10);
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(function() {
+            modal.style.display = 'none';
+        }, 250);
+    }
+
+    if (triggerBtn) {
+        triggerBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+        });
+    }
+
+    if (closeX) {
+        closeX.addEventListener('click', closeModal);
+    }
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeModal);
+    }
+
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+            deleteForm.submit();
+        });
+    }
+
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+});
+</script>
+{% endif %}
 {% endblock %}

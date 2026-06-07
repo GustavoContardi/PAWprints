@@ -559,4 +559,34 @@ class BookController extends Controller
             ]);
         }
     }
+
+    public function delete(array $params): void
+    {
+        $this->requireAuth();
+
+        if (!\Core\Session::validateCsrf($_POST['csrf_token'] ?? null)) {
+            $this->abort(403, 'Acción no autorizada / CSRF inválido');
+            return;
+        }
+
+        $id = $params['id'] ?? null;
+        if (!$id) {
+            header('Location: /catalogue');
+            exit;
+        }
+
+        $book = Book::find($this->db, (int)$id);
+        if (!$book) {
+            $this->abort(404, 'Libro no encontrado');
+            return;
+        }
+
+        if ($book->delete($this->db)) {
+            header('Location: /catalogue');
+            exit;
+        } else {
+            $this->abort(500, 'Error al dar de baja el libro');
+            return;
+        }
+    }
 }
