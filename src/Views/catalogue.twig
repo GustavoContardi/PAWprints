@@ -207,7 +207,7 @@
 </section>
 
 <script id="books-json" type="application/json">
-{{ allBooks|json_encode }}
+{{ allBooks|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP') b-or constant('JSON_HEX_APOS') b-or constant('JSON_HEX_QUOT'))|raw }}
 </script>
 
 <script src="{{ asset('scripts/catalogue.js') }}"></script>

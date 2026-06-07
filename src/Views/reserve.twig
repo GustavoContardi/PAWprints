@@ -1,11 +1,6 @@
-<?php
-// Variables disponibles: $book (array|null), $errors (array|null), $old (array|null), $success (bool|null), $reserve (array|null)
-$book    = $book ?? null;
-$errors  = $errors ?? [];
-$old     = $old ?? [];
-$success = $success ?? false;
-$reserve = $reserve ?? null;
-?>
+{% extends "layouts/base.twig" %}
+
+{% block content %}
 
 <h1>PAWprints</h1>
 <h2>Datos de reserva</h2>
@@ -18,20 +13,20 @@ $reserve = $reserve ?? null;
         </svg>
         <p>¡Reserva enviada correctamente!<br><span>Nos pondremos en contacto a la brevedad.</span></p>
 
-        <?php if ($reserve): ?>
+        {% if reserve %}
         <div class="reserva-datos">
-            <p><strong>Libro:</strong> <?= htmlspecialchars($reserve['book_title'] ?? ($book['title'] ?? '')) ?></p>
-            <p><strong>Nombre:</strong> <?= htmlspecialchars($reserve['buyer_name']) ?></p>
-            <p><strong>Teléfono:</strong> <?= htmlspecialchars($reserve['phone']) ?></p>
-            <p><strong>Email:</strong> <?= htmlspecialchars($reserve['email']) ?></p>
-            <p><strong>Copias:</strong> <?= (int)$reserve['copies'] ?></p>
-            <p><strong>Fecha:</strong> <?= htmlspecialchars($reserve['created_at']) ?></p>
+            <p><strong>Libro:</strong> {{ reserve.book_title ?? (reserve.book_title ?? book.title ?? '') }}</p>
+            <p><strong>Nombre:</strong> {{ reserve.buyer_name }}</p>
+            <p><strong>Teléfono:</strong> {{ reserve.phone }}</p>
+            <p><strong>Email:</strong> {{ reserve.email }}</p>
+            <p><strong>Copias:</strong> {{ reserve.copies }}</p>
+            <p><strong>Fecha:</strong> {{ reserve.created_at }}</p>
         </div>
-        <?php endif; ?>
+        {% endif %}
 
-        <?php if ($book): ?>
-            <a href="/book/<?= $book['id'] ?>" class="btn-link">Volver al libro</a>
-        <?php else: ?>
+        {% if book %}
+            <a href="/book/{{ book.id }}" class="btn-link">Volver al libro</a>
+        {% else %}
             <a href="/catalogue" class="btn-link">Volver al catálogo</a>
         {% endif %}
     </div>
@@ -101,4 +96,5 @@ $reserve = $reserve ?? null;
     </form>
 
 {% endif %}
+
 {% endblock %}

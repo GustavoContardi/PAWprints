@@ -3,6 +3,9 @@
 namespace Core;
 
 use Monolog\Logger;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class Mailer
 {
@@ -15,50 +18,84 @@ class Mailer
         $this->from = $from;
     }
 
-    /**
-     * Envía un correo electrónico.
-     * En desarrollo, lo guarda en un archivo de log separado (log/emails.log).
-     */
     public function send(string $to, string $subject, string $body, ?string $replyTo = null): bool
     {
-        // ── Simulación en Desarrollo ─────────────────────────────────────────
-        if (($_ENV['APP_ENV'] ?? 'development') !== 'production') {
+        $driver = $_ENV['MAIL_DRIVER'] ?? 'log';
+
+        if ($driver === 'smtp') {
+            return $this->sendSmtp($to, $subject, $body, $replyTo);
+        }
+
+        return $this->simulateSend($to, $subject, $body, $replyTo);
+    }
+
+    private function sendSmtp(string $to, string $subject, string $body, ?string $replyTo): bool
+    {
+        $host     = $_ENV['MAIL_HOST'] ?? '';
+        $port     = (int)($_ENV['MAIL_PORT'] ?? 587);
+        $username = $_ENV['MAIL_USERNAME'] ?? '';
+        $password = $_ENV['MAIL_PASSWORD'] ?? '';
+        $enc      = $_ENV['MAIL_ENCRYPTION'] ?? 'tls';
+
+        if ($host === '' || $username === '' || $password === '') {
+            $this->logger->warning('Mail driver SMTP configurado pero faltan credenciales. Cayendo a simulación.', [
+                'host' => $host,
+                'user' => $username ? '***' : '',
+            ]);
             return $this->simulateSend($to, $subject, $body, $replyTo);
         }
 
-        // ── Envío Real en Producción ──────────────────────────────────────────
-        $headers = "From: {$this->from}\r\n";
-        if ($replyTo) {
-            $headers .= "Reply-To: {$replyTo}\r\n";
-        }
+        try {
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host       = $host;
+            $mail->Port       = $port;
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $username;
+            $mail->Password   = $password;
+            $mail->CharSet    = 'UTF-8';
 
-        $enviado = mail($to, $subject, $body, $headers);
+            if ($enc === 'tls') {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            } elseif ($enc === 'ssl') {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            }
 
-        if (!$enviado) {
-            $lastError = error_get_last();
-            $msg = $lastError['message'] ?? 'Error desconocido al ejecutar mail()';
-            
-            $this->logger->error("Error al enviar email real", [
+            $fromName = $_ENV['MAIL_FROM_NAME'] ?? 'PAWprints';
+            $mail->setFrom($this->from, $fromName);
+            $mail->addAddress($to);
+
+            if ($replyTo) {
+                $mail->addReplyTo($replyTo);
+            }
+
+            $mail->isHTML(false);
+            $mail->Subject = $subject;
+            $mail->Body    = $body;
+
+            $mail->send();
+
+            $this->logger->info("Email enviado correctamente vía SMTP", [
                 'to' => $to,
                 'subject' => $subject,
-                'php_error' => $msg
             ]);
+            return true;
 
+        } catch (PHPMailerException $e) {
+            $this->logger->error("Error al enviar email vía SMTP", [
+                'to'      => $to,
+                'subject' => $subject,
+                'error'   => $mail->ErrorInfo,
+            ]);
             return false;
         }
-
-        $this->logger->info("Email real enviado correctamente", ['to' => $to]);
-        return true;
     }
 
-    /**
-     * Simula el envío escribiendo en log/emails.log
-     */
     private function simulateSend(string $to, string $subject, string $body, ?string $replyTo): bool
     {
         $logPath = __DIR__ . '/../../log/emails.log';
         $timestamp = date('Y-m-d H:i:s');
-        
+
         $content = "================================================================\n";
         $content .= "FECHA: $timestamp\n";
         $content .= "PARA: $to\n";
@@ -69,7 +106,6 @@ class Mailer
         $content .= "$body\n";
         $content .= "================================================================\n\n";
 
-        // Asegurarse de que el directorio existe
         if (!is_dir(dirname($logPath))) {
             mkdir(dirname($logPath), 0777, true);
         }

@@ -5,7 +5,8 @@
         "robmorgan/phinx": "^0.16.11",
         "filp/whoops": "^2.18",
         "aws/aws-sdk-php": "^3.382",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "phpmailer/phpmailer": "^7.1"
     },
     "autoload": {
         "psr-4": {
