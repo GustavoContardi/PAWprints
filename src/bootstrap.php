@@ -13,6 +13,8 @@ $dotenv->safeLoad();
 
 $dotenv->required(['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD']);
 
+\Core\Session::start();
+
 // ── 2. Whoops (solo en desarrollo) ──────────────────────────────────────────
 // En producción no se registra para evitar exponer stack traces, rutas de
 // archivos, variables de entorno y credenciales al usuario.

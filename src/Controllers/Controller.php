@@ -44,32 +44,10 @@ abstract class Controller
         exit;
     }
 
-    protected function requireAdmin(string $redirectTo): void
+    protected function requireAuth(): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_password'])) {
-            $adminPassword = $_ENV['ADMIN_PASSWORD'] ?? 'changeme';
-            if ($_POST['admin_password'] === $adminPassword) {
-                $_SESSION['admin_auth'] = true;
-                header("Location: " . $redirectTo);
-                exit;
-            } else {
-                $this->render('admin_login', [
-                    'title' => 'Acceso restringido — PAWprints',
-                    'error' => 'Contraseña incorrecta.',
-                ]);
-                exit;
-            }
-        }
-
-        if (empty($_SESSION['admin_auth'])) {
-            $this->render('admin_login', [
-                'title' => 'Acceso restringido — PAWprints',
-                'error' => null,
-            ]);
+        if (!\Core\Session::isAuthenticated()) {
+            header('Location: /login');
             exit;
         }
     }

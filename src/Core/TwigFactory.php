@@ -24,6 +24,15 @@ class TwigFactory
         // Global variable for cache-busting
         $twig->addGlobal('asset_version', time());
 
+        // Auth status and details globals
+        $twig->addGlobal('is_authenticated', \Core\Session::isAuthenticated());
+        $twig->addGlobal('employee_name', \Core\Session::employeeName());
+
+        // Custom csrf_token() function
+        $twig->addFunction(new TwigFunction('csrf_token', function (): string {
+            return \Core\Session::csrfToken();
+        }));
+
         // Custom asset() function
         $twig->addFunction(new TwigFunction('asset', function (string $path): string {
             return '/assets/' . $path . '?v=' . time();

@@ -15,6 +15,38 @@
     {% endif %}
     {% block extra_styles %}{% endblock %}
     {% block microdata_head %}{% endblock %}
+    <style>
+        .nav-btn-logout {
+            background: transparent;
+            color: var(--color-white);
+            font-family: var(--font);
+            cursor: pointer;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius);
+            padding: 0.3rem 0.85rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .nav-btn-logout:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--color-white);
+        }
+        @media (max-width: 899px) {
+            .nav-logout-li {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-btn-logout {
+                display: inline-block;
+                width: 50%;
+                max-width: 300px;
+                margin: 0.25rem auto;
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -27,8 +59,18 @@
                 <li><a href="/catalogue?order=popular">Más Vendidos</a></li>
                 <li><a href="/about-us">Sobre nosotros</a></li>
                 <li><a href="/contact">Contacto</a></li>
-                <li><a href="" class="nav-btn">Iniciar sesión</a></li>
-                <li><a href="" class="nav-btn">Registrarse</a></li>
+                {% if is_authenticated %}
+                    <li><a href="/books/new">Cargar libro</a></li>
+                    <li><a href="/admin/reserves">Pedidos</a></li>
+                    <li class="nav-logout-li">
+                        <form method="post" action="/logout" style="display: inline-block; margin: 0;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="nav-btn-logout">Cerrar sesión</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="/login" class="nav-btn">Acceso empleados</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

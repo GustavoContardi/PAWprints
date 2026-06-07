@@ -8,8 +8,8 @@ class AdminReservesController extends Controller
 {
     public function index(array $params): void
     {
-        // 1. Authenticate user or redirect/render login
-        $this->requireAdmin('/admin/reserves');
+        // 1. Authenticate user
+        $this->requireAuth();
 
         // 2. Read query filters
         $search = trim($_GET['search'] ?? '');

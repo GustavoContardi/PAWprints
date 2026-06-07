@@ -17,6 +17,7 @@ services:
       dockerfile: docker/php.Dockerfile
     volumes:
       - .:/var/www/app
+      - php_sessions:/var/lib/php/sessions
     security_opt:
       - label:disable
     working_dir: /var/www/app
@@ -34,3 +35,4 @@ services:
 
 volumes:
   db_data:
+  php_sessions:

@@ -75,7 +75,7 @@ class BookController extends Controller
 
     public function new(array $params): void
     {
-        $this->requireAdmin('/books/new');
+        $this->requireAuth();
 
         $this->render('libro_nuevo', [
             'title'  => 'Cargar libro — PAWprints',
@@ -112,7 +112,17 @@ class BookController extends Controller
 
     public function store(array $params): void
     {
-        $this->requireAdmin('/books/new');
+        $this->requireAuth();
+
+        if (!\Core\Session::validateCsrf($_POST['csrf_token'] ?? null)) {
+            $this->render('libro_nuevo', [
+                'title'  => 'Cargar libro — PAWprints',
+                'styles' => ['libro_nuevo.css'],
+                'errors' => ['csrf' => 'Sesión expirada, intentá de nuevo.'],
+                'old'    => $_POST,
+            ]);
+            return;
+        }
 
         // 1. Leer y sanitizar $_POST
         $title          = isset($_POST['title'])          ? trim($_POST['title'])          : '';

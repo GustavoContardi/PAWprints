@@ -20,6 +20,8 @@ $router->get('/books/new',        'BookController',      'new');
 $router->post('/books/new',       'BookController',      'store');
 $router->get('/api/search-book',  'BookController',      'apiSearchBook');
 $router->get('/admin/reserves',   'AdminReservesController', 'index');
-$router->post('/admin/reserves',  'AdminReservesController', 'index');
+$router->get('/login',            'AuthController',     'showLogin');
+$router->post('/login',           'AuthController',     'login');
+$router->post('/logout',          'AuthController',     'logout');
 
 $router->resolve();
