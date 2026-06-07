@@ -19,5 +19,7 @@ $router->post('/reserve',         'ReserveController',   'process');
 $router->get('/books/new',        'BookController',      'new');
 $router->post('/books/new',       'BookController',      'store');
 $router->get('/api/search-book',  'BookController',      'apiSearchBook');
+$router->get('/admin/reserves',   'AdminReservesController', 'index');
+$router->post('/admin/reserves',  'AdminReservesController', 'index');
 
 $router->resolve();

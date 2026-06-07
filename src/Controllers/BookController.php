@@ -53,36 +53,6 @@ class BookController extends Controller
         ]);
     }
 
-    // ── Autenticación simple (temporal, sin roles) ────────────────────────────
-    private function requirePassword(): void
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_password'])) {
-            $adminPassword = $_ENV['ADMIN_PASSWORD'] ?? 'changeme';
-            if ($_POST['admin_password'] === $adminPassword) {
-                $_SESSION['admin_auth'] = true;
-                header('Location: /books/new');
-                exit;
-            } else {
-                $this->render('admin_login', [
-                    'title' => 'Acceso restringido — PAWprints',
-                    'error' => 'Contraseña incorrecta.',
-                ]);
-                exit;
-            }
-        }
-
-        if (empty($_SESSION['admin_auth'])) {
-            $this->render('admin_login', [
-                'title' => 'Acceso restringido — PAWprints',
-                'error' => null,
-            ]);
-            exit;
-        }
-    }
 
     public function apiSearchBook(array $params): void
     {
@@ -105,7 +75,7 @@ class BookController extends Controller
 
     public function new(array $params): void
     {
-        $this->requirePassword();
+        $this->requireAdmin('/books/new');
 
         $this->render('libro_nuevo', [
             'title'  => 'Cargar libro — PAWprints',
@@ -142,7 +112,7 @@ class BookController extends Controller
 
     public function store(array $params): void
     {
-        $this->requirePassword();
+        $this->requireAdmin('/books/new');
 
         // 1. Leer y sanitizar $_POST
         $title          = isset($_POST['title'])          ? trim($_POST['title'])          : '';

@@ -1,0 +1,182 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+    /* Admin reserves dashboard styles */
+    .admin-reserves-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    main > h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+        padding: 2rem 1.25rem 0.25rem;
+    }
+
+    main > p.total-reserves {
+        text-align: center;
+        font-size: 1.25rem;
+        color: var(--color-text-muted);
+        margin-bottom: 2rem;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-form input[type="text"] {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        font-family: var(--font);
+        font-size: 0.9rem;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius);
+        background: var(--color-white);
+        outline: none;
+    }
+
+    .search-form input[type="text"]:focus {
+        border-color: var(--color-brand);
+        box-shadow: 0 0 0 3px rgba(92, 6, 140, 0.12);
+    }
+
+    .search-form button {
+        width: auto !important;
+        flex-shrink: 0;
+        background: var(--color-brand);
+        color: var(--color-white);
+        border: none;
+        border-radius: var(--radius);
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .search-form button:hover {
+        background: var(--color-brand-dark);
+    }
+
+    .no-results {
+        text-align: center;
+        font-size: 1.1rem;
+        color: var(--color-text-muted);
+        background: var(--color-white);
+        padding: 3rem;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--color-border);
+        max-width: 600px;
+        margin: 2rem auto;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        background: var(--color-white);
+        border-radius: var(--radius);
+        border: 1.5px solid var(--color-border);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        margin-bottom: 3rem;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        text-align: left;
+    }
+
+    th, td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    th {
+        background-color: #f7f7f7;
+        font-weight: 600;
+        color: var(--color-text-muted);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background-color: #fafafa;
+    }
+
+    @media (min-width: 900px) {
+        main > h1 {
+            font-size: 3.5rem;
+            padding-top: 3rem;
+        }
+
+        main > p.total-reserves {
+            padding-bottom: 2rem;
+            border-bottom: 6px solid var(--color-brand);
+            margin-bottom: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Pedidos</h1>
+<p class="total-reserves">{{ total }} pedido(s)</p>
+
+<div class="admin-reserves-container">
+    <form method="get" action="/admin/reserves" class="search-form">
+        <input type="text" name="search" value="{{ search }}" placeholder="Buscar por nombre, email o título">
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if reserves is empty %}
+        <p class="no-results">Sin pedidos.</p>
+    {% else %}
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Libro</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Copias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reserves %}
+                        <tr>
+                            <td>{{ r.id }}</td>
+                            <td>{{ r.created_at }}</td>
+                            <td>{{ r.book_title }}</td>
+                            <td>{{ r.buyer_name }}</td>
+                            <td>{{ r.email }}</td>
+                            <td>{{ r.phone }}</td>
+                            <td>{{ r.copies }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
