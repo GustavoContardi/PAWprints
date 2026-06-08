@@ -6,5 +6,5 @@ WORKDIR /app
 COPY . .
 RUN composer install --no-dev
 EXPOSE 10000
-#CMD vendor/bin/phinx migrate && vendor/bin/phinx seed:run && php -S 0.0.0.0:10000 -t public
-CMD vendor/bin/phinx migrate && php -S 0.0.0.0:10000 -t public
+CMD vendor/bin/phinx migrate && vendor/bin/phinx seed:run && php -S 0.0.0.0:10000 -t public
+#CMD vendor/bin/phinx migrate && php -S 0.0.0.0:10000 -t public
