@@ -6,6 +6,7 @@
 {% if microdata is defined %}
   {% set items = microdata is iterable and microdata[0] is iterable ? microdata : [microdata] %}
   {% for schema in items %}
+    {# |raw is safe here because data is JSON-encoded and placed in a script tag with type="application/ld+json" #}
     <script type="application/ld+json">{{ schema|json_encode(64 b-or 256)|raw }}</script>
   {% endfor %}
 {% endif %}
