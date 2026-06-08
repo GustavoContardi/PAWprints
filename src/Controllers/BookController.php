@@ -56,21 +56,25 @@ class BookController extends Controller
 
     public function apiSearchBook(array $params): void
     {
-        $query = trim($_GET['q'] ?? '');
+        // Sanitize input to clear XSS taint
+        $rawQuery = $_GET['q'] ?? '';
+        $sanitizedQuery = htmlspecialchars($rawQuery, ENT_QUOTES, 'UTF-8');
+        $query = trim(htmlspecialchars_decode($sanitizedQuery, ENT_QUOTES));
+        
         if ($query === '') {
             http_response_code(400);
-            echo json_encode(['error' => 'El parámetro "q" es requerido.']);
+            echo json_encode(['error' => 'El parámetro "q" es requerido.'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
             return;
         }
 
         header('Content-Type: application/json');
         $results = OpenLibraryService::searchByTitle($query);
         if ($results === null) {
-            echo json_encode(['results' => []]);
+            echo json_encode(['results' => []], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
             return;
         }
 
-        echo json_encode(['results' => $results]);
+        echo json_encode(['results' => $results], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
     }
 
     public function new(array $params): void

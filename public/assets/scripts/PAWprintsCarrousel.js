@@ -184,28 +184,30 @@ class PAWprintsCarrousel {
     }
 
     goTo(index) {
+        index = parseInt(index, 10);
+        if (isNaN(index)) return;
         if (index < 0) index = this.slides.length - 1;
         if (index >= this.slides.length) index = 0;
         
         // Remover clase activa del actual
-        this.slides[this.currentIndex].classList.remove('active');
-        if (this.thumbs[this.currentIndex]) {
-            this.thumbs[this.currentIndex].classList.remove('active');
+        this.slides.at(this.currentIndex).classList.remove('active');
+        if (this.thumbs.at(this.currentIndex)) {
+            this.thumbs.at(this.currentIndex).classList.remove('active');
         }
-        if (this.dots && this.dots[this.currentIndex]) {
-            this.dots[this.currentIndex].classList.remove('active');
+        if (this.dots && this.dots.at(this.currentIndex)) {
+            this.dots.at(this.currentIndex).classList.remove('active');
         }
         
         // Actualizar índice
         this.currentIndex = index;
         
         // Agregar clase activa al nuevo
-        this.slides[this.currentIndex].classList.add('active');
-        if (this.thumbs[this.currentIndex]) {
-            this.thumbs[this.currentIndex].classList.add('active');
+        this.slides.at(this.currentIndex).classList.add('active');
+        if (this.thumbs.at(this.currentIndex)) {
+            this.thumbs.at(this.currentIndex).classList.add('active');
         }
-        if (this.dots && this.dots[this.currentIndex]) {
-            this.dots[this.currentIndex].classList.add('active');
+        if (this.dots && this.dots.at(this.currentIndex)) {
+            this.dots.at(this.currentIndex).classList.add('active');
         }
     }
 

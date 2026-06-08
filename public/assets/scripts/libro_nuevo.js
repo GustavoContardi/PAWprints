@@ -7,16 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form-libro-nuevo');
     if (!form) return;
 
-    const fields = {
-        title: document.getElementById('title'),
-        author: document.getElementById('author'),
-        price: document.getElementById('price'),
-        stock: document.getElementById('stock'),
-        discount: document.getElementById('discount'),
-        category: document.getElementById('category'),
-        age: document.getElementById('age'),
-        image: document.getElementById('image')
-    };
+    const fields = new Map([
+        ['title', document.getElementById('title')],
+        ['author', document.getElementById('author')],
+        ['price', document.getElementById('price')],
+        ['stock', document.getElementById('stock')],
+        ['discount', document.getElementById('discount')],
+        ['category', document.getElementById('category')],
+        ['age', document.getElementById('age')],
+        ['image', document.getElementById('image')]
+    ]);
 
     /**
      * Valida un campo individualmente y retorna el mensaje de error o cadena vacía.
@@ -109,8 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
      * Muestra el mensaje de error inline y resalta el input.
      */
     function showError(fieldName, message) {
+        if (!fields.has(fieldName)) return;
         const errorSpan = document.getElementById(`error-${fieldName}`);
-        const field = fields[fieldName];
+        const field = fields.get(fieldName);
         if (!field) return;
         
         const group = field.closest('.form-group');
@@ -128,8 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
      * Oculta el mensaje de error y agrega estilo de campo válido si corresponde.
      */
     function clearError(fieldName) {
+        if (!fields.has(fieldName)) return;
         const errorSpan = document.getElementById(`error-${fieldName}`);
-        const field = fields[fieldName];
+        const field = fields.get(fieldName);
         if (!field) return;
         
         const group = field.closest('.form-group');
@@ -155,7 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * Validador en evento Blur (salir del foco del campo).
      */
     function handleBlur(fieldName) {
-        const field = fields[fieldName];
+        if (!fields.has(fieldName)) return;
+        const field = fields.get(fieldName);
         if (!field) return;
         
         const val = field.value;
@@ -173,7 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * Validador en tiempo real (evento input) sólo si el campo ya tenía un error.
      */
     function handleInput(fieldName) {
-        const field = fields[fieldName];
+        if (!fields.has(fieldName)) return;
+        const field = fields.get(fieldName);
         if (!field) return;
         
         const group = field.closest('.form-group');
@@ -228,19 +232,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     item.setAttribute('role', 'button');
                     item.dataset.index = idx;
 
-                    const img = book.cover_url
-                        ? `<img src="${book.cover_url}" alt="" loading="lazy">`
-                        : '<div style="width:48px;height:72px;background:var(--color-border);border-radius:4px;flex-shrink:0"></div>';
+                    if (book.cover_url) {
+                        const imgEl = document.createElement('img');
+                        imgEl.src = book.cover_url;
+                        imgEl.alt = "";
+                        imgEl.loading = "lazy";
+                        item.appendChild(imgEl);
+                    } else {
+                        const divEl = document.createElement('div');
+                        divEl.style.width = '48px';
+                        divEl.style.height = '72px';
+                        divEl.style.background = 'var(--color-border)';
+                        divEl.style.borderRadius = '4px';
+                        divEl.style.flexShrink = '0';
+                        item.appendChild(divEl);
+                    }
 
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'ol-result-info';
+
+                    const titleP = document.createElement('p');
+                    titleP.className = 'ol-result-title';
+                    titleP.textContent = book.title;
+
+                    const authorP = document.createElement('p');
+                    authorP.className = 'ol-result-author';
                     const year = book.first_publish_year ? `(${book.first_publish_year})` : '';
+                    authorP.textContent = `${book.author} ${year}`;
 
-                    item.innerHTML = `
-                        ${img}
-                        <div class="ol-result-info">
-                            <p class="ol-result-title">${escapeHtml(book.title)}</p>
-                            <p class="ol-result-author">${escapeHtml(book.author)} ${year}</p>
-                        </div>
-                    `;
+                    infoDiv.appendChild(titleP);
+                    infoDiv.appendChild(authorP);
+                    item.appendChild(infoDiv);
 
                     item.addEventListener('click', () => fillBookData(book));
                     item.addEventListener('keydown', (e) => {
@@ -303,7 +325,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mostrar preview de portada
         if (coverPreview && book.cover_url) {
-            coverPreview.innerHTML = `<img src="${book.cover_url}" alt="Portada prevista">`;
+            coverPreview.innerHTML = '';
+            const imgEl = document.createElement('img');
+            imgEl.src = book.cover_url;
+            imgEl.alt = 'Portada prevista';
+            coverPreview.appendChild(imgEl);
             coverPreview.classList.add('visible');
         } else if (coverPreview) {
             coverPreview.innerHTML = '';
@@ -345,8 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Asociar escuchas de eventos a cada campo
-    Object.keys(fields).forEach(fieldName => {
-        const field = fields[fieldName];
+    fields.forEach((field, fieldName) => {
         if (!field) return;
 
         field.addEventListener('blur', () => handleBlur(fieldName));
@@ -361,8 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         let hasErrors = false;
         
-        Object.keys(fields).forEach(fieldName => {
-            const field = fields[fieldName];
+        fields.forEach((field, fieldName) => {
             if (!field) return;
             
             const val = field.value;

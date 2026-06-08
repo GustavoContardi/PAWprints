@@ -338,15 +338,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = book.image || 'placeholder.jpg';
             const imgSrc = (img.startsWith('http://') || img.startsWith('https://')) ? img : `/assets/img/${img}`;
 
-            card.innerHTML = `
-                <a href="/book/${book.id}">
-                    <img src="${escapeHtml(imgSrc)}" alt="Portada del libro">
-                </a>
-                <h3>${escapeHtml(book.title)}</h3>
-                <p class="cat-card-autor">${escapeHtml(book.author)}</p>
-                <p class="cat-card-precio">${formattedPrice}</p>
-                <a href="/reserve/${encodeURIComponent(book.id)}" class="cat-btn-carrito" aria-label="Reservar libro"></a>
-            `;
+            const aImg = document.createElement('a');
+            aImg.href = `/book/${encodeURIComponent(book.id)}`;
+            const imgEl = document.createElement('img');
+            imgEl.src = imgSrc;
+            imgEl.alt = 'Portada del libro';
+            aImg.appendChild(imgEl);
+
+            const h3 = document.createElement('h3');
+            h3.textContent = book.title;
+
+            const pAuthor = document.createElement('p');
+            pAuthor.className = 'cat-card-autor';
+            pAuthor.textContent = book.author;
+
+            const pPrice = document.createElement('p');
+            pPrice.className = 'cat-card-precio';
+            pPrice.textContent = formattedPrice;
+
+            const aCart = document.createElement('a');
+            aCart.href = `/reserve/${encodeURIComponent(book.id)}`;
+            aCart.className = 'cat-btn-carrito';
+            aCart.setAttribute('aria-label', 'Reservar libro');
+
+            card.appendChild(aImg);
+            card.appendChild(h3);
+            card.appendChild(pAuthor);
+            card.appendChild(pPrice);
+            card.appendChild(aCart);
             grid.appendChild(card);
         });
 
