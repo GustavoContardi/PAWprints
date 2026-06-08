@@ -10,6 +10,7 @@
 {% if microdata is defined %}
   {% set items = microdata is iterable and microdata[0] is iterable ? microdata : [microdata] %}
   {% for schema in items %}
+    {# |raw is safe here because data is JSON-encoded and placed in a script tag with type="application/ld+json" #}
     <script type="application/ld+json">{{ schema|json_encode(64 b-or 256)|raw }}</script>
   {% endfor %}
 {% endif %}
@@ -206,6 +207,7 @@
 
 </section>
 
+{# |raw is safe here because data is JSON-encoded with hex escaping and placed in a script tag with type="application/json" #}
 <script id="books-json" type="application/json">
 {{ allBooks|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP') b-or constant('JSON_HEX_APOS') b-or constant('JSON_HEX_QUOT'))|raw }}
 </script>

@@ -12,6 +12,39 @@ use Whoops\Handler\PrettyPageHandler;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->safeLoad();
 
+// ── 1.1. Security Headers for XSS Prevention ─────────────────────────────────
+// Content Security Policy to restrict sources of scripts, styles, etc.
+$csp = "default-src 'self'; "
+     . "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
+     . "style-src 'self' 'unsafe-inline'; "
+     . "img-src 'self' data: https:; "
+     . "font-src 'self' data:; "
+     . "connect-src 'self'; "
+     . "frame-ancestors 'none';";
+header("Content-Security-Policy: $csp");
+
+// X-Content-Type-Options to prevent MIME sniffing
+header("X-Content-Type-Options: nosniff");
+
+// X-Frame-Options to prevent clickjacking
+header("X-Frame-Options: DENY");
+
+// X-XSS-Protection for older browsers
+header("X-XSS-Protection: 1; mode=block");
+
+// ── 1.2. Secure Session Cookie Settings ───────────────────────────────────────
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => '',
+        'secure' => isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'production',
+        'httponly' => true,
+        'samesite' => 'Strict'
+    ]);
+    session_start();
+}
+
 $dotenv->required(['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD']);
 
 \Core\Session::start();
@@ -55,6 +88,7 @@ try {
 
     $pdo = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['SafePDOStatement', []]);
 
