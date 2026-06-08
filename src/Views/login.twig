@@ -1,27 +1,41 @@
 {% extends 'layouts/base.twig' %}
 
-{% block title %}Acceso restringido - PAWprints{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 {% set error = error ?? null %}
 
 <h1>PAWprints</h1>
-<h2>Acceso restringido</h2>
+<h2>Acceso de personal</h2>
 
-<form method="post" action="" class="admin-login-form" novalidate>
+<form method="post" action="/login" class="admin-login-form" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
     {% if error %}
         <p class="admin-login-error">{{ error }}</p>
     {% endif %}
 
     <div class="form-group">
-        <label for="admin_password">Contraseña</label>
+        <label for="email">Email</label>
+        <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Ingresá tu email"
+            required
+            autofocus
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="password">Contraseña</label>
         <input
             type="password"
-            name="admin_password"
-            id="admin_password"
-            placeholder="Ingresá la contraseña"
+            name="password"
+            id="password"
+            placeholder="Ingresá tu contraseña"
+            required
             autocomplete="current-password"
-            autofocus
         >
     </div>
 
@@ -29,7 +43,7 @@
 </form>
 
 <style>
-    /* Hero & Titulados de Acceso Restringido */
+    /* Hero & Titulados de Acceso de Personal */
     main {
         display: flex;
         flex-direction: column;
@@ -91,6 +105,7 @@
         color: var(--color-text-muted);
     }
 
+    .admin-login-form input[type="email"],
     .admin-login-form input[type="password"] {
         width: 100%;
         padding: 0.625rem 0.875rem;
@@ -103,6 +118,7 @@
         transition: border-color 0.2s, box-shadow 0.2s;
     }
 
+    .admin-login-form input[type="email"]:focus,
     .admin-login-form input[type="password"]:focus {
         outline: none;
         border-color: var(--color-brand);

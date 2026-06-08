@@ -1,0 +1,173 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Editar {{ book.title }} - PAWprints{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{{ asset('estilos/libro_nuevo.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set errors = errors ?? [] %}
+{% set old = old ?? [] %}
+
+<h1>PAWprints</h1>
+<h2>Editar libro</h2>
+
+{% if errors is not empty %}
+    <div class="reserva-errores" style="background-color: #ffebee; color: #c62828; border: 1.5px solid #ef9a9a; border-radius: var(--radius); padding: 1rem; margin-bottom: 1.5rem;">
+        <p style="font-weight: 600; margin-bottom: 0.5rem;">Por favor, corrija los siguientes errores:</p>
+        <ul style="list-style-type: disc; margin-left: 1.5rem;">
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="post" action="/book/{{ book.id }}/edit" enctype="multipart/form-data" novalidate id="form-libro-nuevo">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="openlibrary-search">
+        <h3>Búsqueda rápida (actualizar datos)</h3>
+        <p class="ol-search-hint">Buscá por título o autor y autorellená el formulario si querés actualizar la información.</p>
+        <div class="ol-search-row">
+            <input type="text" id="ol-query" placeholder="Ej: El Principito">
+            <button type="button" id="ol-search-btn">Buscar</button>
+        </div>
+        <div id="ol-results" class="ol-results"></div>
+    </div>
+
+    <fieldset>
+        <!-- Título -->
+        <div class="form-group {% if errors.title is defined %}has-error{% endif %}">
+            <label for="title">Título *</label>
+            <input type="text" name="title" id="title" placeholder="Ej: El Principito" value="{{ old.title ?? book.title }}">
+            <span class="form-error {% if errors.title is defined %}visible{% endif %}" id="error-title">{{ errors.title ?? '' }}</span>
+        </div>
+
+        <!-- Autor -->
+        <div class="form-group {% if errors.author is defined %}has-error{% endif %}">
+            <label for="author">Autor *</label>
+            <input type="text" name="author" id="author" placeholder="Ej: Antoine de Saint-Exupéry" value="{{ old.author ?? book.author }}">
+            <span class="form-error {% if errors.author is defined %}visible{% endif %}" id="error-author">{{ errors.author ?? '' }}</span>
+        </div>
+
+        <!-- Precio -->
+        <div class="form-group {% if errors.price is defined %}has-error{% endif %}">
+            <label for="price">Precio *</label>
+            <input type="number" name="price" id="price" min="0" step="0.01" placeholder="Ej: 1500.00" value="{{ old.price ?? book.price }}">
+            <span class="form-error {% if errors.price is defined %}visible{% endif %}" id="error-price">{{ errors.price ?? '' }}</span>
+        </div>
+
+        <!-- Stock -->
+        <div class="form-group {% if errors.stock is defined %}has-error{% endif %}">
+            <label for="stock">Stock *</label>
+            <input type="number" name="stock" id="stock" min="0" step="1" placeholder="Ej: 15" value="{{ old.stock ?? book.stock }}">
+            <span class="form-error {% if errors.stock is defined %}visible{% endif %}" id="error-stock">{{ errors.stock ?? '' }}</span>
+        </div>
+
+        <!-- Descuento -->
+        <div class="form-group {% if errors.discount is defined %}has-error{% endif %}">
+            <label for="discount">Descuento (%)</label>
+            <input type="number" name="discount" id="discount" min="0" max="100" step="0.01" placeholder="Ej: 15" value="{{ old.discount ?? book.discount }}">
+            <span class="form-error {% if errors.discount is defined %}visible{% endif %}" id="error-discount">{{ errors.discount ?? '' }}</span>
+        </div>
+
+        <!-- Categoría -->
+        <div class="form-group {% if errors.category is defined %}has-error{% endif %}">
+            <label for="category">Categoría *</label>
+            <select name="category" id="category">
+                <option value="">-- Seleccionar categoría --</option>
+                {% set categories = {
+                    'ciencia-ficcion': 'Ciencia ficción',
+                    'romance': 'Romance',
+                    'aventura': 'Aventura',
+                    'fantasia': 'Fantasía',
+                    'misterio': 'Misterio',
+                    'historia': 'Historia',
+                    'no-ficcion': 'No Ficción',
+                    'otros': 'Otros'
+                } %}
+                {% set selectedCategory = old.category ?? book.category ?? '' %}
+                {% for val, label in categories %}
+                    <option value="{{ val }}" {% if selectedCategory == val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+            <span class="form-error {% if errors.category is defined %}visible{% endif %}" id="error-category">{{ errors.category ?? '' }}</span>
+        </div>
+
+        <!-- Edad Recomendada -->
+        <div class="form-group {% if errors.age is defined %}has-error{% endif %}">
+            <label for="age">Edad recomendada</label>
+            <select name="age" id="age">
+                <option value="">-- Seleccionar edad --</option>
+                {% set ages = {
+                    'infantil': 'Infantil',
+                    'juvenil': 'Juvenil',
+                    'adulto': 'Adulto'
+                } %}
+                {% set selectedAge = old.age ?? book.age ?? '' %}
+                {% for key, label in ages %}
+                    <option value="{{ key }}" {% if selectedAge == key %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+            <span class="form-error {% if errors.age is defined %}visible{% endif %}" id="error-age">{{ errors.age ?? '' }}</span>
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group {% if errors.description is defined %}has-error{% endif %}">
+            <label for="description">Descripción</label>
+            <textarea name="description" id="description" placeholder="Sinopsis o descripción del libro...">{{ old.description ?? book.description }}</textarea>
+            <span class="form-error {% if errors.description is defined %}visible{% endif %}" id="error-description">{{ errors.description ?? '' }}</span>
+        </div>
+
+        <!-- Imagen de portada actual -->
+        {% if book.image %}
+            <div class="form-group">
+                <label>Portada actual</label>
+                <div style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                    <img src="{{ image_url(book) }}" alt="Portada actual" style="max-height: 150px; border: 1.5px solid var(--color-border); border-radius: var(--radius);">
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Nueva Imagen -->
+        <div class="form-group {% if errors.image is defined %}has-error{% endif %}">
+            <label for="image">Subir nueva imagen (reemplaza la actual)</label>
+            <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg, image/webp">
+            <span class="form-error {% if errors.image is defined %}visible{% endif %}" id="error-image">{{ errors.image ?? '' }}</span>
+        </div>
+
+        <!-- Foto de autor actual -->
+        {% if book.author_image %}
+            <div class="form-group">
+                <label>Foto de autor actual</label>
+                <div style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                    <img src="{{ author_image_url(book) }}" alt="Foto de autor actual" style="max-height: 150px; border: 1.5px solid var(--color-border); border-radius: var(--radius);">
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Nueva Foto de Autor -->
+        <div class="form-group {% if errors.author_image is defined %}has-error{% endif %}">
+            <label for="author_image">Subir nueva foto de autor (reemplaza la actual)</label>
+            <input type="file" name="author_image" id="author_image" accept="image/png, image/jpeg, image/jpg, image/webp">
+            <span class="form-error {% if errors.author_image is defined %}visible{% endif %}" id="error-author-image">{{ errors.author_image ?? '' }}</span>
+        </div>
+
+        <!-- Biografía de Autor -->
+        <div class="form-group {% if errors.author_bio is defined %}has-error{% endif %}">
+            <label for="author_bio">Biografía del autor</label>
+            <textarea name="author_bio" id="author_bio" placeholder="Biografía o datos del autor...">{{ old.author_bio ?? book.author_bio }}</textarea>
+            <span class="form-error {% if errors.author_bio is defined %}visible{% endif %}" id="error-author-bio">{{ errors.author_bio ?? '' }}</span>
+        </div>
+
+        <input type="hidden" id="cover_id" name="cover_id" value="{{ old.cover_id ?? '' }}">
+        <div id="cover-preview" class="cover-preview"></div>
+
+        <button type="submit">Guardar cambios</button>
+    </fieldset>
+</form>
+
+<script src="{{ asset('scripts/libro_nuevo.js') }}"></script>
+{% endblock %}

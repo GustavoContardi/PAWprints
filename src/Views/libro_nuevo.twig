@@ -37,6 +37,7 @@
     {% endif %}
 
     <form method="post" action="/books/new" enctype="multipart/form-data" novalidate id="form-libro-nuevo">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <div class="openlibrary-search">
         <h3>Búsqueda rápida</h3>
