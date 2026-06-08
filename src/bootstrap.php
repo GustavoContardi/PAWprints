@@ -7,6 +7,7 @@ use Monolog\Handler\StreamHandler;
 use Whoops\Run;
 use Whoops\Handler\PrettyPageHandler;
 
+
 // ── 1. Variables de entorno ──────────────────────────────────────────────────
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->safeLoad();
